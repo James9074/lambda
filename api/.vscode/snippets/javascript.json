@@ -1,0 +1,33 @@
+{
+  "GraphQL Type": {
+    "prefix": "type",
+    "body": [
+      "/* @flow */",
+      "",
+      "import { GraphQLObjectType, GraphQLString } from 'graphql';",
+      "import { globalIdField } from 'graphql-relay';",
+      "",
+      "export default new GraphQLObjectType({",
+      "  name: '${1:name}',",
+      "  fields: {",
+      "    id: globalIdField(),",
+      "    ${2:field}",
+      "  },",
+      "});",
+      ""
+    ],
+    "description": "GraphQL Type"
+  },
+  "GraphQL Field": {
+    "prefix": "field",
+    "body": [
+      "${1:field}: {",
+      "  type: ${2:type},",
+      "  resolve(${3:parent}, args, { ${4:loader} }) {",
+      "    return ${4:loader}.load(${3:parent}.id);",
+      "  },",
+      "},"
+    ],
+    "description": "GraphQL Field"
+  }
+}

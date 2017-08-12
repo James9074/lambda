@@ -1,0 +1,45 @@
+version: '2'
+services:
+  nginx:
+    image: wlan1/robot-nginx
+    build: 
+      context: ./nginx
+    depends_on:
+      - api
+      - ui
+  api:
+    image: wlan1/robot-api
+    build: 
+      context: ./api   
+    hostname: api
+    depends_on:
+      - db
+      - redis
+    env_file: .env
+    user: root
+  db:
+    image: wlan1/robot-db
+    build:
+      context: ./api/db
+    read_only: true
+    hostname: db
+    tmpfs:
+      - /tmp
+      - /var/run/postgresql
+    volumes:
+      - database:/var/lib/postgresql/data
+  ui:
+    image: wlan1/robot-ui
+    build: 
+      context: ./ui
+    hostname: ui
+    command: yarn start
+  redis:
+    image: redis:3.2.9-alpine
+    read_only: true
+    volumes:
+      - redis:/data
+    user: redis
+volumes:
+  redis:
+  database:

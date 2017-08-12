@@ -1,0 +1,41 @@
+before_script:
+  - apk add --update yarn
+  - yarn --version
+  - docker --version
+  - docker login -u $docker_username -p $docker_password
+
+build-api:
+  script:
+    - cd api
+    - yarn install
+    - yarn build
+    - yarn install --production
+    - docker build . -t wlan1/robot-api:$CI_COMMIT_REF_SLUG --file Dockerfile-prod
+    - docker tag wlan1/robot-api:$CI_COMMIT_REF_SLUG wlan1/robot-api:latest
+    - docker push wlan1/robot-api:$CI_COMMIT_REF_SLUG
+    - docker push wlan1/robot-api:latest
+
+build-ui:
+  script:
+    - cd ui
+    - docker build . -t wlan1/robot-ui:$CI_COMMIT_REF_SLUG
+    - docker tag wlan1/robot-ui:$CI_COMMIT_REF_SLUG wlan1/robot-ui:latest    
+    - docker push wlan1/robot-ui:$CI_COMMIT_REF_SLUG
+    - docker push wlan1/robot-ui:latest
+
+build-db:
+  script:
+    - cd api/db
+    - docker build . -t wlan1/robot-db:$CI_COMMIT_REF_SLUG
+    - docker tag wlan1/robot-db:$CI_COMMIT_REF_SLUG wlan1/robot-db:latest    
+    - docker push wlan1/robot-db:$CI_COMMIT_REF_SLUG
+    - docker push wlan1/robot-db:latest
+
+build-nginx:
+  script:
+    - cd nginx
+    - docker build . -t wlan1/robot-nginx:$CI_COMMIT_REF_SLUG
+    - docker tag wlan1/robot-nginx:$CI_COMMIT_REF_SLUG wlan1/robot-nginx:latest    
+    - docker push wlan1/robot-nginx:$CI_COMMIT_REF_SLUG
+    - docker push wlan1/robot-nginx:latest
+    
