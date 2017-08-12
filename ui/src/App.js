@@ -42,8 +42,8 @@ class App extends Component {
 
   // Handles login redirect if needed
   componentWillUpdate(nextProps){
-    if(nextProps.data.me === null)
-      window.location = '/login/facebook'
+   // if(nextProps.data.me === null)
+    //  window.location = '/login/test'
     //  fetch('/login/facebook', { method: 'GET', credentials: 'include' }).then(() => window.location = window.location)
   }
 
@@ -54,7 +54,7 @@ class App extends Component {
 
   render() {
     const theme = RobotTheme;
-    if(!this.props.data || !this.props.data.me){
+    if(!this.props.data || this.props.data.loading){
       return <FullPageLoader theme={theme}/>
     }
     return (
@@ -63,7 +63,7 @@ class App extends Component {
             <div className="App" >
               <AppToolbar 
                 onRef={ref => (this.child = ref)}
-                loading={false} 
+                loading={false}
                 {...this.props} />
               <Grid container gutter={0} justify="center" style={{marginTop: '60px', backgroundColor:theme.canvasColor[900]}}>
                 <Grid item xs={8}>

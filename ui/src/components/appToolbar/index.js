@@ -8,39 +8,19 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Grid from 'material-ui/Grid';
 import Toolbar from 'material-ui/Toolbar';
-import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import styles from './styles'
 import { LinearProgress } from 'material-ui/Progress';
 import AppDrawer from 'components/appDrawer'
 import SearchBar from 'components/searchBar'
-
-const pages = [{
-  name: 'Feed',
-  path: '/'
-},{
-  name: 'Lambdas',
-  path: '/lambdas'
-},{
-  name: 'Products',
-  path: '/products'
-}];
+import UserInfo from 'components/userInfo'
 
 @withRouter
 @withStyles(styles)
 class AppToolbar extends Component {
   constructor(props, context){
     super(props);
-    this.state = {
-      index: this.setBasePage(context)
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
-      this.setState({index: this.setBasePage(this.context)})
-    }
   }
 
   componentDidMount() {
@@ -54,20 +34,9 @@ class AppToolbar extends Component {
     router: PropTypes.object.isRequired
   }
 
-  setBasePage(context){
-    let pathname = context.router.route.location.pathname.match(/[^/]*\/[^/]*/)[0]
-    return pages.map((x,y)=>x.path).indexOf(pathname);
-  }
-
-  handleChange = (event, index) => {
-    this.setState({ index });
-    this.context.router.history.push(pages[index].path)
-  };
-
   render() {
     const classes = this.props.classes;
     let loading = this.props.loading ? (<LinearProgress color="accent" />) : ('')
-    let user = this.props.data.me == null ? "User" : this.props.data.me.displayName;
 
     return (
       <AppBar position="fixed">
@@ -89,8 +58,7 @@ class AppToolbar extends Component {
               </div>
             </Grid>
             <Grid item xs={2} style={{textAlign:'right'}} className={classes.centerItems}>
-              <Avatar alt="Avatar" src={'https://robohash.org/'+user+'.png?size=300x300'} 
-                      className={classes.avatar} />
+              <UserInfo user={this.props.data.me}/>
             </Grid>
           </Grid>
         </Toolbar>

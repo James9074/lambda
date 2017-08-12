@@ -26,11 +26,6 @@ export default createStyleSheet('AppToolbar', theme => ({
       'vertical-align': 'middle'
     }
   },
-  avatar: {
-    marginRight: '10px',
-    backgroundColor: 'white',
-    display: 'inline-block'
-  },
   flag: {
     width: '40px',
     paddingRight: '17px'
