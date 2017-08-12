@@ -1,10 +1,8 @@
 before_script:
-  - apk add --update yarn
-  - yarn --version
-  - docker --version
   - docker login -u $docker_username -p $docker_password
 
 build-api:
+  stage: build
   script:
     - cd api
     - yarn install
@@ -16,6 +14,7 @@ build-api:
     - docker push wlan1/robot-api:latest
 
 build-ui:
+  stage: build  
   script:
     - cd ui
     - docker build . -t wlan1/robot-ui:$CI_COMMIT_REF_SLUG
@@ -24,6 +23,7 @@ build-ui:
     - docker push wlan1/robot-ui:latest
 
 build-db:
+  stage: build
   script:
     - cd api/db
     - docker build . -t wlan1/robot-db:$CI_COMMIT_REF_SLUG
@@ -32,6 +32,7 @@ build-db:
     - docker push wlan1/robot-db:latest
 
 build-nginx:
+  stage: build
   script:
     - cd nginx
     - docker build . -t wlan1/robot-nginx:$CI_COMMIT_REF_SLUG
