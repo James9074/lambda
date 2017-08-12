@@ -100,6 +100,11 @@ loginProviders.forEach(({ provider, options }) => {
 // Remove the `user` object from the session. Example:
 //   fetch('/login/clear', { method: 'POST', credentials: 'include' })
 //     .then(() => window.location = '/')
+router.get('/login/clear', (req, res) => {
+  req.logout();
+  res.redirect('/')
+});
+
 router.post('/login/clear', (req, res) => {
   req.logout();
   res.status(200).send('OK');

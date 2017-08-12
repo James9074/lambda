@@ -69,6 +69,7 @@ async function login(req, provider, profile, tokens) {
       .table('users')
       .insert({
         display_name: profile.displayName,
+        username: profile.username, // TODO: Make sure this is A) there, and B) unique, +generate unique if needed
         emails: JSON.stringify(
           (profile.emails || []).map(x => ({
             email: x.value,
@@ -205,11 +206,9 @@ passport.use(
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  callbackURL: '/login/github/return'
 },
 async (req, accessToken, refreshToken, profile, done) => {
   try {
-    console.log(profile);
     const user = await login(req, 'github', profile, {
       accessToken,
       refreshToken,
