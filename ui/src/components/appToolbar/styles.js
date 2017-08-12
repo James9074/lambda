@@ -1,6 +1,10 @@
 import { createStyleSheet } from 'material-ui/styles';
 
 export default createStyleSheet('AppToolbar', theme => ({
+  barContainer: {
+    //position: 'sticky !important'
+    paddingRight: '0px !important'
+  },
   appBar: {
     paddingLeft: '0px',
     minHeight: '60px',

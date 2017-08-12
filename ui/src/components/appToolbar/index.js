@@ -39,7 +39,7 @@ class AppToolbar extends Component {
     let loading = this.props.loading ? (<LinearProgress color="accent" />) : ('')
 
     return (
-      <AppBar position="fixed">
+      <AppBar position="fixed" className={classes.barContainer}>
         <Toolbar className={classes.appBar}>
           <Grid container className="Grid" gutter={0}>
             <Grid item xs={2} lg={2} className={classes.centerItems}>

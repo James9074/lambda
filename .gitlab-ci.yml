@@ -14,6 +14,11 @@ build-api:
     - docker tag wlan1/robot-api:$CI_COMMIT_REF_SLUG wlan1/robot-api:latest
     - docker push wlan1/robot-api:$CI_COMMIT_REF_SLUG
     - docker push wlan1/robot-api:latest
+   only:
+    - develop
+    - master
+    - tags
+
 
 build-ui:
   script:
@@ -22,6 +27,10 @@ build-ui:
     - docker tag wlan1/robot-ui:$CI_COMMIT_REF_SLUG wlan1/robot-ui:latest    
     - docker push wlan1/robot-ui:$CI_COMMIT_REF_SLUG
     - docker push wlan1/robot-ui:latest
+   only:
+    - develop
+    - master
+    - tags
 
 build-db:
   script:
@@ -30,6 +39,10 @@ build-db:
     - docker tag wlan1/robot-db:$CI_COMMIT_REF_SLUG wlan1/robot-db:latest    
     - docker push wlan1/robot-db:$CI_COMMIT_REF_SLUG
     - docker push wlan1/robot-db:latest
+   only:
+    - develop
+    - master
+    - tags
 
 build-nginx:
   script:
@@ -38,4 +51,19 @@ build-nginx:
     - docker tag wlan1/robot-nginx:$CI_COMMIT_REF_SLUG wlan1/robot-nginx:latest    
     - docker push wlan1/robot-nginx:$CI_COMMIT_REF_SLUG
     - docker push wlan1/robot-nginx:latest
-    
+  only:
+    - develop
+    - master
+    - tags
+
+deploy:
+  stage: deploy
+  image: cdrx/rancher-gitlab-deploy
+  script:
+    - upgrade --environment Public --stack wlan1-lambda --service api    
+    - upgrade --environment Public --stack wlan1-lambda --service ui
+    - upgrade --environment Public --stack wlan1-lambda --service nginx
+  only:
+    - develop
+    - master
+    - tags    

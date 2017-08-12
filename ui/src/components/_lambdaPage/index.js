@@ -6,7 +6,7 @@ import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
-import Breadcrumbs from 'components/breadcrumbs'
+//import Breadcrumbs from 'components/breadcrumbs'
 import styles from './styles'
 import ViewLambda from 'components/viewLambda'
 

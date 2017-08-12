@@ -18,7 +18,7 @@ import { RobotTheme } from './Themes'
 import 'typeface-roboto'
 import css from './App.css'
 
-@graphql(gql`query { me { displayName } }`)
+@graphql(gql`query { me { displayName username imageUrl } }`)
 class App extends Component {
   static contextTypes = {
     router: PropTypes.object.isRequired

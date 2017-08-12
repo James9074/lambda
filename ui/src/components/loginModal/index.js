@@ -15,26 +15,36 @@ import styles from './styles'
 @withStyles(styles)
 class LoginModal extends Component {
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+
+  directToAuth = (provider) => {
+    window.location = `/login/${provider}`
+  }
+
   render(){
     const { isOpen, onClose } = this.props
     return (
         <Dialog open={isOpen} onRequestClose={onClose}>
           <DialogTitle>
-            {"Use Google's location service?"}
+            {"Login"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
+              Login to create your own Lambdas
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={onClose} color="primary">
-              Disagree
+            <Button raised onClick={() => this.directToAuth('google')} color="primary">
+              Google
             </Button>
-            <Button onClick={onClose} color="primary">
-              Agree
-            </Button>
+            <Button raised onClick={() => this.directToAuth('github')} color="accent">
+              GitHub
+            </Button>       
+            <Button raised onClick={() => this.directToAuth('twitter')} color="primary">
+              Twitter
+            </Button>                  
           </DialogActions>
         </Dialog>
     )
