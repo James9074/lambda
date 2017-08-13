@@ -67,53 +67,30 @@ app.use(passport.session());
 app.use(flash());
 
 function execute(command, callback){
-  child.exec(command, (error, stdout, stderr) => callback(stdout, stderr, error))
+  child.exec(command, (err, stdout, stderr) => callback(err, stdout, stderr))
 }
 
 function processLambda(lambda, req, res) {
-  if (lambda.length === 0)
-    return res.json({
-      error: `Lambda with slug ${req.params.slug} not found!`
-    })
+  let lambdaInputArray = lambda.inputs.map(x => `"${x.value.toString()}"`)
 
-  let query = Object.keys(req.query)
-  let inputs = lambda[0].inputs
-  let inputNames = inputs.map(x => x.name)
-  let error = false;
+  console.log(JSON.stringify(lambdaInputArray))
 
-  if (query.length !== inputNames.length)
-    error = 'Incorrect Param Length'
-
-  if (error)
-    return res.json({
-      error,
-      expected: inputs
-    })
-
-
-  let code = lambda[0].code;
-  inputs = inputs.map(x => x.example)
-
-
-  let expression = `${code} console.log(entryPoint(${JSON.stringify(inputs)}))`;
+  let expression = `${lambda.code} process.stdout.write(entryPoint(${JSON.stringify(lambdaInputArray)}).toString())`;
   let result = '';
 
   try {
     let dockerstr = `docker run --rm node:8-alpine node -e "${expression}"`
-    execute(dockerstr, (out, stderr, err) => {
-      console.log("RETURNING");
-      console.log("OUT",out, "STDERR",stderr, "ERR",err)
-
-      if(stderr){
-        return res.json({'lambda_error':stderr})
-      } else if(err){
-        return res.json({'error':err})
+    console.log(dockerstr)
+    execute(dockerstr, (err, stdout, stderr) => {
+      console.log(stdout)
+      if (stderr){
+        return res.json({ lambda_error: stderr })
+      } else if (err){
+        return res.json({ error: err })
       } else {
-        return res.json({'output':out})
+        return res.json({ output: stdout })
       }
     });
-
-    result = 'test';
   } catch (e) {
     result = e.toString();
     if (result === undefined)
@@ -132,13 +109,40 @@ app.get('/graphql/schema', (req, res) => {
   res.type('text/plain').send(printSchema(schema));
 });
 
+app.post('lambda', (req, res) => {
+  if (req.body.lambda)
+    return processLambda(req.body.lambda, req, res);
+  else return res.json({ error: 'You need to provide a Lambda object!' })
+});
+
 app.get('/lambda/:slug', (req, res) => {
   db
     .table('lambdas')
     .whereIn('slug', [req.params.slug])
     .select()
-    .then(x => processLambda(x, req, res))
-})
+    .then((lambdas) => {
+      if (lambdas.length === 0)
+        return res.json({
+          error: `Lambda with slug ${req.params.slug} not found!`
+        })
+      let error = false;
+      let lambda = lambdas[0]
+      let queryValues = Object.keys(req.query).map(key => req.query[key])
+      let inputNames = lambda.inputs.map(x => x.name)
+
+      if (queryValues.length !== inputNames.length)
+        error = 'Incorrect Param Length'
+
+      if (error)
+        return res.json({
+          error,
+          expected: lambda.inputs
+        })
+
+      lambda.inputs.forEach((input, index) => { input.value = queryValues[index] })
+      processLambda(lambda, req, res)
+    })
+});
 
 app.use('/graphql', expressGraphQL(req => ({
   schema,
