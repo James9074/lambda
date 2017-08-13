@@ -10,8 +10,6 @@ import LoginModal from 'components/loginModal'
 import styles from './styles'
 import Menu, { MenuItem } from 'material-ui/Menu';
 
-
-
 @withStyles(styles)
 class UserInfo extends Component {
   constructor(props, context){

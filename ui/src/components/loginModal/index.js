@@ -20,7 +20,7 @@ class LoginModal extends Component {
   }
 
   directToAuth = (provider) => {
-    window.location = `/login/${provider}`
+    window.location = `/login/${provider}?return=${this.props.returnTo || '/'}`
   }
 
   render(){

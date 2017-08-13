@@ -38,7 +38,7 @@ class ViewLambda extends Component {
 
   componentWillReceiveProps(newProps){
     if(newProps.data && (!this.state.lambda || (this.props.data.lambda.slug !== newProps.slug))){
-      let newLambda = Object.assign({...newProps.data.lambda},{inputs:JSON.parse(newProps.data.lambda.inputs)})
+      let newLambda = Object.assign({...newProps.data.lambda},{inputs:newProps.data.lambda.inputs})
       this.setState({lambda: newLambda})
     }
   }

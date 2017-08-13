@@ -10,6 +10,7 @@ import LambdaPage from 'components/_lambdaPage'
 import NewLambdaPage from 'components/_newLambdaPage'
 import User from 'components/_userPage'
 import AppToolbar from 'components/appToolbar/'
+import LoginModal from 'components/loginModal'
 import FullPageLoader from 'components/fullPageLoader/'
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
@@ -25,7 +26,8 @@ class App extends Component {
   };
 
   state = {
-    hoveredTooltip: false
+    hoveredTooltip: false,
+    loginModalOpen:false,
   }
 
 
@@ -48,8 +50,10 @@ class App extends Component {
   }
 
   addNew = (event, index) => {
-    this.setState({ index });
-    this.context.router.history.push('/lambdas/new')
+    if(!this.props.data.me)
+      this.setState({loginModalOpen:true})
+    else
+      this.context.router.history.push('/lambdas/new')
   };
 
   render() {
@@ -79,6 +83,9 @@ class App extends Component {
                   <Button onClick={this.addNew} fab color="primary" style={{position: 'fixed',right: '15px', bottom: '15px'}}>
                     <AddIcon />
                   </Button>
+                  <LoginModal onClose={()=>this.setState({loginModalOpen:false})} 
+                    isOpen={this.state.loginModalOpen}
+                    returnTo='/lambdas/new' />
                 </Grid>
               </Grid>
             </div>

@@ -9,6 +9,7 @@ import session from 'express-session';
 import connectRedis from 'connect-redis';
 import flash from 'express-flash';
 import i18next from 'i18next';
+import * as child from 'child_process';
 import i18nextMiddleware, { LanguageDetector } from 'i18next-express-middleware';
 import i18nextBackend from 'i18next-node-fs-backend';
 import expressGraphQL from 'express-graphql';
@@ -65,6 +66,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+function execute(command, callback){
+  child.exec(command, (error, stdout, stderr) => callback(stdout, stderr, error))
+}
+
 function processLambda(lambda, req, res) {
   if (lambda.length === 0)
     return res.json({
@@ -72,7 +77,7 @@ function processLambda(lambda, req, res) {
     })
 
   let query = Object.keys(req.query)
-  let inputs = JSON.parse(lambda[0].inputs)
+  let inputs = lambda[0].inputs
   let inputNames = inputs.map(x => x.name)
   let error = false;
 
@@ -90,20 +95,36 @@ function processLambda(lambda, req, res) {
   inputs = inputs.map(x => x.example)
 
 
-  let expression = `${code} return entryPoint(${JSON.stringify(inputs)})`;
+  let expression = `${code} console.log(entryPoint(${JSON.stringify(inputs)}))`;
   let result = '';
 
   try {
-    result = new Function(expression)().toString();
-  } catch (e){ result = e.toString(); }
-  if (result === undefined)
-    result = 'undefined'
-  if (result === null)
-    result = 'null'
-  if (result.length === 0)
-    result = 'Nothing returned'
+    let dockerstr = `docker run --rm node:8-alpine node -e "${expression}"`
+    execute(dockerstr, (out, stderr, err) => {
+      console.log("RETURNING");
+      console.log("OUT",out, "STDERR",stderr, "ERR",err)
 
-  res.json(result)
+      if(stderr){
+        return res.json({'lambda_error':stderr})
+      } else if(err){
+        return res.json({'error':err})
+      } else {
+        return res.json({'output':out})
+      }
+    });
+
+    result = 'test';
+  } catch (e) {
+    result = e.toString();
+    if (result === undefined)
+      result = 'undefined'
+    if (result === null)
+      result = 'null'
+    if (result.length === 0)
+      result = 'Nothing returned'
+
+    res.json(result)
+  }
 }
 
 
