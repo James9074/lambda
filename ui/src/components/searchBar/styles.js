@@ -31,7 +31,7 @@ export default createStyleSheet('SearchBar', theme => ({
       paddingRight:'10px'
     },
     '& input:focus':{
-      backgroundColor: theme.palette.primary[300]
+      //backgroundColor: theme.palette.primary[300]
     },
   },
   search: {

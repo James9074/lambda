@@ -70,7 +70,7 @@ class App extends Component {
                 loading={false}
                 {...this.props} />
               <Grid container gutter={0} justify="center" style={{marginTop: '60px', backgroundColor:theme.canvasColor[900]}}>
-                <Grid item xs={8}>
+                <Grid item xs={12} sm={10} lg={8}>
                   <Grid item xs={12}>
                     <Switch>
                       <Route path='/lambdas/new' render={(props) => ( <NewLambdaPage appData={this.props.data}/> )}/>

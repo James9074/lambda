@@ -9,6 +9,7 @@ import Button from 'material-ui/Button';
 import LoginModal from 'components/loginModal'
 import styles from './styles'
 import Menu, { MenuItem } from 'material-ui/Menu';
+import Hidden from 'material-ui/Hidden'
 
 @withStyles(styles)
 class UserInfo extends Component {
@@ -67,10 +68,12 @@ class UserInfo extends Component {
       <div className={classes.root}>
         <Button className={classes.avatar}  onClick={this.handleUserMenuOpen}>
           <div className={classes.nameInfo}>
+          <Hidden smDown>
             <div className={classes.nameText}>
               <span className={classes.displayName}>{user.displayName}</span>
               <span className={classes.userName}>{user.username}</span>
             </div>
+            </Hidden>
             <Avatar alt="Avatar" src={profilePic}  ref="avatar"/>
           </div>
         </Button>

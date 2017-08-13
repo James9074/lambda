@@ -12,6 +12,7 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import styles from './styles'
 import { LinearProgress } from 'material-ui/Progress';
+import Hidden from 'material-ui/Hidden'
 import AppDrawer from 'components/appDrawer'
 import SearchBar from 'components/searchBar'
 import UserInfo from 'components/userInfo'
@@ -42,22 +43,24 @@ class AppToolbar extends Component {
       <AppBar position="fixed" className={classes.barContainer}>
         <Toolbar className={classes.appBar}>
           <Grid container className="Grid" gutter={0}>
-            <Grid item xs={2} lg={2} className={classes.centerItems}>
+            <Grid item xs={2} md={3} lg={2} className={classes.centerItems}>
             <AppDrawer/>
               {/*<Button onClick={()=> {if(this.context.router.route.location.pathname !== "/") this.context.router.history.push("/")}} disableFocusRipple>*/}
-              <Button href="/" disableFocusRipple>
-                <Typography type="title" color="inherit" className={classes.title}>
-                  λ Lambda
-                </Typography>
-              </Button>
+              <Hidden smDown>
+                <Button href="/" disableFocusRipple>
+                  <Typography type="title" color="inherit" className={classes.title}>
+                    λ Lambda
+                  </Typography>
+                </Button>
+              </Hidden>
             </Grid>
-            <Grid item xs={8} lg={8}>
+            <Grid item xs={6} sm={8} md={6} lg={8}>
               <div className={classes.center} id="toolbar">
                 <SearchBar 
                     searchFocused={this.props.searchFocused} />
               </div>
             </Grid>
-            <Grid item xs={2} style={{textAlign:'right'}} className={classes.centerItems}>
+            <Grid item xs={1} style={{textAlign:'right'}} className={classes.centerItems}>
               <UserInfo user={this.props.data.me}/>
             </Grid>
           </Grid>
