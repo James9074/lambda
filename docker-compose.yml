@@ -20,6 +20,7 @@ services:
     user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/files:/tmp/files
   db:
     image: wlan1/robot-db
     build:

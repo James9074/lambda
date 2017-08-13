@@ -49,7 +49,7 @@ class NewLambda extends Component {
 
 // Prints the first input above (an empty string by default)
 function entryPoint(inputs){        
-  console.log(inputs[0])
+  console.log("This will be printed")
   return inputs[0]
 }
 
@@ -64,7 +64,7 @@ function entryPoint(inputs){
       saveErrors: [],
       toastOpen: false,
       editorOutput: '',
-      loadingOutput: true
+      loadingOutput: false
     }
   }
 
@@ -106,6 +106,7 @@ function entryPoint(inputs){
 
   handleTestLambda = () => {
     if(this.state.loadingOutput) return;
+    this.setState({loadingOutput: true})
     let fullURL = url.parse(document.location.href);
     let baseURL = fullURL.protocol + '//' + fullURL.hostname  + ':' + fullURL.port
     const settings = { 
@@ -121,6 +122,7 @@ function entryPoint(inputs){
     }
 
     request(settings, (err, response, body) => {
+      this.setState({loadingOutput: false})
       console.log(response.statusCode)
       console.log(body) // this is empty instead of return the body that has been sent
       this.setState({editorOutput: body.output || body.lambda_error || body.error})

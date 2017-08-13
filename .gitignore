@@ -14,3 +14,4 @@ docker-compose.prod.yml
 !.vscode/snippets
 !.vscode/launch.json
 !.vscode/settings.json
+test

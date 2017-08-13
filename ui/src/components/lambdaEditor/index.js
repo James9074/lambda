@@ -14,6 +14,7 @@ import ContentCopyIcon from 'material-ui-icons/ContentCopy';
 import SaveIcon from 'material-ui-icons/Save';
 import IconButton from 'material-ui/IconButton';
 import Editor from 'components/codeEditor'
+import { LinearProgress } from 'material-ui/Progress';
 
 const themeOptions = [
   { name: 'VS Light', key: 'vs' },
@@ -140,11 +141,15 @@ class LambdaEditor extends Component {
                   }}/>
               </Paper>
             </Grid>
+            {//+ ' ' +  (!this.props.loading && classes.outputLoaded}
+            }
             <Grid item xs={12} className={classes.output}>
+              {this.props.loading && (
+                <div className={classes.loadingOutput}>
+                  <LinearProgress color="accent" />
+                </div>
+              )}
               <Paper elevation={4}>
-                {this.props.loading && (
-                  <div className={classes.loadingOutput}></div>
-                )}
                 <Editor
                   height='100'
                   editorTheme={themeOptions[this.state.editorTheme].key} 

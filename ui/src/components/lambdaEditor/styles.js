@@ -27,15 +27,23 @@ export default createStyleSheet('LambdaEditor', theme => ({
   themeButton: {
   },
   output: {
-    borderTop: '10px solid transparent',
-    borderImage: `linear-gradient(to bottom, ${theme.palette.primary[600]} 0%, ${theme.palette.primary[500]} .9%)`,
-    borderImageSlice: '1',
+    width: '100%',
+    height: '100px',
+    position: 'relative',
+    borderTop: '5px solid ' + theme.palette.accent[500],
   },
   loadingOutput:{
+    "& div":{
+      top:'-10px'
+    },
+    borderTop: '5px solid transparent',
+    textAlign: 'center',
+    width: '100%',
+    height: '100%',
     position: 'absolute',
-    width: '100px',
-    height: '100px',
-    backgroundColor: 'red',
+    top: '0',
+    left: '0',
+    backgroundColor: 'rgba(0, 0, 0, 0.38)',
     zIndex: '100'
   }
 }));
