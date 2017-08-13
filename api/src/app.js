@@ -84,7 +84,7 @@ function isAsync(fn) {
 }
 
 function processLambda(lambda, req, res) {
-  let lambdaInputArray = lambda.inputs.map(x => `"${x.value.toString()}"`)
+  let lambdaInputArray = lambda.inputs.map(x => `${x.value.toString()}`)
   let expression = `
   ${lambda.code}
   if(typeof(entryPoint) === 'function'){
