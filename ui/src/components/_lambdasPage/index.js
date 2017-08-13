@@ -114,7 +114,7 @@ class Lambdas extends Component {
             <Tab label="Popular" />
             <Tab label="Today" />
             <Tab label="This Week" />
-            <Tab label="All Time" />
+            <Tab label="All" />
             <Tab label="Mine" />
           </Tabs>
         </AppBar>
