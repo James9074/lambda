@@ -78,16 +78,29 @@ function execute(command, callback){
   child.exec(command, (err, stdout, stderr) => callback(err, stdout, stderr))
 }
 
+// Used to determine if this lambda is a async or not
+function isAsync(fn) {
+  return fn.constructor.name === 'AsyncFunction';
+}
+
 function processLambda(lambda, req, res) {
   let lambdaInputArray = lambda.inputs.map(x => `"${x.value.toString()}"`)
-  let expression = `${lambda.code} console.log(entryPoint(${JSON.stringify(lambdaInputArray)}))`;
+  let expression = `
+  ${lambda.code}
+  if(typeof(entryPoint) === 'function'){
+    if (entryPoint.constructor.name === 'AsyncFunction')
+      entryPoint(${JSON.stringify(lambdaInputArray)}).then((x)=>console.log(x))
+    else
+      console.log(entryPoint(${JSON.stringify(lambdaInputArray)}))
+  } else
+    console.log("You must provide a function named entryPoint")`;
   let result = '';
 
   try {
     let tempFile = `/tmp/files/${uuidv4()}.js`
     fs.writeFile(tempFile, expression, 'utf8', (saveError) => {
-        if (saveError)
-          return res.json({ error: 'Error saving file', details: saveError });
+      if (saveError)
+        return res.json({ error: 'Error saving file', details: saveError });
 
 
       let dockerstr = `docker run --rm -v ${tempFile}:${tempFile} node:8-alpine node ${tempFile} && rm ${tempFile}`
