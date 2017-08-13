@@ -37,7 +37,7 @@ class Editor extends React.Component {
     return (
       <MonacoEditor
         width="100%"
-        height="600"
+        height={this.props.height || "600"}
         language="javascript"
         value={this.props.code}
         options={options}

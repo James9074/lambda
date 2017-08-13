@@ -91,7 +91,7 @@ class LambdaEditor extends Component {
     return (
       <div>
         <Grid container gutter={40}  className={classes.editorOptions}>
-          <Grid item xs={12} xl={8}>
+          <Grid item xs={12} xl={12}>
             <Grid container>
               <Grid item xs={9}>
                 <Typography type="headline">Implementation</Typography>
@@ -140,49 +140,24 @@ class LambdaEditor extends Component {
                   }}/>
               </Paper>
             </Grid>
-          </Grid>
-
-          <Grid item xs={12} xl={4}>
-            <Grid container>
-              <Grid item xs={10}>
-                <Typography type="headline">Output</Typography>
-              </Grid>       
-              <Grid item xs={2} style={{textAlign:'right'}}>
-                <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleThemeMenuOpen}>
-                  <SortIcon />
-                </IconButton>
-                  <Menu
-                    id="theme-menu"
-                    anchorEl={this.state.themeAnchorEl}
-                    open={this.state.themeMenuOpen}
-                    onRequestClose={this.handleThemeMenuClose}
-                  >
-                    {themeOptions.map((option, index) =>
-                      <MenuItem
-                        key={index}
-                        selected={index === this.state.editorTheme}
-                        onClick={event => this.handleThemeMenuClick(event, index)}
-                      >
-                        {option.name}
-                      </MenuItem>,
-                    )}
-                </Menu>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.output}>
               <Paper elevation={4}>
-                <Editor 
+                {this.props.loading && (
+                  <div className={classes.loadingOutput}></div>
+                )}
+                <Editor
+                  height='100'
                   editorTheme={themeOptions[this.state.editorTheme].key} 
                   code={this.props.output}
                   editorOptions={{
                     minimap: { enabled: false },
                     lineNumbers: false,
-                    readOnly: true
+                    readOnly: true,
                   }} />
               </Paper>
             </Grid>
+          </Grid>            
           </Grid>
-        </Grid>
       </div>
     );
   }

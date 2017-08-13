@@ -14,6 +14,7 @@ import i18nextMiddleware, { LanguageDetector } from 'i18next-express-middleware'
 import i18nextBackend from 'i18next-node-fs-backend';
 import expressGraphQL from 'express-graphql';
 import PrettyError from 'pretty-error';
+import fs from 'fs'
 import { printSchema } from 'graphql';
 import email from './email';
 import redis from './redis';
@@ -66,25 +67,41 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 function execute(command, callback){
   child.exec(command, (err, stdout, stderr) => callback(err, stdout, stderr))
 }
 
 function processLambda(lambda, req, res) {
   let lambdaInputArray = lambda.inputs.map(x => `"${x.value.toString()}"`)
-  let expression = `${lambda.code} process.stdout.write(entryPoint(${JSON.stringify(lambdaInputArray)}).toString())`;
+  let expression = `${lambda.code} console.log(entryPoint(${JSON.stringify(lambdaInputArray)}))`;
   let result = '';
 
   try {
-    let dockerstr = `docker run --rm node:8-alpine node -e "${expression}"`
-    execute(dockerstr, (err, stdout, stderr) => {
-      if (stderr){
-        return res.json({ lambda_error: stderr })
-      } else if (err){
-        return res.json({ error: err })
-      } else {
-        return res.json({ output: stdout })
-      }
+    let tempFile = `/home/node/${uuidv4()}.js`
+    fs.writeFile(tempFile, expression, 'utf8', (saveError) => {
+        if (saveError)
+          return res.json({ error: 'Error saving file', details: saveError });
+
+
+      let dockerstr = `docker run --rm -v /home/node:/home/node node:8-alpine echo >> dev>null && node ${tempFile} && rm ${tempFile}`
+      execute(dockerstr, (err, stdout, stderr) => {
+        if (/(entryPoint is not defined)+/.test(stderr)) stderr = "You must provide a function named 'entryPoint'"
+        if (stdout.trim() === 'undefined') stdout = 'Nothing returned!';
+        if (stderr){
+          return res.json({ lambda_error: stderr.trim() })
+        } else if (err){
+          return res.json({ error: err })
+        } else {
+          return res.json({ output: stdout.trim() })
+        }
+      });
     });
   } catch (e) {
     result = e.toString();

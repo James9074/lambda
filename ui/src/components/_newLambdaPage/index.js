@@ -63,7 +63,8 @@ function entryPoint(inputs){
       codeErrors: '',
       saveErrors: [],
       toastOpen: false,
-      editorOutput: ''
+      editorOutput: '',
+      loadingOutput: true
     }
   }
 
@@ -104,6 +105,7 @@ function entryPoint(inputs){
   }
 
   handleTestLambda = () => {
+    if(this.state.loadingOutput) return;
     let fullURL = url.parse(document.location.href);
     let baseURL = fullURL.protocol + '//' + fullURL.hostname  + ':' + fullURL.port
     const settings = { 
@@ -121,12 +123,13 @@ function entryPoint(inputs){
     request(settings, (err, response, body) => {
       console.log(response.statusCode)
       console.log(body) // this is empty instead of return the body that has been sent
-      this.setState({editorOutput: body.output})
+      this.setState({editorOutput: body.output || body.lambda_error || body.error})
     })
     
   }  
 
   handleSaveLambda = () => {
+    if(this.state.loadingOutput) return;
     let errors = []
     //Try to submit
     this.props.save({
@@ -270,6 +273,7 @@ function entryPoint(inputs){
               <Grid item xs={12} >
                 <LambdaEditor 
                   edit
+                  loading={this.state.loadingOutput}
                   lambda={this.state.lambda}
                   output={this.state.editorOutput}
                   testLambda={this.handleTestLambda}

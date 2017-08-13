@@ -25,5 +25,17 @@ export default createStyleSheet('LambdaEditor', theme => ({
     marginTop:'25px'
   },
   themeButton: {
+  },
+  output: {
+    borderTop: '10px solid transparent',
+    borderImage: `linear-gradient(to bottom, ${theme.palette.primary[600]} 0%, ${theme.palette.primary[500]} .9%)`,
+    borderImageSlice: '1',
+  },
+  loadingOutput:{
+    position: 'absolute',
+    width: '100px',
+    height: '100px',
+    backgroundColor: 'red',
+    zIndex: '100'
   }
 }));
