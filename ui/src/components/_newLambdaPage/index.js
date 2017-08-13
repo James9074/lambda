@@ -166,13 +166,13 @@ function entryPoint(inputs){
         <Paper className={classes.mainContainer} elevation={4}>
           <Grid item xs={12} >
             <Grid container gutter={40} className={classes.topOptions}>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Grid container gutter={0} className={classes.description}>
                   <Grid item xs={12} >
                     <Typography type="headline" className={classes.title}>Basic Info</Typography>
                     <Typography type="body1">This will help you identify and organize your lambda</Typography>
                   </Grid>
-                  <Grid item xs={9}>
+                  <Grid item xs={8} sm={9}>
                     <TextField
                       id="lambda-name"
                       label="Lambda Name"
@@ -184,7 +184,7 @@ function entryPoint(inputs){
                     />
                   </Grid>
                   
-                  <Grid item xs={2}>
+                  <Grid item xs={1}>
                     <FormControlLabel
                       className={classes.privacy}
                       label="Public"
@@ -213,7 +213,7 @@ function entryPoint(inputs){
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <Grid item xs={12}>
                   <Typography type="headline" className={classes.title}>Lambda Inputs</Typography>
                   <Typography type="body1">These values will be accessible from the lambda function itself</Typography>
@@ -234,7 +234,7 @@ function entryPoint(inputs){
                           />
                         </Grid>
 
-                        <Grid item xs={6}>
+                        <Grid item xs={5}>
                           <TextField
                             id="input-example"
                             label="Input Example"
@@ -278,7 +278,7 @@ function entryPoint(inputs){
               </Grid>
             </Grid>
 
-            <Grid container gutter={40}  className={classes.editorOptions}>
+            <Grid container gutter={0}  className={classes.editorOptions}>
               <Grid item xs={12} >
                 <LambdaEditor 
                   edit

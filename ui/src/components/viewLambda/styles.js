@@ -9,5 +9,8 @@ export default createStyleSheet('ViewLambda', theme => ({
   },
   textField:{
     fontSize:'15px'
+  },
+  noLambda:{
+    textAlign:'center'
   }
 }));

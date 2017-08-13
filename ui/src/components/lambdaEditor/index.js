@@ -94,10 +94,10 @@ class LambdaEditor extends Component {
         <Grid container gutter={40}  className={classes.editorOptions}>
           <Grid item xs={12} xl={12}>
             <Grid container>
-              <Grid item xs={9}>
+              <Grid item xs={6}>
                 <Typography type="headline">Implementation</Typography>
               </Grid>       
-              <Grid item xs={3} style={{textAlign:'right'}}>
+              <Grid item xs={6} style={{textAlign:'right'}}>
                 { this.props.edit && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleSaveLambda}>
                   <SaveIcon /> 
                 </IconButton> )}   

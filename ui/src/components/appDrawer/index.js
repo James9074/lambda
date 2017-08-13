@@ -11,10 +11,9 @@ import Divider from 'material-ui/Divider';
 import DraftsIcon from 'material-ui-icons/Drafts';
 import StarIcon from 'material-ui-icons/Star';
 import SendIcon from 'material-ui-icons/Send';
-import MailIcon from 'material-ui-icons/Mail';
-import DeleteIcon from 'material-ui-icons/Delete';
-import ReportIcon from 'material-ui-icons/Report';
+import HomeIcon from 'material-ui-icons/Home';
 import MenuIcon from 'material-ui-icons/Menu';
+import AddIcon from 'material-ui-icons/Add';
 
 
 class AppDrawer extends Component {
@@ -26,6 +25,10 @@ class AppDrawer extends Component {
       right: false,
     },
   };
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }  
 
   toggleDrawer = (side, open) => {
     const drawerState = {};
@@ -44,24 +47,36 @@ class AppDrawer extends Component {
         <ListItem>
           
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => this.context.router.history.push('/')}>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItem>        
+        {/*<ListItem button>
           <ListItemIcon>
             <StarIcon />
           </ListItemIcon>
           <ListItemText primary="Starred" />
-        </ListItem>
-        <ListItem button>
+        </ListItem>*/}
+        <ListItem button onClick={() => this.context.router.history.push(`/users/${this.props.user.username}`)}>
           <ListItemIcon>
             <SendIcon />
           </ListItemIcon>
           <ListItemText primary="My Lambdas" />
         </ListItem>
-        <ListItem button>
+        {/*<ListItem button>
           <ListItemIcon>
             <DraftsIcon />
           </ListItemIcon>
           <ListItemText primary="Drafts" />
-        </ListItem>
+        </ListItem>*/}
+        <ListItem button onClick={() => this.context.router.history.push('/lambdas/new')}>
+          <ListItemIcon>
+            <AddIcon />
+          </ListItemIcon>
+          <ListItemText primary="New Lambda" />
+        </ListItem>        
       </div>
     );
 

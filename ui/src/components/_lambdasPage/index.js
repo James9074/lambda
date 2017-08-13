@@ -9,7 +9,9 @@ import Typography from 'material-ui/Typography';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Paper from 'material-ui/Paper';
+import Hidden from 'material-ui/Hidden'
 import { CircularProgress } from 'material-ui/Progress';
+import SmallHeader from 'components/smallHeader'
 import styles from './styles'
 
 import { gql, graphql } from 'react-apollo';
@@ -72,7 +74,7 @@ class Lambdas extends Component {
     }
     return (
       <div className={classes.root}>
-
+        <Hidden smDown>
           <Grid item xs={12} className={classes.jumbo}>
             <Paper>
               <Grid container>
@@ -95,7 +97,11 @@ class Lambdas extends Component {
               </Grid>
             </Paper>
           </Grid>
+        </Hidden>
 
+        <Hidden mdUp>
+          <SmallHeader content={"View Lambdas"}/>                  
+        </Hidden>
 
         <AppBar position="static" color="default" className={classes.tabs}>
           <Tabs

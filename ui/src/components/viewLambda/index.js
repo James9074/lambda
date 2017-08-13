@@ -9,6 +9,7 @@ import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import styles from './styles'
 import LambdaEditor from 'components/lambdaEditor'
+import SmallHeader from 'components/smallHeader'
 import TextField from 'material-ui/TextField';
 import request from 'request'
 import url from 'url'
@@ -40,8 +41,7 @@ class ViewLambda extends Component {
 
   componentWillReceiveProps(newProps){
     if(newProps.data && (!this.state.lambda || (this.props.data.lambda.slug !== newProps.slug))){
-      console.log(newProps.data.lambda.inputs)
-      let newLambda = Object.assign({...newProps.data.lambda},{inputs:JSON.parse(newProps.data.lambda.inputs)})
+      let newLambda = newProps.data.lambda === null ? "none" : Object.assign({...newProps.data.lambda},{inputs:JSON.parse(newProps.data.lambda.inputs)})
       this.setState({lambda: newLambda})
     }
   }
@@ -96,6 +96,16 @@ class ViewLambda extends Component {
         <Typography type="headline">Loading</Typography>
         </div>)
     }
+
+    else if(lambda === "none")
+      return(
+        <Grid container gutter={24}>
+          <Grid item xs={12}>
+            <SmallHeader content={"404: This Lambda Doesn't Exist!"}/>
+            <Typography type="headline" className={classes.noLambda}></Typography>
+          </Grid>
+        </Grid>
+      )
 
     return (
       <div className={classes.root}>

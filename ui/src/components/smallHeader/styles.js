@@ -28,10 +28,10 @@ export default createStyleSheet('LambdasPage', theme => ({
   header:{
     overflow: 'hidden',
     marginBottom:'20px',
+    backgroundColor: theme.palette.primary[400],
     "& div":{
       padding:'5px',
       height:'50px',
-      backgroundColor: theme.palette.primary[400],
       "& h1":{
         color:'white',
         textAlign: 'center',
@@ -41,9 +41,9 @@ export default createStyleSheet('LambdasPage', theme => ({
   lambdaIcon: {
     fontSize: '85px',
     height: '100%',
-    lineHeight: '45px'
+    lineHeight: '50px'
   },
-  welcomeContainer: {
+  messageContainer: {
     "& h1":{
       fontSize: '30px',
       textAlign: 'left !important'
@@ -53,5 +53,8 @@ export default createStyleSheet('LambdasPage', theme => ({
   avatar:{
     height:'32px',
     width:'32px'
+  },
+  lambdaContainer:{
+    minWidth:  '55px'
   }
 }));
