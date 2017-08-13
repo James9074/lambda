@@ -112,8 +112,8 @@ class Lambdas extends Component {
             fullWidth
           >
             <Tab label="Popular" />
-            <Tab label="Today" />
-            <Tab label="This Week" />
+            <Tab label="Latest" />
+            <Tab label="Starred" />
             <Tab label="All" />
             <Tab label="Mine" />
           </Tabs>
