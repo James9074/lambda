@@ -1,6 +1,6 @@
 FROM node:8.1.2-alpine
 
-RUN apk --update add postgresql-client && rm -rf /var/cache/apk/*
+RUN apk --update add postgresql-client docker && rm -rf /var/cache/apk/*
 COPY package.json yarn.lock /tmp/
 RUN cd /tmp && yarn --pure-lockfile
 
