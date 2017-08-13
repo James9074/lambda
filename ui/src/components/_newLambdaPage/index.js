@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import { CircularProgress } from 'material-ui/Progress';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import { FormControlLabel } from 'material-ui/Form';
@@ -16,6 +15,7 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
 import IconButton from 'material-ui/IconButton';
 import LambdaEditor from 'components/lambdaEditor'
+import LoginModal from 'components/loginModal'
 import request from 'request'
 import url from 'url'
 
@@ -34,6 +34,7 @@ class NewLambda extends Component {
   constructor(props, context){
     super(props);
     this.state = {
+      loginModalOpen:false,
       lambda: {
         name: '',
         public: true,
@@ -66,12 +67,13 @@ function entryPoint(inputs){
       editorOutput: '',
       loadingOutput: false
     }
+
+    console.log(props)
   }
 
   static contextTypes = {
     router: PropTypes.object.isRequired
   }
-
   //Shortcut for updating the Lambda object
   setLambda(data) {
     this.setState({ lambda: Object.assign(this.state.lambda, data) })
@@ -108,7 +110,7 @@ function entryPoint(inputs){
     if(this.state.loadingOutput) return;
     this.setState({loadingOutput: true})
     let fullURL = url.parse(document.location.href);
-    let baseURL = fullURL.protocol + '//' + fullURL.hostname  + ':' + fullURL.port
+    let baseURL = fullURL.protocol + '//' + fullURL.hostname + (fullURL.port ? (':' + fullURL.port) : '')
     const settings = { 
       method: 'POST',
       followAllRedirects: true,
@@ -152,7 +154,12 @@ function entryPoint(inputs){
 
   render(){
     const { classes } = this.props;
+    if(!this.props.appData.me){
 
+      return (<LoginModal onClose={()=>this.context.router.history.push('/')} 
+      isOpen={true}
+      returnTo='/lambdas/new' />)
+    }
     return (
       <div>
         <SmallHeader content={"New Lambda"}/>          

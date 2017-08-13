@@ -10,11 +10,13 @@ import { CircularProgress } from 'material-ui/Progress';
 import styles from './styles'
 import LambdaEditor from 'components/lambdaEditor'
 import TextField from 'material-ui/TextField';
+import request from 'request'
+import url from 'url'
 
 import { gql, graphql } from 'react-apollo';
 
 @withStyles(styles)
-@graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lambda(slug:$slug) { name, id, slug, inputs, description, code, owner { username } } }`, {
+@graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lambda(slug:$slug) { name, id, slug, inputs, description, createdAt, code, owner { username } } }`, {
   options: (ownProps) => ({
     variables: {
       slug: ownProps.slug
@@ -38,7 +40,8 @@ class ViewLambda extends Component {
 
   componentWillReceiveProps(newProps){
     if(newProps.data && (!this.state.lambda || (this.props.data.lambda.slug !== newProps.slug))){
-      let newLambda = Object.assign({...newProps.data.lambda},{inputs:newProps.data.lambda.inputs})
+      console.log(newProps.data.lambda.inputs)
+      let newLambda = Object.assign({...newProps.data.lambda},{inputs:JSON.parse(newProps.data.lambda.inputs)})
       this.setState({lambda: newLambda})
     }
   }
@@ -57,6 +60,31 @@ class ViewLambda extends Component {
     newInputs[i] = value;
     this.setLambda({inputs: newInputs})
   }      
+
+  handleRunLambda = () => {
+    if(this.state.loadingOutput) return;
+    this.setState({loadingOutput: true})
+    let fullURL = url.parse(document.location.href);
+    let baseURL = fullURL.protocol + '//' + fullURL.hostname + (fullURL.port ? (':' + fullURL.port) : '')
+    const settings = { 
+      method: 'POST',
+      followAllRedirects: true,
+      followOriginalHttpMethod: true,
+      url: `${baseURL}/api/lambda`,
+      json: true,
+      body: {
+        lambda: this.state.lambda,
+      }
+    }
+
+    request(settings, (err, response, body) => {
+      this.setState({loadingOutput: false})
+      //console.log(response.statusCode)
+      //console.log(body) // this is empty instead of return the body that has been sent
+      this.setState({editorOutput: body.output || body.lambda_error || body.error})
+    })
+    
+  }    
 
   render(){
     const { data, classes, slug } = this.props;
@@ -108,9 +136,12 @@ class ViewLambda extends Component {
             </Grid>  
 
             <Grid item xs={12} >
-              <LambdaEditor 
-                view
-                lambda={lambda} />
+            <LambdaEditor 
+              view
+              loading={this.state.loadingOutput}
+              lambda={lambda}
+              output={this.state.editorOutput}
+              testLambda={this.handleRunLambda} />
             </Grid> 
           </Grid>
       </div>

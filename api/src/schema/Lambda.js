@@ -219,6 +219,9 @@ export const createLambda = mutationWithClientMutationId({
     const { data, errors } = validate(input, context);
 
     // Ensure our lambda owner is the current user
+    if (!context.user || context.user === undefined)
+      return null;
+
     data.owner_id = context.user.id;
 
     if (errors.length) {

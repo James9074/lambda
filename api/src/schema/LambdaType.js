@@ -33,7 +33,10 @@ export default new GraphQLObjectType({
 
 
     inputs: {
-      type: GraphQLString
+      type: GraphQLString,
+      resolve(parent) {
+        return JSON.stringify(parent.inputs);
+      },
     },
 
     code: {

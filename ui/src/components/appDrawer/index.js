@@ -65,37 +65,10 @@ class AppDrawer extends Component {
       </div>
     );
 
-    const otherMailFolderListItems = (
-      <div>
-        <ListItem button>
-          <ListItemIcon>
-            <MailIcon />
-          </ListItemIcon>
-          <ListItemText primary="All mail" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <DeleteIcon />
-          </ListItemIcon>
-          <ListItemText primary="Trash" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <ReportIcon />
-          </ListItemIcon>
-          <ListItemText primary="Spam" />
-        </ListItem>
-      </div>
-    );
-
     const sideList = (
       <div>
         <List className={classes.list} disablePadding>
           {mailFolderListItems}
-        </List>
-        <Divider />
-        <List className={classes.list} disablePadding>
-          {otherMailFolderListItems}
         </List>
       </div>
     );

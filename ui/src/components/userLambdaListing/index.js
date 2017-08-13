@@ -12,7 +12,7 @@ import styles from './styles'
 import { gql, graphql } from 'react-apollo';
 
 @withStyles(styles)
-@graphql(gql`query GetAllLambdasByUsername($name: String!) { lambdas(username:$name) { edges { node { id name slug owner_id, owner{ displayName, username, email } } } } }`, {
+@graphql(gql`query GetAllLambdasByUsername($name: String!) { lambdas(username:$name) { edges { node { id name slug owner_id createdAt owner{ displayName, username, emails { email } } } } } }`, {
   options: (ownProps) => ({
     variables: {
       name: ownProps.username // ownProps are the props that are added from the parent component

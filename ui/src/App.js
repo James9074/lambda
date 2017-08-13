@@ -73,10 +73,10 @@ class App extends Component {
                 <Grid item xs={8}>
                   <Grid item xs={12}>
                     <Switch>
-                      <Route path='/lambdas/new' component={NewLambdaPage} data={this.props.data}/>
-                      <Route path='/users/:user' component={User} data={this.props.data}/>
-                      <Route path='/:slug' component={LambdaPage} data={this.props.data}/>
-                      <Route path='/' component={Lambdas} data={this.props.data}/>
+                      <Route path='/lambdas/new' render={(props) => ( <NewLambdaPage appData={this.props.data}/> )}/>
+                      <Route path='/users/:user' component={User} appData={this.props.data}/>
+                      <Route path='/:slug' component={LambdaPage} appData={this.props.data}/>
+                      <Route path='/' component={Lambdas} appData={this.props.data}/>
                     </Switch>
                   </Grid>
 

@@ -7,6 +7,7 @@ import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import Card, { CardContent } from 'material-ui/Card';
 import styles from './styles'
+import moment from 'moment'
 
 function Lambdas(props) {
   const { classes, lambda, type } = props;
@@ -28,7 +29,7 @@ function Lambdas(props) {
           </Typography>
 
           <Typography color="secondary" className={classes.created} component='div'>
-            <a href={lambda.owner.username}>{lambda.owner.username}</a> | 9/12/16
+          <a href={'/users/'+lambda.owner.username}>{lambda.owner.username}</a> | {moment(lambda.createdAt).format('MM/DD/YYYY')}
           </Typography>
 
         </Grid>
@@ -60,7 +61,7 @@ function Lambdas(props) {
           </Typography>
 
           <Typography color="secondary" className={classes.created} component='div'>
-            <a href={'/users/'+lambda.owner.username}>{lambda.owner.username}</a> | 9/12/16
+            <a href={'/users/'+lambda.owner.username}>{lambda.owner.username}</a> | {moment(lambda.createdAt).format('MM/DD/YYYY')}
           </Typography>
 
           

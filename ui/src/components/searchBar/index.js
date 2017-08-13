@@ -220,7 +220,6 @@ const searchLambdas = gql`
           owner{
             displayName
             username
-            email
           }
         }
       }
