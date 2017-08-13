@@ -5,15 +5,17 @@ export default createStyleSheet('UserInfo', theme => ({
     position: 'absolute',
     top: '50%',
     transform: 'translateY(-50%)',
-    right: '10px',
+    right: '0px',
   },
   login:{
     color: 'white'
   },
   avatar: {
-    right: '10px',
-    width: '200px',
-    height: '45px',
+    right: '0px',
+    width: '60px',
+    minWidth: '60px',
+    padding: '0px !important',
+    height: '60px',
     position: 'absolute',
     top: '50%',
     transform: 'translateY(-50%)',
@@ -31,10 +33,6 @@ export default createStyleSheet('UserInfo', theme => ({
   },
   nameInfo:{
     textAlign: 'right',
-    position: 'absolute',
-    width: '200px',
-    top: '50%',
-    transform: 'translateY(-50%)',
     fontWeight: '300',
     "& div":{
       display: 'inline-block',
@@ -42,9 +40,8 @@ export default createStyleSheet('UserInfo', theme => ({
     textTransform: 'none'
   },
   nameText: {
-    left: '-5px',
-    top: '-8px',
     position: 'relative',
+    right: '65px'
   },
   displayName:{
     display: 'block',

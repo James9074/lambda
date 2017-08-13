@@ -66,17 +66,18 @@ class UserInfo extends Component {
     //TODO: Wow the css for this is abysmal. Let's fix that.
     return (
       <div className={classes.root}>
-        <Button className={classes.avatar}  onClick={this.handleUserMenuOpen}>
           <div className={classes.nameInfo}>
+          <Button className={classes.avatar}  onClick={this.handleUserMenuOpen}>
+            <Avatar alt="Avatar" src={profilePic}  ref="avatar"/>
+          </Button>            
           <Hidden smDown>
             <div className={classes.nameText}>
               <span className={classes.displayName}>{user.displayName}</span>
               <span className={classes.userName}>{user.username}</span>
             </div>
-            </Hidden>
-            <Avatar alt="Avatar" src={profilePic}  ref="avatar"/>
+          </Hidden>
           </div>
-        </Button>
+
         <Menu
             id="user-menu"
             anchorEl={this.state.avatarNode}
