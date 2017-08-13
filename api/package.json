@@ -34,6 +34,7 @@
     "pg": "^6.4.1",
     "pretty-error": "^2.1.1",
     "redis": "^2.7.1",
+    "request": "^2.81.0",
     "shortid": "^2.2.8",
     "source-map-support": "^0.4.15",
     "validator": "^8.0.0"

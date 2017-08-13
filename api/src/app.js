@@ -72,17 +72,12 @@ function execute(command, callback){
 
 function processLambda(lambda, req, res) {
   let lambdaInputArray = lambda.inputs.map(x => `"${x.value.toString()}"`)
-
-  console.log(JSON.stringify(lambdaInputArray))
-
   let expression = `${lambda.code} process.stdout.write(entryPoint(${JSON.stringify(lambdaInputArray)}).toString())`;
   let result = '';
 
   try {
     let dockerstr = `docker run --rm node:8-alpine node -e "${expression}"`
-    console.log(dockerstr)
     execute(dockerstr, (err, stdout, stderr) => {
-      console.log(stdout)
       if (stderr){
         return res.json({ lambda_error: stderr })
       } else if (err){
@@ -109,10 +104,12 @@ app.get('/graphql/schema', (req, res) => {
   res.type('text/plain').send(printSchema(schema));
 });
 
-app.post('lambda', (req, res) => {
-  if (req.body.lambda)
-    return processLambda(req.body.lambda, req, res);
-  else return res.json({ error: 'You need to provide a Lambda object!' })
+app.post('/lambda', (req, res) => {
+  let lambda = Object.assign({}, req.body.lambda)
+  if (lambda){
+    lambda.inputs.forEach((input) => { input.value = input.example })
+    return processLambda(lambda, req, res);
+  } else return res.json({ error: 'You need to provide a Lambda object!' })
 });
 
 app.get('/lambda/:slug', (req, res) => {
@@ -125,13 +122,18 @@ app.get('/lambda/:slug', (req, res) => {
         return res.json({
           error: `Lambda with slug ${req.params.slug} not found!`
         })
-      let error = false;
+
       let lambda = lambdas[0]
       let queryValues = Object.keys(req.query).map(key => req.query[key])
       let inputNames = lambda.inputs.map(x => x.name)
 
+      let error = false;
+
       if (queryValues.length !== inputNames.length)
         error = 'Incorrect Param Length'
+
+      if (!inputNames.every((e, i) => e.toLowerCase() === Object.keys(req.query)[i]))
+        error = 'Incorrect Param Names'
 
       if (error)
         return res.json({

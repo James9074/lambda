@@ -59,12 +59,11 @@ class LambdaEditor extends Component {
     this.setState({ themeMenuOpen: false });
   };  
 
-  handleTestLambda = () => {
+  handleTestLambda2 = () => {
     var theInstructions = this.state.editorCode;
     var inputs = Array.isArray(this.props.lambda.inputs) ? this.props.lambda.inputs : JSON.parse(this.props.lambda.inputs);
     inputs = inputs.map((x)=>x.example)
     
-
 
     var expression = `${theInstructions} return entryPoint(${JSON.stringify(inputs)})`;
     var result = '';
@@ -105,7 +104,7 @@ class LambdaEditor extends Component {
                 { this.props.view && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleCloneLambda}>
                   <ContentCopyIcon /> 
                 </IconButton> )}       
-                <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleTestLambda}>
+                <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.testLambda}>
                   <PlayArrowIcon />
                 </IconButton>
                 <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleThemeMenuOpen}>
@@ -174,7 +173,7 @@ class LambdaEditor extends Component {
               <Paper elevation={4}>
                 <Editor 
                   editorTheme={themeOptions[this.state.editorTheme].key} 
-                  code={this.state.codeOutput}
+                  code={this.props.output}
                   editorOptions={{
                     minimap: { enabled: false },
                     lineNumbers: false,

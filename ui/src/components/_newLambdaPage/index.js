@@ -16,6 +16,8 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
 import IconButton from 'material-ui/IconButton';
 import LambdaEditor from 'components/lambdaEditor'
+import request from 'request'
+import url from 'url'
 
 import Snackbar from 'material-ui/Snackbar';
 import Fade from 'material-ui/transitions/Fade';
@@ -60,7 +62,8 @@ function entryPoint(inputs){
       codeOutput: '',
       codeErrors: '',
       saveErrors: [],
-      toastOpen: false
+      toastOpen: false,
+      editorOutput: ''
     }
   }
 
@@ -99,6 +102,29 @@ function entryPoint(inputs){
   onEditorUpdate(newCode){
     this.setLambda({code: newCode})
   }
+
+  handleTestLambda = () => {
+    let fullURL = url.parse(document.location.href);
+    let baseURL = fullURL.protocol + '//' + fullURL.hostname  + ':' + fullURL.port
+    const settings = { 
+      method: 'POST',
+      followAllRedirects: true,
+      followOriginalHttpMethod: true,
+      url: `${baseURL}/api/lambda`,
+      json: true,
+      body: {
+        lambda: this.state.lambda,
+        test: 'test'
+      }
+    }
+
+    request(settings, (err, response, body) => {
+      console.log(response.statusCode)
+      console.log(body) // this is empty instead of return the body that has been sent
+      this.setState({editorOutput: body.output})
+    })
+    
+  }  
 
   handleSaveLambda = () => {
     let errors = []
@@ -245,6 +271,8 @@ function entryPoint(inputs){
                 <LambdaEditor 
                   edit
                   lambda={this.state.lambda}
+                  output={this.state.editorOutput}
+                  testLambda={this.handleTestLambda}
                   saveLambda={this.handleSaveLambda}
                   onEditorUpdate={(newCode) => this.onEditorUpdate(newCode)} />
               </Grid>
