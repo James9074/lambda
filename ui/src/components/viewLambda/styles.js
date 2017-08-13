@@ -15,5 +15,11 @@ export default createStyleSheet('ViewLambda', theme => ({
   },
   viewEditor:{
     overflow: 'hidden'
+  },
+  deleteLambda: {
+    color: 'white',
+    float: 'right',
+    marginTop: '15px',
+    marginBottom:'15px'
   }
 }));

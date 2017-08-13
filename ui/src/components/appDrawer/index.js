@@ -59,12 +59,12 @@ class AppDrawer extends Component {
           </ListItemIcon>
           <ListItemText primary="Starred" />
         </ListItem>*/}
-        <ListItem button onClick={() => this.context.router.history.push(`/users/${this.props.user.username}`)}>
+        { this.props.user && (<ListItem button onClick={() => this.context.router.history.push(`/users/${this.props.user.username}`)}>
           <ListItemIcon>
             <SendIcon />
           </ListItemIcon>
           <ListItemText primary="My Lambdas" />
-        </ListItem>
+        </ListItem>)}
         {/*<ListItem button>
           <ListItemIcon>
             <DraftsIcon />

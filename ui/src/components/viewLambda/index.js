@@ -11,6 +11,13 @@ import styles from './styles'
 import LambdaEditor from 'components/lambdaEditor'
 import SmallHeader from 'components/smallHeader'
 import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog';
 import request from 'request'
 import url from 'url'
 
@@ -82,9 +89,13 @@ class ViewLambda extends Component {
       //console.log(response.statusCode)
       //console.log(body) // this is empty instead of return the body that has been sent
       this.setState({editorOutput: body.output || body.lambda_error || body.error})
-    })
-    
-  }    
+    }) 
+  }
+
+  deleteLambda = () => {
+    window.location = '/'
+    this.setState({modalOpen:false})
+  }
 
   render(){
     const { data, classes, slug } = this.props;
@@ -110,6 +121,24 @@ class ViewLambda extends Component {
     return (
       <div className={classes.root}>
           <Grid container gutter={24}>
+          <Dialog open={this.state.modalOpen} onRequestClose={() => this.setState({modalOpen: false})}>
+            <DialogTitle>
+              {"Delete"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Are you sure you want to delete this Lambda?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button disabled onClick={this.deleteLambda}>
+                Yes
+              </Button>
+              <Button onClick={() => this.setState({modalOpen: false})}>
+                No
+              </Button>
+            </DialogActions>
+          </Dialog>
             <Grid item xs={12} key={lambda.id}>
               <LambdaCard lambda={lambda} type={'single'}/>
             </Grid>
@@ -152,6 +181,7 @@ class ViewLambda extends Component {
               lambda={lambda}
               output={this.state.editorOutput}
               testLambda={this.handleRunLambda} />
+              <Button raised className={classes.deleteLambda} onClick={() => this.setState({modalOpen:true})} color="primary">Delete</Button>
             </Grid> 
           </Grid>
       </div>
