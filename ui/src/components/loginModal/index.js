@@ -36,13 +36,13 @@ class LoginModal extends Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button raised onClick={() => this.directToAuth('google')} color="primary">
+            <Button disabled raised onClick={() => this.directToAuth('google')} color="primary">
               Google
             </Button>
             <Button raised onClick={() => this.directToAuth('github')} color="accent">
               GitHub
             </Button>       
-            <Button raised onClick={() => this.directToAuth('twitter')} color="primary">
+            <Button disabled raised onClick={() => this.directToAuth('twitter')} color="primary">
               Twitter
             </Button>                  
           </DialogActions>

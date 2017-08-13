@@ -102,7 +102,7 @@ class LambdaEditor extends Component {
                   <SaveIcon /> 
                 </IconButton> )}   
 
-                { this.props.view && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleCloneLambda}>
+                { this.props.view && (<IconButton disabled className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleCloneLambda}>
                   <ContentCopyIcon /> 
                 </IconButton> )}       
                 <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.testLambda}>

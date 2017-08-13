@@ -58,7 +58,12 @@ class UserInfo extends Component {
     if(!user)
       return (
         <div className={classes.root}>
-          <Button raised color="accent" className={classes.login} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
+          <Hidden smUp>
+            <Button raised color="accent" className={classes.loginSmall} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
+          </Hidden>
+          <Hidden xsDown>
+            <Button raised color="accent" className={classes.login} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
+          </Hidden>
           <LoginModal onClose={this.handleRequestClose} isOpen={this.state.loginModalOpen} />
         </div>
       )

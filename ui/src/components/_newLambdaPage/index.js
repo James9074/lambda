@@ -134,7 +134,6 @@ function entryPoint(inputs){
 
   handleSaveLambda = () => {
     if(this.state.loadingOutput) return;
-    let errors = []
     //Try to submit
     this.props.save({
       variables: { 
@@ -142,14 +141,12 @@ function entryPoint(inputs){
       }
     })
     .then(({ data }) => {
-      console.log('got data', data);
-      this.setState({toastOpen: true, toastMessage: 'Lambda Saved!'})
+      this.setState({toastOpen: true, toastMessage: 'Lambda Saved!', saveErrors:[]})
+      this.context.router.history.push(`/${data.createLambda.lambda.slug}`)
     }).catch(({graphQLErrors}) => {
       console.log('there was an error sending the query', graphQLErrors[0].state);
-      this.setState({toastOpen: true, toastMessage: 'There was an error saving this Lambda'})
+      this.setState({toastOpen: true, toastMessage: 'There was an error saving this Lambda', saveErrors: graphQLErrors[0].state})
     });
-
-    this.setState({saveErrors: errors})
   }
 
   render(){
@@ -175,6 +172,7 @@ function entryPoint(inputs){
                   <Grid item xs={8} sm={9}>
                     <TextField
                       id="lambda-name"
+                      error={this.state.saveErrors.name !== undefined}
                       label="Lambda Name"
                       value={this.state.lambda.name}
                       onChange={(event) => this.setLambda({ name: event.target.value })}
@@ -190,6 +188,7 @@ function entryPoint(inputs){
                       label="Public"
                       control={
                         <Switch
+                          disabled
                           checked={this.state.lambda.public}
                           onChange={(event, checked) => this.setLambda({ public: checked })}
                         />

@@ -8,7 +8,13 @@ export default createStyleSheet('UserInfo', theme => ({
     right: '0px',
   },
   login:{
-    color: 'white'
+    color: 'white',
+    right: '15px',
+  },
+  loginSmall:{
+    color: 'white',
+    right: '10px',
+    minWidth: '60px'
   },
   avatar: {
     right: '0px',

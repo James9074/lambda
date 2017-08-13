@@ -12,5 +12,8 @@ export default createStyleSheet('ViewLambda', theme => ({
   },
   noLambda:{
     textAlign:'center'
+  },
+  viewEditor:{
+    overflow: 'hidden'
   }
 }));
