@@ -5,7 +5,10 @@ export default createStyleSheet('ViewLambda', theme => ({
     width: '100%',
     textAlign:'center',
     marginTop:'100px',
-    fontSize:'35px'
+    fontSize:'35px',
+    "& h1":{
+      color: theme.palette.primary[500]
+    }
   },
   textField:{
     fontSize:'15px'
