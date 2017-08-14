@@ -146,11 +146,11 @@ function entryPoint(inputs){
       }
     })
     .then(({ data }) => {
-      this.setState({toastOpen: true, toastMessage: 'Lambda Saved!', saveErrors:[]})
-      this.context.router.history.push(`/${data.createLambda.lambda.slug}`)
+      this.setState({toastOpen: true, toastMessage: 'Lambda Saved!', saveErrors:[]},()=>{
+        this.context.router.history.push(`/${data.createLambda.lambda.slug}`)
+      })
     }).catch(({graphQLErrors}) => {
-      console.log('there was an error sending the query', graphQLErrors[0].state);
-      this.setState({toastOpen: true, toastMessage: 'There was an error saving this Lambda', saveErrors: graphQLErrors[0].state})
+        this.setState({toastOpen: true, toastMessage: 'There was an error saving this Lambda', saveErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error'})
     });
   }
 
