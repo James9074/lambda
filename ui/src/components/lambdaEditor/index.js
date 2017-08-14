@@ -12,6 +12,7 @@ import SortIcon from 'material-ui-icons/Sort';
 import PlayArrowIcon from 'material-ui-icons/PlayArrow';
 import ContentCopyIcon from 'material-ui-icons/ContentCopy';
 import SaveIcon from 'material-ui-icons/Save';
+import InputIcon from 'material-ui-icons/Input';
 import IconButton from 'material-ui/IconButton';
 import Editor from 'components/codeEditor'
 import LambdaInputs from './inputs'
@@ -96,12 +97,12 @@ class LambdaEditor extends Component {
         <Grid container gutter={40}  className={classes.editorOptions}>
           <Grid item xs={12} xl={12}>
             <Grid container>
-              <Grid item xs={6}>
-                <Typography type="headline">Implementation</Typography>
+              <Grid item xs={5}>
+                <Typography type="headline">Lambda</Typography>
               </Grid>       
-              <Grid item xs={6} style={{textAlign:'right'}}>
-                <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={()=>this.setState({inputsOpen: true})}>
-                  <SaveIcon /> 
+              <Grid item xs={7} style={{textAlign:'right'}}>
+                <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={()=>this.setState({showInputs: true})}>
+                  <InputIcon /> 
                 </IconButton>
                 { this.props.edit && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleSaveLambda}>
                   <SaveIcon /> 
@@ -138,6 +139,10 @@ class LambdaEditor extends Component {
               
               <LambdaInputs 
                 show={this.state.showInputs}
+                lambdaInputs={this.props.lambda.inputs}
+                addInput={this.props.addInput}
+                removeInput={this.props.removeInput}
+                modifyInput={this.props.modifyInput}
                 onClose={()=>{this.setState({showInputs: false})}} />
 
               <Paper elevation={4}>

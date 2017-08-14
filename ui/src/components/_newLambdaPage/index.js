@@ -39,7 +39,6 @@ class NewLambda extends Component {
         name: '',
         public: true,
         inputs: [{
-          id: 0,
           name: '',
           type: '',
           example: ''
@@ -79,10 +78,9 @@ function entryPoint(inputs){
     this.setState({ lambda: Object.assign(this.state.lambda, data) })
   }
 
-  addInput(){
+  addInput = () => {
     var newInputs = this.state.lambda.inputs;
     newInputs.push({
-      id: this.state.lambda.inputs.length,
       name: '',
       type: '',
       test: ''
@@ -90,15 +88,17 @@ function entryPoint(inputs){
     this.setLambda({inputs: newInputs})
   }
 
-  modifyInput(i, value){
+  modifyInput = (i, value) => {
     var newInputs = this.state.lambda.inputs;
     newInputs[i] = value;
     this.setLambda({inputs: newInputs})
   }  
 
-  removeInput(i){
+  removeInput = (input) => {
     var newInputs = this.state.lambda.inputs;
-    newInputs.splice(i,1);
+    console.log(newInputs.indexOf(input));
+    newInputs.splice(newInputs.indexOf(input),1);
+    console.log(newInputs)
     this.setLambda({inputs: newInputs})
   }
 
@@ -147,6 +147,10 @@ function entryPoint(inputs){
       console.log('there was an error sending the query', graphQLErrors[0].state);
       this.setState({toastOpen: true, toastMessage: 'There was an error saving this Lambda', saveErrors: graphQLErrors[0].state})
     });
+  }
+
+  handleInputsChange = (newInputs) => {
+    this.setState({lambda: Object.assign({},this.state.lambda,{inputs: newInputs})});
   }
 
   render(){
@@ -264,7 +268,7 @@ function entryPoint(inputs){
                               <AddIcon />
                             </IconButton>)
                             : (
-                            <IconButton className={classes.button} aria-label="Delete" onClick={()=>{this.removeInput(i)}}>
+                            <IconButton className={classes.button} aria-label="Delete" onClick={()=>{this.removeInput(input)}}>
                               <DeleteIcon />
                             </IconButton>
                             )
@@ -286,6 +290,9 @@ function entryPoint(inputs){
                   output={this.state.editorOutput}
                   testLambda={this.handleTestLambda}
                   saveLambda={this.handleSaveLambda}
+                  modifyInput={this.modifyInput}
+                  addInput={this.addInput}
+                  removeInput={this.removeInput}
                   onEditorUpdate={(newCode) => this.onEditorUpdate(newCode)} />
               </Grid>
             </Grid>
