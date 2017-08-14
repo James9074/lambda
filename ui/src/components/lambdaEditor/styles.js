@@ -13,10 +13,6 @@ export default createStyleSheet('LambdaEditor', theme => ({
   title: {
     marginTop:'20px'
   },
-  privacy: {
-    marginTop: '23px',
-    paddingLeft: '25%'
-  },
   inputContainer:{
     height: '246px',
     'overflow-y': 'auto',

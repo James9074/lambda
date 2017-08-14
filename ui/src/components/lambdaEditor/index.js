@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
+import { FormControlLabel } from 'material-ui/Form';
+import Switch from 'material-ui/Switch';
 import Paper from 'material-ui/Paper';
 import styles from './styles'
 import Menu, { MenuItem } from 'material-ui/Menu';
@@ -17,6 +18,7 @@ import IconButton from 'material-ui/IconButton';
 import Editor from 'components/codeEditor'
 import LambdaInputs from './inputs'
 import { LinearProgress } from 'material-ui/Progress';
+import TextField from 'material-ui/TextField';
 
 const themeOptions = [
   { name: 'VS Light', key: 'vs' },
@@ -37,7 +39,7 @@ class LambdaEditor extends Component {
       saveErrors: [],
       toastOpen: false,
       editorCode: props.lambda.code,
-      showInputs: true
+      showInputs: false
     }
   }
 
@@ -61,29 +63,7 @@ class LambdaEditor extends Component {
 
   handleThemeMenuClose = () => {
     this.setState({ themeMenuOpen: false });
-  };  
-
-  handleTestLambda2 = () => {
-    var theInstructions = this.state.editorCode;
-    var inputs = Array.isArray(this.props.lambda.inputs) ? this.props.lambda.inputs : JSON.parse(this.props.lambda.inputs);
-    inputs = inputs.map((x)=>x.example)
-    
-
-    var expression = `${theInstructions} return entryPoint(${JSON.stringify(inputs)})`;
-    var result = '';
-
-    try{
-      result = new Function(expression)().toString();
-    }
-    catch(e){ result = e.toString(); }
-    if(result === undefined)
-      result = "undefined"
-    if(result === null)
-      result = "null"
-    if(result.length === 0)
-      result = "Nothing returned"
-    this.setState({codeOutput:result})    
-  }
+  };
 
   handleSaveLambda = () => {
     this.props.saveLambda();
@@ -94,13 +74,22 @@ class LambdaEditor extends Component {
 
     return (
       <div>
-        <Grid container gutter={40}  className={classes.editorOptions}>
+        <Grid container gutter={8}  className={classes.editorOptions}>
           <Grid item xs={12} xl={12}>
             <Grid container>
-              <Grid item xs={5}>
-                <Typography type="headline">Lambda</Typography>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  id="lambda-name"
+                  value={this.props.lambda.name}
+                  error={this.props.errors.name !== undefined}
+                  label={`${this.props.errors.name !== undefined ? '* ' : ''}Lambda Name`}                  
+                  onChange={(event) => this.props.editLambda({name: event.target.value})}
+                  fullWidth
+                  margin="dense"
+                /> 
               </Grid>       
-              <Grid item xs={7} style={{textAlign:'right'}}>
+              
+              <Grid item xs={12} md={6} style={{textAlign:'right'}}>
                 <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={()=>this.setState({showInputs: true})}>
                   <InputIcon /> 
                 </IconButton>
@@ -117,6 +106,16 @@ class LambdaEditor extends Component {
                 <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleThemeMenuOpen}>
                   <SortIcon />
                 </IconButton>
+                <FormControlLabel
+                  className={classes.privacy}
+                  label="Public"
+                  control={
+                    <Switch
+                      disabled
+                      checked={this.props.lambda.public}
+                      onChange={(event, checked) => this.props.editLambda({ public: checked })} />
+                  }
+                />                 
                   <Menu
                     id="theme-menu"
                     anchorEl={this.state.themeAnchorEl}
@@ -133,7 +132,7 @@ class LambdaEditor extends Component {
                       </MenuItem>,
                     )}
                 </Menu>
-              </Grid>
+              </Grid>            
             </Grid>
             <Grid item xs={12} className={classes.mainEditor}>
               
@@ -159,7 +158,7 @@ class LambdaEditor extends Component {
             {//+ ' ' +  (!this.props.loading && classes.outputLoaded}
             }
             <Grid item xs={12} className={classes.output}>
-              {this.props.loading || true && (
+              {this.props.loading && (
                 <div className={classes.loadingOutput}>
                   <LinearProgress color="accent" />
                 </div>

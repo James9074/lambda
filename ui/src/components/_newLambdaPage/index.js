@@ -74,7 +74,7 @@ function entryPoint(inputs){
     router: PropTypes.object.isRequired
   }
   //Shortcut for updating the Lambda object
-  setLambda(data) {
+  setLambda = (data) => {
     this.setState({ lambda: Object.assign(this.state.lambda, data) })
   }
 
@@ -166,41 +166,28 @@ function entryPoint(inputs){
         <SmallHeader content={"New Lambda"}/>          
         <Paper className={classes.mainContainer} elevation={4}>
           <Grid item xs={12} >
-            <Grid container gutter={40} className={classes.topOptions}>
-              <Grid item xs={12} md={6}>
+            <Grid container gutter={0}  className={classes.editorOptions}>
+              <Grid item xs={12} >
+                <LambdaEditor 
+                  edit
+                  errors={this.state.saveErrors}
+                  loading={this.state.loadingOutput}
+                  lambda={this.state.lambda}
+                  output={this.state.editorOutput}
+                  editLambda={this.setLambda}
+                  testLambda={this.handleTestLambda}
+                  saveLambda={this.handleSaveLambda}
+                  modifyInput={this.modifyInput}
+                  addInput={this.addInput}
+                  removeInput={this.removeInput}
+                  onEditorUpdate={(newCode) => this.onEditorUpdate(newCode)} />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid container gutter={40} className={classes.topOptions}>
+              <Grid item xs={12} md={12}>
                 <Grid container gutter={0} className={classes.description}>
-                  <Grid item xs={12} >
-                    <Typography type="headline" className={classes.title}>Basic Info</Typography>
-                    <Typography type="body1">This will help you identify and organize your lambda</Typography>
-                  </Grid>
-                  <Grid item xs={8} sm={9}>
-                    <TextField
-                      id="lambda-name"
-                      error={this.state.saveErrors.name !== undefined}
-                      label="Lambda Name"
-                      value={this.state.lambda.name}
-                      onChange={(event) => this.setLambda({ name: event.target.value })}
-                      className={classes.textField}
-                      fullWidth
-                      margin="normal"
-                    />
-                  </Grid>
-                  
-                  <Grid item xs={1}>
-                    <FormControlLabel
-                      className={classes.privacy}
-                      label="Public"
-                      control={
-                        <Switch
-                          disabled
-                          checked={this.state.lambda.public}
-                          onChange={(event, checked) => this.setLambda({ public: checked })}
-                        />
-                      }
-                    />
-                  </Grid>
-
-                  <Grid item xs={11}>
+                  <Grid item xs={12}>
                     <TextField
                       id="lambda-description"
                       label="Lambda Description"
@@ -216,87 +203,7 @@ function entryPoint(inputs){
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} md={6}>
-                <Grid item xs={12}>
-                  <Typography type="headline" className={classes.title}>Lambda Inputs</Typography>
-                  <Typography type="body1">These values will be accessible from the lambda function itself</Typography>
-                </Grid>
-                <Grid item xs={12}  className={classes.inputContainer}>
-                  {this.state.lambda.inputs.map(function(input, i){
-                    return (
-                      <Grid key={i} container gutter={8}>
-                        <Grid item xs={5}>
-                          <TextField
-                            id="input-name"
-                            label={"Input Name"}
-                            value={this.state.lambda.inputs[i].name}
-                            onChange={(event)=>this.modifyInput(Object.assign(input,{name:event.target.value}))}
-                            className={classes.textField}
-                            fullWidth
-                            margin="normal"
-                          />
-                        </Grid>
-
-                        <Grid item xs={5}>
-                          <TextField
-                            id="input-example"
-                            label="Input Example"
-                            value={this.state.lambda.inputs[i].example}
-                            onChange={(event)=>this.modifyInput(Object.assign(input,{example:event.target.value}))}
-                            className={classes.textField}
-                            fullWidth
-                            margin="normal"
-                          />
-                        </Grid>                           
-
-                        {/*<Grid item xs={2}>                       
-                          <TextField
-                            id="input-type"
-                            label="Input Type"
-                            value={this.state.lambda.inputs[i].type}
-                            onChange={(event)=>this.modifyInput(Object.assign(input,{type:event.target.value}))}
-                            className={classes.textField}
-                            fullWidth
-                            margin="normal"
-                          />
-                        </Grid> */}                 
-
-                        <Grid item xs={1}>
-
-                          { this.state.lambda.inputs.length === i+1 ? (
-                            <IconButton className={classes.button} aria-label="Delete" onClick={this.addInput.bind(this)}>
-                              <AddIcon />
-                            </IconButton>)
-                            : (
-                            <IconButton className={classes.button} aria-label="Delete" onClick={()=>{this.removeInput(input)}}>
-                              <DeleteIcon />
-                            </IconButton>
-                            )
-                          }
-                        </Grid>
-                      </Grid>
-                    )
-                  }.bind(this))}
-                </Grid>
-              </Grid>
-            </Grid>
-
-            <Grid container gutter={0}  className={classes.editorOptions}>
-              <Grid item xs={12} >
-                <LambdaEditor 
-                  edit
-                  loading={this.state.loadingOutput}
-                  lambda={this.state.lambda}
-                  output={this.state.editorOutput}
-                  testLambda={this.handleTestLambda}
-                  saveLambda={this.handleSaveLambda}
-                  modifyInput={this.modifyInput}
-                  addInput={this.addInput}
-                  removeInput={this.removeInput}
-                  onEditorUpdate={(newCode) => this.onEditorUpdate(newCode)} />
-              </Grid>
-            </Grid>
-          </Grid>
+            </Grid>          
         </Paper>
 
         <Snackbar

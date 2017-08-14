@@ -3,12 +3,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import List, { ListItem, ListItemText } from 'material-ui/List';
+import Divider from 'material-ui/Divider';
 import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
 import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField';
-import Input from 'material-ui/Input/Input';
 import Slide from 'material-ui/transitions/Slide';
 import styles from './styles'
 
@@ -27,10 +27,15 @@ class LambdaInputs extends Component {
     router: PropTypes.object.isRequired
   }
 
-  modifyInput = (event, i, input) => {
+  modifyInputName = (event, i, input) => {
     let newInput = Object.assign(input,{name:event.target.value})
     this.props.modifyInput(i, newInput);
   }
+
+  modifyInputExample = (event, i, input) => {
+    let newInput = Object.assign(input,{example:event.target.value})
+    this.props.modifyInput(i, newInput);
+  }  
 
   render() {
     const { lambdaInputs, classes } = this.props;
@@ -51,27 +56,41 @@ class LambdaInputs extends Component {
                 <ListItemText primary="Inputs"/>
               </ListItem>
                 {lambdaInputs.map((input, i) => (
-                  <ListItem key={i}>
-                    { lambdaInputs.length === i+1 ? (
-                      <IconButton className={classes.button} aria-label="Add" onClick={this.props.addInput}>
-                        <AddIcon />
-                      </IconButton>)
-                      : (
-                      <IconButton className={classes.button} aria-label="Delete" onClick={()=>this.props.removeInput(input)}>
-                        <DeleteIcon />
-                      </IconButton>
-                      )
-                    }
-                    {/*<ListItemText primary={input.name}/>*/}
-                    <TextField
-                      id="input-name"
-                      value={input.name}
-                      placeholder={`Input #${i+1} Name`}
-                      onChange={(event) => this.modifyInput(event,i,input)}
-                      fullWidth
-                      margin="none"
-                    />                              
-                  </ListItem>
+                  <div key={i}>
+                    <ListItem>
+                      { lambdaInputs.length === i+1 ? (
+                        <IconButton className={classes.button} aria-label="Add" onClick={this.props.addInput}>
+                          <AddIcon />
+                        </IconButton>)
+                        : (
+                        <IconButton className={classes.button} aria-label="Delete" onClick={()=>this.props.removeInput(input)}>
+                          <DeleteIcon />
+                        </IconButton>
+                        )
+                      }
+                      <TextField
+                        id="input-name"
+                        value={input.name}
+                        placeholder={`Input #${i+1} Name`}
+                        onChange={(event) => this.modifyInputName(event,i,input)}
+                        fullWidth
+                        margin="none"
+                      />    
+                                            
+                    </ListItem>
+                    <ListItem>
+                      <IconButton></IconButton>
+                      <TextField
+                        id="input-example"
+                        value={input.example}
+                        placeholder={`Input #${i+1} Example`}
+                        onChange={(event) => this.modifyInputExample(event,i,input)}
+                        fullWidth
+                        margin="none"
+                       />                       
+                    </ListItem>
+                    <Divider />    
+                  </div>
                 ))}
               <ListItem button>
                 <ListItemText primary="Outputs" />
