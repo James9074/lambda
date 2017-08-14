@@ -53,8 +53,8 @@ class LambdaInputs extends Component {
             transitionAppear={!this.state.firstMount}>
             <List className={classes.panel}>
               <ListItem button>
-                <ListItemText primary="Inputs"/>
-              </ListItem>
+                <ListItemText primary="Inputs" secondary='Inputs with blank names are ignored'/>
+              </ListItem>            
                 {lambdaInputs.map((input, i) => (
                   <div key={i}>
                     <ListItem>
@@ -83,7 +83,7 @@ class LambdaInputs extends Component {
                       <TextField
                         id="input-example"
                         value={input.example}
-                        placeholder={`Input #${i+1} Example`}
+                        placeholder={`Input #${i+1} Example (Optional)`}
                         onChange={(event) => this.modifyInputExample(event,i,input)}
                         fullWidth
                         margin="none"

@@ -84,7 +84,9 @@ function isAsync(fn) {
 }
 
 function processLambda(lambda, req, res) {
-  let lambdaInputArray = lambda.inputs.map(x => `${x.value.toString()}`)
+  try{
+    let lambdaInputArray = lambda.inputs.map(x => `${x.value.toString()}`)
+  } catch(e) { return res.status(400).json({ error: 'Values were not provided for all inputs' }) }
   let expression = `
   ${lambda.code}
   if(typeof(entryPoint) === 'function'){
@@ -108,9 +110,9 @@ function processLambda(lambda, req, res) {
         if (/(entryPoint is not defined)+/.test(stderr)) stderr = "You must provide a function named 'entryPoint'"
         if (stdout.trim() === 'undefined') stdout = 'Nothing returned!';
         if (stderr){
-          return res.json({ lambda_error: stderr.trim() })
+          return res.status(400).json({ lambda_error: stderr.trim() })
         } else if (err){
-          return res.json({ error: err })
+          return res.status(500).json({ error: err })
         } else {
           return res.json({ output: stdout.trim() })
         }

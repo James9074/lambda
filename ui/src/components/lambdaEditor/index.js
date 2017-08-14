@@ -90,7 +90,7 @@ class LambdaEditor extends Component {
               </Grid>       
               
               <Grid item xs={12} md={6} style={{textAlign:'right'}}>
-                <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={()=>this.setState({showInputs: true})}>
+                <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={()=>this.setState({showInputs: !this.state.showInputs})}>
                   <InputIcon /> 
                 </IconButton>
                 { this.props.edit && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleSaveLambda}>
