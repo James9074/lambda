@@ -166,7 +166,7 @@ app.get('/lambda/:slug', (req, res) => {
       if (queryValues.length !== inputNames.length)
         error = 'Incorrect Param Length'
 
-      if (!inputNames.every((e, i) => e.toLowerCase() === Object.keys(req.query)[i]))
+      if (!inputNames.every((e, i) => e.toLowerCase() === (Object.keys(req.query)[i] === undefined ? false : Object.keys(req.query)[i].toLowerCase())))
         error = 'Incorrect Param Names'
 
       if (error)

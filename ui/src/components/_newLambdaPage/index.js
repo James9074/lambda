@@ -66,8 +66,6 @@ function entryPoint(inputs){
       editorOutput: '',
       loadingOutput: false
     }
-
-    console.log(props)
   }
 
   static contextTypes = {

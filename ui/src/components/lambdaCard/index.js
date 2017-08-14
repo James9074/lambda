@@ -29,7 +29,7 @@ function Lambdas(props) {
           </Typography>
 
           <Typography color="secondary" className={classes.created} component='div'>
-          <a href={'/users/'+lambda.owner.username}>{lambda.owner.username}</a> | {moment(lambda.createdAt).format('MM/DD/YYYY')}
+          <a href={'/users/'+lambda.owner.username}>{lambda.owner.username}</a> | {moment(lambda.createdAt).format('MM/DD/YYYY')}  | <a href={`/api/lambda/${lambda.slug}`}>View in API</a>
           </Typography>
 
         </Grid>
@@ -61,7 +61,7 @@ function Lambdas(props) {
           </Typography>
 
           <Typography color="secondary" className={classes.created} component='div'>
-            <a href={'/users/'+lambda.owner.username}>{lambda.owner.username}</a> | {moment(lambda.createdAt).format('MM/DD/YYYY')}
+            <a href={'/users/'+lambda.owner.username}>{lambda.owner.username}</a> | {moment(lambda.createdAt).format('MM/DD/YYYY')} | <a href={`/api/lambda/${lambda.slug}`}>View in API</a>
           </Typography>
 
           

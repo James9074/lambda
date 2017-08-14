@@ -139,7 +139,6 @@ class SearchBar extends Component {
   };
 
   handleSuggestionSelected = (event, { suggestion }) => {
-    console.log(event);
     event.preventDefault();
     this.context.router.history.push(`/${suggestion.slug}`)
     this.setState({
