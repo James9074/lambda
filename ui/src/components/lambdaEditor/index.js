@@ -40,7 +40,8 @@ class LambdaEditor extends Component {
       saveErrors: [],
       toastOpen: false,
       editorCode: props.lambda.code,
-      showInputs: false
+      showInputs: false,
+      outputHeight: 150
     }
   }
 
@@ -164,7 +165,7 @@ class LambdaEditor extends Component {
             </Grid>
             {//+ ' ' +  (!this.props.loading && classes.outputLoaded}
             }
-            <Grid item xs={12} className={classes.output}>
+            <Grid item xs={12} className={classes.output} style={{height:this.state.outputHeight}}>
               {this.props.loading && (
                 <div className={classes.loadingOutput}>
                   <LinearProgress color="accent" />
@@ -172,7 +173,7 @@ class LambdaEditor extends Component {
               )}
               <Paper elevation={4}>
                 <Editor
-                  height='100'
+                  height={this.state.outputHeight}
                   editorTheme={themeOptions[this.state.editorTheme].key} 
                   code={this.props.output}
                   editorOptions={{

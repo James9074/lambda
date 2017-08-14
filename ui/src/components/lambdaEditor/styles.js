@@ -25,7 +25,6 @@ export default createStyleSheet('LambdaEditor', theme => ({
   },
   output: {
     width: '100%',
-    height: '100px',
     position: 'relative',
     borderTop: '5px solid ' + theme.palette.accent[500],
   },
