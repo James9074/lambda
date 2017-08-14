@@ -1,4 +1,5 @@
 import { createStyleSheet } from 'material-ui/styles';
+import Slide from 'material-ui/transitions/Slide';
 
 export default createStyleSheet('LambdaEditor', theme => ({
   mainContainer:{
@@ -31,6 +32,15 @@ export default createStyleSheet('LambdaEditor', theme => ({
     height: '100px',
     position: 'relative',
     borderTop: '5px solid ' + theme.palette.accent[500],
+  },
+  mainEditor:{
+    width: '100%',
+    height: '600px',
+    position: 'relative',
+    borderTop: '5px solid ' + theme.palette.accent[500],
+  },
+  inputsOverlay:{
+
   },
   loadingOutput:{
     "& div":{

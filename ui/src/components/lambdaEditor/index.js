@@ -14,6 +14,7 @@ import ContentCopyIcon from 'material-ui-icons/ContentCopy';
 import SaveIcon from 'material-ui-icons/Save';
 import IconButton from 'material-ui/IconButton';
 import Editor from 'components/codeEditor'
+import LambdaInputs from './inputs'
 import { LinearProgress } from 'material-ui/Progress';
 
 const themeOptions = [
@@ -34,7 +35,8 @@ class LambdaEditor extends Component {
       codeErrors: '',
       saveErrors: [],
       toastOpen: false,
-      editorCode: props.lambda.code
+      editorCode: props.lambda.code,
+      showInputs: true
     }
   }
 
@@ -98,6 +100,9 @@ class LambdaEditor extends Component {
                 <Typography type="headline">Implementation</Typography>
               </Grid>       
               <Grid item xs={6} style={{textAlign:'right'}}>
+                <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={()=>this.setState({inputsOpen: true})}>
+                  <SaveIcon /> 
+                </IconButton>
                 { this.props.edit && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleSaveLambda}>
                   <SaveIcon /> 
                 </IconButton> )}   
@@ -129,7 +134,12 @@ class LambdaEditor extends Component {
                 </Menu>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.mainEditor}>
+              
+              <LambdaInputs 
+                show={this.state.showInputs}
+                onClose={()=>{this.setState({showInputs: false})}} />
+
               <Paper elevation={4}>
                 <Editor 
                   editorTheme={themeOptions[this.state.editorTheme].key} 
@@ -144,7 +154,7 @@ class LambdaEditor extends Component {
             {//+ ' ' +  (!this.props.loading && classes.outputLoaded}
             }
             <Grid item xs={12} className={classes.output}>
-              {this.props.loading && (
+              {this.props.loading || true && (
                 <div className={classes.loadingOutput}>
                   <LinearProgress color="accent" />
                 </div>
