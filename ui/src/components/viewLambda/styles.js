@@ -16,6 +16,10 @@ export default createStyleSheet('ViewLambda', theme => ({
   noLambda:{
     textAlign:'center'
   },
+  inputs:{
+    marginTop: '25px',
+    paddingLeft:'5px',
+  },
   viewEditor:{
     overflow: 'hidden'
   },

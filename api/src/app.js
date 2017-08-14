@@ -84,9 +84,11 @@ function isAsync(fn) {
 }
 
 function processLambda(lambda, req, res) {
+  let lambdaInputArray = []
   try{
-    let lambdaInputArray = lambda.inputs.map(x => `${x.value.toString()}`)
+    lambdaInputArray = lambda.inputs.map(x => `${x.value.toString()}`)
   } catch(e) { return res.status(400).json({ error: 'Values were not provided for all inputs' }) }
+
   let expression = `
   ${lambda.code}
   if(typeof(entryPoint) === 'function'){

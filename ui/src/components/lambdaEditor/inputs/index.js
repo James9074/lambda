@@ -54,9 +54,19 @@ class LambdaInputs extends Component {
             <List className={classes.panel}>
               <ListItem button>
                 <ListItemText primary="Inputs" secondary='Inputs with blank names are ignored'/>
-              </ListItem>            
-                {lambdaInputs.map((input, i) => (
+              </ListItem>     
+                {!this.props.edit && lambdaInputs.map((input, i) => (
                   <div key={i}>
+                    <Divider />
+                    <ListItem>
+                      <ListItemText primary={input.name.length > 0 ? input.name : `Nameless Input #${i+1}`} secondary={`${input.example.length > 0 ? 'Example: ' + input.example : 'No example provided'}`}/>
+                    </ListItem>
+                  </div>
+                ))}
+
+                {this.props.edit && lambdaInputs.map((input, i) => (
+                  <div key={i}>
+                    <Divider />   
                     <ListItem>
                       { lambdaInputs.length === i+1 ? (
                         <IconButton className={classes.button} aria-label="Add" onClick={this.props.addInput}>
@@ -88,13 +98,9 @@ class LambdaInputs extends Component {
                         fullWidth
                         margin="none"
                        />                       
-                    </ListItem>
-                    <Divider />    
+                    </ListItem> 
                   </div>
                 ))}
-              <ListItem button>
-                <ListItemText primary="Outputs" />
-              </ListItem>
             </List> 
           </Slide>       
         </div>

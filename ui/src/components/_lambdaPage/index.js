@@ -20,9 +20,7 @@ function lambdaPage(props, context) {
       </Grid>
       <Grid item xs={12}>
         <Paper className={classes.root}>
-          <Typography type="headline" className={classes.notice}>
-            <ViewLambda slug={context.router.route.match.params.slug} />
-          </Typography>
+          <ViewLambda slug={context.router.route.match.params.slug} />
         </Paper>
       </Grid>
     </Grid>

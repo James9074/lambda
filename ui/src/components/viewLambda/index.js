@@ -120,34 +120,34 @@ class ViewLambda extends Component {
 
     return (
       <div className={classes.root}>
-          <Grid container gutter={24}>
-          <Dialog open={this.state.modalOpen} onRequestClose={() => this.setState({modalOpen: false})}>
-            <DialogTitle>
-              {"Delete"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Are you sure you want to delete this Lambda?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button disabled onClick={this.deleteLambda}>
-                Yes
-              </Button>
-              <Button onClick={() => this.setState({modalOpen: false})}>
-                No
-              </Button>
-            </DialogActions>
-          </Dialog>
+          <Grid container gutter={0}>
+            <Dialog open={this.state.modalOpen} onRequestClose={() => this.setState({modalOpen: false})}>
+              <DialogTitle>
+                {"Delete"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Are you sure you want to delete this Lambda?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button disabled onClick={this.deleteLambda}>
+                  Yes
+                </Button>
+                <Button onClick={() => this.setState({modalOpen: false})}>
+                  No
+                </Button>
+              </DialogActions>
+            </Dialog>
             <Grid item xs={12} key={lambda.id}>
               <LambdaCard lambda={lambda} type={'single'}/>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.inputs}>
               <Grid container gutter={0}>
                 <Grid item xs={12}>
                   <Typography type="headline" className={classes.title}>Lambda Inputs</Typography>
-                  {!Array.isArray(this.state.lambda.inputs) && (
+                  {!this.state.lambda.inputs.length && (
                     <Typography type="body1">There are no inputs for this Lambda</Typography>
                   )}
                 </Grid>
@@ -163,7 +163,7 @@ class ViewLambda extends Component {
                               onChange={(event)=>this.modifyInput(Object.assign(input,{example:event.target.value}))}
                               className={classes.textField}
                               fullWidth
-                              margin="normal"
+                              margin="dense"
                             />
                           </Grid>
                         

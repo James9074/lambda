@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { FormControlLabel } from 'material-ui/Form';
+import Badge from 'material-ui/Badge';
 import Switch from 'material-ui/Switch';
 import Paper from 'material-ui/Paper';
 import styles from './styles'
@@ -72,26 +73,31 @@ class LambdaEditor extends Component {
   render(){
     const { classes } = this.props;
 
+    let validInputs = this.props.lambda.inputs.filter(input => input.name.length > 0).length
+
     return (
       <div>
         <Grid container gutter={8}  className={classes.editorOptions}>
           <Grid item xs={12} xl={12}>
             <Grid container>
               <Grid item xs={12} md={6}>
-                <TextField
+                {this.props.edit && (<TextField
                   id="lambda-name"
                   value={this.props.lambda.name}
-                  error={this.props.errors.name !== undefined}
-                  label={`${this.props.errors.name !== undefined ? '* ' : ''}Lambda Name`}                  
+                  error={this.props.errors && this.props.errors.name !== undefined}
+                  label={`${this.props.errors && this.props.errors.name !== undefined ? '* ' : ''}Lambda Name`}                  
                   onChange={(event) => this.props.editLambda({name: event.target.value})}
                   fullWidth
                   margin="dense"
-                /> 
+                />)}
               </Grid>       
               
               <Grid item xs={12} md={6} style={{textAlign:'right'}}>
                 <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={()=>this.setState({showInputs: !this.state.showInputs})}>
-                  <InputIcon /> 
+                { !validInputs ? (<InputIcon /> ) : 
+                  (<Badge className={classes.badge} badgeContent={validInputs} color="accent">
+                    <InputIcon /> 
+                  </Badge>)}
                 </IconButton>
                 { this.props.edit && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleSaveLambda}>
                   <SaveIcon /> 
@@ -137,6 +143,7 @@ class LambdaEditor extends Component {
             <Grid item xs={12} className={classes.mainEditor}>
               
               <LambdaInputs 
+                edit={this.props.edit}
                 show={this.state.showInputs}
                 lambdaInputs={this.props.lambda.inputs}
                 addInput={this.props.addInput}

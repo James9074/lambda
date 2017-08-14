@@ -134,16 +134,15 @@ function entryPoint(inputs){
 
   handleSaveLambda = () => {
     if(this.state.loadingOutput) return;
-    console.log(this.state.lambda.inputs)
+
+    //Filter out blank Inputs
     let filteredInputs = JSON.parse(JSON.stringify(this.state.lambda.inputs))
     filteredInputs = filteredInputs.filter(input => input.name.length > 0)
 
-    console.log(filteredInputs)
-    return;
     //Try to submit
     this.props.save({
       variables: { 
-        input: Object.assign({},this.state.lambda,{inputs: JSON.stringify(this.state.lambda.inputs)})
+        input: Object.assign({},this.state.lambda,{inputs: JSON.stringify(filteredInputs)})
       }
     })
     .then(({ data }) => {

@@ -51,5 +51,8 @@ export default createStyleSheet('LambdaEditor', theme => ({
     left: '0',
     backgroundColor: 'rgba(0, 0, 0, 0.38)',
     zIndex: '100'
-  }
+  },
+  badge: {
+    margin: `0 ${theme.spacing.unit * 2}px`,
+  },
 }));
