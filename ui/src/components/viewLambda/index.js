@@ -64,7 +64,7 @@ class ViewLambda extends Component {
   componentWillReceiveProps(newProps){
     if(newProps.lambdaQuery.lambda && !newProps.lambdaQuery.loading &&  (this.state.lambda === undefined || (this.props.lambdaQuery.lambda.slug !== newProps.slug))){
       let newLambda = newProps.lambdaQuery.lambda === null ? "none" : Object.assign({...newProps.lambdaQuery.lambda},{inputs:JSON.parse(newProps.lambdaQuery.lambda.inputs)})
-      let ownerIsViewing = newProps.userQuery.me.username === newProps.lambdaQuery.lambda.owner.username     
+      let ownerIsViewing = newProps.userQuery.me && (newProps.userQuery.me.username === newProps.lambdaQuery.lambda.owner.username)
       this.setState({lambda: newLambda, ownerIsViewing})
     }
   }
