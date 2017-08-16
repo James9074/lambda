@@ -4,16 +4,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
-import { FormControlLabel } from 'material-ui/Form';
-import Switch from 'material-ui/Switch';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import SmallHeader from 'components/smallHeader';
 import styles from './styles'
-import DeleteIcon from 'material-ui-icons/Delete';
-import AddIcon from 'material-ui-icons/Add';
-import IconButton from 'material-ui/IconButton';
 import LambdaEditor from 'components/lambdaEditor'
 import LoginModal from 'components/loginModal'
 import request from 'request'

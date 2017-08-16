@@ -14,6 +14,7 @@ import SortIcon from 'material-ui-icons/Sort';
 import PlayArrowIcon from 'material-ui-icons/PlayArrow';
 import ContentCopyIcon from 'material-ui-icons/ContentCopy';
 import SaveIcon from 'material-ui-icons/Save';
+import DeleteIcon from 'material-ui-icons/Delete';
 import InputIcon from 'material-ui-icons/Input';
 import IconButton from 'material-ui/IconButton';
 import Editor from 'components/codeEditor'
@@ -100,7 +101,10 @@ class LambdaEditor extends Component {
                     <InputIcon /> 
                   </Badge>)}
                 </IconButton>
-                { this.props.edit && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleSaveLambda}>
+                { this.props.ownerIsViewing && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleDeleteLambda}>
+                  <DeleteIcon /> 
+                </IconButton> )}
+                { this.props.edit && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleSaveLambda}>
                   <SaveIcon /> 
                 </IconButton> )}   
 
@@ -159,7 +163,7 @@ class LambdaEditor extends Component {
                   code={this.state.editorCode} 
                   onChange={(newCode)=>this.onEditorUpdate(newCode)}
                   editorOptions={{
-                    readOnly: this.props.view
+                    readOnly: !this.props.edit
                   }}/>
               </Paper>
             </Grid>

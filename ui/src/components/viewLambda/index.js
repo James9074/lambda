@@ -21,15 +21,28 @@ import Dialog, {
 import request from 'request'
 import url from 'url'
 
-import { gql, graphql } from 'react-apollo';
+import { gql, graphql, compose } from 'react-apollo';
 
+let userQuery = graphql(gql`query CurrentUser{ me { displayName username imageUrl } }`, { name: 'userQuery' })
+let lambdaQuery = graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lambda(slug:$slug) { name, id, slug, inputs, description, createdAt, code, owner { username } } }`, 
+  {
+    name: 'lambdaQuery',
+    options: (ownProps) => ({
+      variables: {
+        slug: ownProps.slug
+      },
+    }
+  )})
+
+  let deleteLambda = graphql(gql`mutation DeleteLambda($input: input){ deleteLambda(input: $input) { message } }`, {
+    name: 'deleteLambda',
+    props: ({ mutate }) => ({
+      delete: (input) => mutate(input),
+    })
+  }) 
+    
 @withStyles(styles)
-@graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lambda(slug:$slug) { name, id, slug, inputs, description, createdAt, code, owner { username } } }`, {
-  options: (ownProps) => ({
-    variables: {
-      slug: ownProps.slug
-    },
-  })})
+@compose(userQuery,lambdaQuery,deleteLambda)
 
 class ViewLambda extends Component {
   constructor(props, context){
@@ -41,15 +54,18 @@ class ViewLambda extends Component {
       themeAnchorEl: undefined,
       codeOutput: '',
       codeErrors: '',
-      saveErrors: [],
+      deleteErrors: [],
       toastOpen: false,
-    }  
+      isEditing: false,
+      ownerIsViewing: false
+    }
   }
 
   componentWillReceiveProps(newProps){
-    if(newProps.data && (!this.state.lambda || (this.props.data.lambda.slug !== newProps.slug))){
-      let newLambda = newProps.data.lambda === null ? "none" : Object.assign({...newProps.data.lambda},{inputs:JSON.parse(newProps.data.lambda.inputs)})
-      this.setState({lambda: newLambda})
+    if(newProps.lambdaQuery.lambda && !newProps.lambdaQuery.loading &&  (this.state.lambda === undefined || (this.props.lambdaQuery.lambda.slug !== newProps.slug))){
+      let newLambda = newProps.lambdaQuery.lambda === null ? "none" : Object.assign({...newProps.lambdaQuery.lambda},{inputs:JSON.parse(newProps.lambdaQuery.lambda.inputs)})
+      let ownerIsViewing = newProps.userQuery.me.username === newProps.lambdaQuery.lambda.owner.username     
+      this.setState({lambda: newLambda, ownerIsViewing})
     }
   }
 
@@ -93,15 +109,38 @@ class ViewLambda extends Component {
   }
 
   deleteLambda = () => {
-    window.location = '/'
+
+    //Try to delete
+    this.props.delete({
+      variables: { 
+        input: this.state.lambda.slug
+      }
+    })
+    .then(({ data }) => {
+      this.setState({toastOpen: true, toastMessage: 'Lambda Deleted!', deleteErrors:[]},()=>{
+        this.context.router.history.push(`/`)
+      })
+    }).catch(({graphQLErrors}) => {
+        this.setState({toastOpen: true, toastMessage: 'There was an error deleting this Lambda', deleteErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error'})
+    });
+
+    //window.location = '/'
     this.setState({modalOpen:false})
   }
 
+  onDelete = () =>{
+    this.setState({modalOpen:true})
+  }
+
+  onEdit = () => {
+    this.setState({editing:!this.state.isEditing})
+  }
+
   render(){
-    const { data, classes, slug } = this.props;
-    const { lambda } = this.state;
+    const { classes, slug } = this.props;
+    const { lambda, ownerIsViewing, isEditing } = this.state;
     
-    if(!data || data.loading || !lambda || !slug){
+    if(!lambda || !slug){
       return (<div className={classes.loading}>
         <CircularProgress color="accent" size={100} />
         <Typography type="headline">Loading</Typography>
@@ -131,7 +170,7 @@ class ViewLambda extends Component {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button disabled onClick={this.deleteLambda}>
+                <Button onClick={this.deleteLambda}>
                   Yes
                 </Button>
                 <Button onClick={() => this.setState({modalOpen: false})}>
@@ -176,12 +215,14 @@ class ViewLambda extends Component {
 
             <Grid item xs={12} className={classes.viewEditor}>
             <LambdaEditor 
-              view
+              edit={isEditing}
+              ownerIsViewing={ownerIsViewing}
+              handleDeleteLambda={this.onDelete}
+              handleEditLambda={this.state.onEdit}
               loading={this.state.loadingOutput}
               lambda={lambda}
               output={this.state.editorOutput}
               testLambda={this.handleRunLambda} />
-              <Button raised className={classes.deleteLambda} onClick={() => this.setState({modalOpen:true})} color="primary">Delete</Button>
             </Grid> 
           </Grid>
       </div>
