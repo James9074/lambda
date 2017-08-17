@@ -54,4 +54,11 @@ export default createStyleSheet('LambdaEditor', theme => ({
   badge: {
     margin: `0 ${theme.spacing.unit * 2}px`,
   },
+  lambdaName:{
+    borderLeft: '5px solid #229dff',
+    paddingLeft: '10px',
+    top: '50%',
+    transform: 'translate(0,-50%)',
+    position: 'relative',
+  }
 }));

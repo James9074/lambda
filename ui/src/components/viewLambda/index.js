@@ -34,15 +34,20 @@ let lambdaQuery = graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lamb
     }
   )})
 
-  let deleteLambda = graphql(gql`mutation DeleteLambda($input: input){ deleteLambda(input: $input) { message } }`, {
-    name: 'deleteLambda',
+  let deleteLambda = graphql(gql`mutation DeleteLambda($input: DeleteLambdaInput!) { deleteLambda(input: $input) { result } }`, {
     props: ({ mutate }) => ({
       delete: (input) => mutate(input),
     })
   }) 
+
+  let createLambda = graphql(gql`mutation CreateLambda($input: CreateLambdaInput!){ createLambda(input: $input) { lambda{ id slug } } }`, {
+    props: ({ mutate }) => ({
+      save: (input) => mutate(input),
+    })
+  })  
     
 @withStyles(styles)
-@compose(userQuery,lambdaQuery,deleteLambda)
+@compose(userQuery,lambdaQuery,deleteLambda, createLambda)
 
 class ViewLambda extends Component {
   constructor(props, context){
@@ -61,6 +66,10 @@ class ViewLambda extends Component {
     }
   }
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+  
   componentWillReceiveProps(newProps){
     if(newProps.lambdaQuery.lambda && !newProps.lambdaQuery.loading &&  (this.state.lambda === undefined || (this.props.lambdaQuery.lambda.slug !== newProps.slug))){
       let newLambda = newProps.lambdaQuery.lambda === null ? "none" : Object.assign({...newProps.lambdaQuery.lambda},{inputs:JSON.parse(newProps.lambdaQuery.lambda.inputs)})
@@ -109,11 +118,10 @@ class ViewLambda extends Component {
   }
 
   deleteLambda = () => {
-
     //Try to delete
     this.props.delete({
       variables: { 
-        input: this.state.lambda.slug
+        input: { 'slug': this.state.lambda.slug }
       }
     })
     .then(({ data }) => {
@@ -133,7 +141,24 @@ class ViewLambda extends Component {
   }
 
   onEdit = () => {
-    this.setState({editing:!this.state.isEditing})
+    if(this.state.cachedLambda){
+      console.log(this.state.lambda.name, this.state.cachedLambda.name)
+    }
+    if(!this.state.isEditing)
+      this.setState({cachedLambda:Object.assign({},this.state.lambda)})
+    else
+      this.setState({lambda: this.state.cachedLambda})
+
+
+    this.setState({isEditing:!this.state.isEditing})
+  }
+
+  editLambda = (newData) => {
+    this.setState({lambda: Object.assign({},this.state.lambda,newData)})
+  }
+
+  onEditorUpdate = (code) => {
+    //test
   }
 
   render(){
@@ -178,11 +203,11 @@ class ViewLambda extends Component {
                 </Button>
               </DialogActions>
             </Dialog>
-            <Grid item xs={12} key={lambda.id}>
+            {/*Grid item xs={12} key={lambda.id}>
               <LambdaCard lambda={lambda} type={'single'}/>
-            </Grid>
+            </Grid>*/}
 
-            <Grid item xs={12} className={classes.inputs}>
+            {false && (<Grid item xs={12} className={classes.inputs}>
               <Grid container gutter={0}>
                 <Grid item xs={12}>
                   <Typography type="headline" className={classes.title}>Lambda Inputs</Typography>
@@ -194,31 +219,33 @@ class ViewLambda extends Component {
                    <Grid container gutter={8}>
                     {Array.isArray(this.state.lambda.inputs) && this.state.lambda.inputs.map(function(input, i){
                       return (
-                          <Grid key={i} item xs={3}>
-                            <TextField
-                              id="input-example"
-                              label={this.state.lambda.inputs[i].name || "Input #1"}
-                              value={this.state.lambda.inputs[i].example}
-                              onChange={(event)=>this.modifyInput(Object.assign(input,{example:event.target.value}))}
-                              className={classes.textField}
-                              fullWidth
-                              margin="dense"
-                            />
-                          </Grid>
-                        
+                        <Grid key={i} item xs={3}>
+                          <TextField
+                            id="input-example"
+                            label={this.state.lambda.inputs[i].name || "Input #1"}
+                            value={this.state.lambda.inputs[i].example}
+                            onChange={(event)=>this.modifyInput(Object.assign(input,{example:event.target.value}))}
+                            className={classes.textField}
+                            fullWidth
+                            margin="dense"
+                          />
+                        </Grid>
                       )
                     }.bind(this))}
                   </Grid>
                 </Grid>          
               </Grid>   
-            </Grid>  
+            </Grid>)}
 
             <Grid item xs={12} className={classes.viewEditor}>
             <LambdaEditor 
               edit={isEditing}
+              handleToggleEdit={this.onEdit}
+              onEditorUpdate={this.onEditorUpdate}
               ownerIsViewing={ownerIsViewing}
               handleDeleteLambda={this.onDelete}
               handleEditLambda={this.state.onEdit}
+              editLambda={this.editLambda}
               loading={this.state.loadingOutput}
               lambda={lambda}
               output={this.state.editorOutput}

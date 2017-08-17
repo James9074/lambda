@@ -233,6 +233,40 @@ export const createLambda = mutationWithClientMutationId({
   },
 });
 
+export const deleteLambda = mutationWithClientMutationId({
+  name: 'DeleteLambda',
+  inputFields: {
+    slug: { type: new GraphQLNonNull(GraphQLString) },
+  },
+  outputFields: {
+    result: { type: GraphQLString },
+  },
+  async mutateAndGetPayload(input, context) {
+    const { t } = context;
+    const { slug } = input
+
+    //if (type !== 'Lambda') {
+    //  throw new Error(t('The lambda ID is invalid.'));
+   // }
+    let errors = []
+    const lambdaToDelete = await db.table('lambdas').where('slug', '=', slug).first('*');
+
+    if (!lambdaToDelete) {
+      errors.push({ key: '', message: 'That lambda was not found. Please make sure that it exists.' });
+    } else if (lambdaToDelete.owner_id !== context.user.id){
+      errors.push({ key: '', message: 'Only the lambda owner can delete this lambda' });
+    }
+
+    if (errors.length) {
+      throw new ValidationError(errors);
+    }
+
+
+    await db.table('lambdas').where('slug', '=', slug).delete();
+    return { result: 'Succesfully deleted Lambda' }
+  },
+});
+
 export const updateLambda = mutationWithClientMutationId({
   name: 'UpdateLambda',
   inputFields: {

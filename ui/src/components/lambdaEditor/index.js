@@ -9,8 +9,11 @@ import Badge from 'material-ui/Badge';
 import Switch from 'material-ui/Switch';
 import Paper from 'material-ui/Paper';
 import styles from './styles'
+import Typography from 'material-ui/Typography';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import SortIcon from 'material-ui-icons/Sort';
+import EditIcon from 'material-ui-icons/Edit';
+import UndoIcon from 'material-ui-icons/Undo';
 import PlayArrowIcon from 'material-ui-icons/PlayArrow';
 import ContentCopyIcon from 'material-ui-icons/ContentCopy';
 import SaveIcon from 'material-ui-icons/Save';
@@ -92,6 +95,9 @@ class LambdaEditor extends Component {
                   fullWidth
                   margin="dense"
                 />)}
+
+                {!this.props.edit && (<Typography type="headline" className={classes.lambdaName}>{this.props.lambda.name}</Typography>)}
+               
               </Grid>       
               
               <Grid item xs={12} md={6} style={{textAlign:'right'}}>
@@ -101,9 +107,16 @@ class LambdaEditor extends Component {
                     <InputIcon /> 
                   </Badge>)}
                 </IconButton>
-                { this.props.ownerIsViewing && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleDeleteLambda}>
+                { this.props.ownerIsViewing && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleDeleteLambda}>
                   <DeleteIcon /> 
                 </IconButton> )}
+                { this.props.ownerIsViewing && !this.props.edit && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleToggleEdit}>
+                  <EditIcon />
+                </IconButton> )}
+                { this.props.ownerIsViewing && this.props.edit && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleToggleEdit}>
+                  <UndoIcon />
+                </IconButton> )}                
+               
                 { this.props.edit && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleSaveLambda}>
                   <SaveIcon /> 
                 </IconButton> )}   
@@ -159,7 +172,6 @@ class LambdaEditor extends Component {
               <Paper elevation={4}>
                 <Editor 
                   editorTheme={themeOptions[this.state.editorTheme].key} 
-                  canEdit={this.props.edit === true}
                   code={this.state.editorCode} 
                   onChange={(newCode)=>this.onEditorUpdate(newCode)}
                   editorOptions={{

@@ -167,13 +167,14 @@ function entryPoint(inputs){
               <Grid item xs={12} >
                 <LambdaEditor 
                   edit
+                  isNewLambda={true}
                   errors={this.state.saveErrors}
                   loading={this.state.loadingOutput}
                   lambda={this.state.lambda}
                   output={this.state.editorOutput}
                   editLambda={this.setLambda}
                   testLambda={this.handleTestLambda}
-                  saveLambda={this.handleSaveLambda}
+                  handleSaveLambda={this.handleSaveLambda}
                   modifyInput={this.modifyInput}
                   addInput={this.addInput}
                   removeInput={this.removeInput}
