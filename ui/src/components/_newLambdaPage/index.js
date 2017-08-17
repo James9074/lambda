@@ -75,7 +75,7 @@ function entryPoint(inputs){
     newInputs.push({
       name: '',
       type: '',
-      test: ''
+      example: ''
     });
     this.setLambda({inputs: newInputs})
   }

@@ -39,6 +39,7 @@ class LambdaInputs extends Component {
 
   render() {
     const { lambdaInputs, classes } = this.props;
+
     return (
       <div className={classes.root + ' ' + (this.props.show ? classes.activeRoot : classes.hiddenRoot)}>
       <div className={classes.root} onClick={this.props.onClose}>
@@ -63,6 +64,11 @@ class LambdaInputs extends Component {
                     </ListItem>
                   </div>
                 ))}
+
+                {this.props.edit && (lambdaInputs.length === 0) && (
+                  <IconButton className={classes.button} aria-label="Add" onClick={this.props.addInput}>
+                    <AddIcon />
+                  </IconButton>)}
 
                 {this.props.edit && lambdaInputs.map((input, i) => (
                   <div key={i}>

@@ -43,7 +43,7 @@ let lambdaQuery = graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lamb
     })
   }) 
 
-  let updateLambda = graphql(gql`mutation UpdateLambda($input: UpdateLambdaInput!){ updateLambda(input: $input) { lambda { id slug } } }`, {
+  let updateLambda = graphql(gql`mutation UpdateLambda($input: UpdateLambdaInput!){ updateLambda(input: $input) { lambda { id slug inputs } } }`, {
     props: ({ mutate }) => ({
       update: (input) => mutate(input),
     })
@@ -185,9 +185,9 @@ class ViewLambda extends Component {
       }
     })
     .then(({ data }) => {
-      this.setState({toastOpen: true, toastMessage: 'Lambda Saved!', graphqlErrors:[], isEditing: false},()=>{
+      //TODO: Figure out how to really deal with this parsing bznz
+      this.setState({toastOpen: true, toastMessage: 'Lambda Saved!', graphqlErrors:[], isEditing: false, lambda: Object.assign({},this.state.lambda, {inputs: JSON.parse(data.updateLambda.lambda.inputs)})},()=>{
         //this.context.router.history.push(`/${data.createLambda.lambda.slug}`)
-        //console.log(data.updateLambda.lambda)
       })
     }).catch(({graphQLErrors}) => {
         this.setState({toastOpen: true, toastMessage: 'There was an error saving this Lambda', graphqlErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error'})
@@ -202,7 +202,7 @@ class ViewLambda extends Component {
     newInputs.push({
       name: '',
       type: '',
-      test: ''
+      example: ''
     });
     this.setLambda({inputs: newInputs})
   }
