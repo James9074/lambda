@@ -182,7 +182,7 @@ class LambdaEditor extends Component {
                   code={this.state.editorCode} 
                   onChange={(newCode)=>this.onEditorUpdate(newCode)}
                   editorOptions={{
-                    readOnly: !this.props.edit
+                    readOnly: !this.state.edit
                   }}/>
               </Paper>
             </Grid>

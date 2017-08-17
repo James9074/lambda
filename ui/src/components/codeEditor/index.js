@@ -10,7 +10,6 @@ class Editor extends React.Component {
   }
   editorDidMount(editor, monaco) {
     this.setState({activeEditor: monaco.editor})
-    //editor.focus();
   }
 
   onChange(newValue, e) {
