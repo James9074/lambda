@@ -35,3 +35,177 @@ docker-compose -f docker-compose.yml up -d # Starts the services in prod mode wi
 
 ### Prod Notes
 The `docker-compose.yml` build only incudes the build output, meaning `/src`, `/test`, `/db`, and a few other things are not in the image.
+
+
+### Quick GraphQL Query Examples
+```graphql
+mutation DeleteLambda($input: DeleteLambdaInput!) {
+  deleteLambda(input: $input) {
+    result
+  }
+}
+
+mutation UpdateLambda($updateInput: UpdateLambdaInput!) {
+  updateLambda(input: $updateInput) {
+    lambda{
+      id,
+      name,
+      slug,
+      code,
+      updatedAt
+    }
+  }
+}
+
+query GetCurrentUser {
+  me {
+    id
+    displayName
+    lambdas {
+      name,
+      slug,
+    }
+  }
+}
+
+query GetSingleUser {
+  node(id: "VXNlcjplMmQ5N2RiNi03YTE1LTExZTctYmQ1Zi0zMzk3NDBmMzQ5NGM=") {
+    id
+    ... on User {
+      displayName
+      username
+      emails{
+        email
+      }
+      lambdas {
+        name
+        slug
+      }
+    }
+  }
+}
+
+query GetSingleUserById {
+  user(id:"3339ee26-7a4d-11e7-9b78-87460c3a2f4b") {
+    id
+    displayName
+    lambdas {
+      name,
+      slug,
+    }
+  }
+}
+
+query GetSingleUserByUsername {
+  user(username:"Hillard.Streich46") {
+    id
+    displayName
+    lambdas {
+      name,
+      slug,
+    }
+  }
+}
+
+query GetAllUsers {
+  users(first: 10) {
+    edges {
+      node {
+        id
+        displayName
+        lambdas {
+          name
+          slug
+        }
+      }
+    }
+  }
+}
+
+query GetAllLambdas {
+  lambdas(first: 10) {
+    edges {
+      node {
+        name
+        slug
+        owner_id,
+        owner{
+          displayName,
+          username,
+          emails{
+            email
+          }
+        }
+      }
+    }
+  }
+}
+
+query GetSingleLambdaBySlug {
+  lambda(slug:"H1SxurWuW") {
+    name,
+    id,
+    slug,
+    owner{
+      username
+      id
+    }
+  }
+}
+
+query GetAllLambdasByUsername {
+  lambdas(username:"Hillard.Streich46") {
+    edges {
+      node {
+        name
+        slug
+        owner_id,
+        owner{
+          displayName,
+          username,
+          emails{
+            email
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation CreateLambda($createInput: CreateLambdaInput!){
+  createLambda(input: $createInput) {
+    lambda{
+      id
+    }
+  }
+}
+
+```
+
+...and the inputs:
+
+```JSON
+{
+  "input": {
+    "slug": "H1SxurWuW"
+  },
+  "createInput": {
+    "slug": "H1SxurWuW",
+    "name": "test",
+    "description": " test",
+    "inputs": "[]",
+    "code": "teasdasdst",
+    "owner_id": "fc956662-822a-11e7-9da0-e7a666d18b85",
+    "public": 1
+  },
+  "updateInput": {
+    "slug": "H1SxurWuW",
+    "name": "updated",
+    "description": " test2",
+    "inputs": "[]",
+    "code": "teasdasdst",
+    "owner_id": "fc956662-822a-11e7-9da0-e7a666d18b85",
+    "public": 1
+  }
+}
+```
