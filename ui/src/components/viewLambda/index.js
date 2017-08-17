@@ -197,6 +197,30 @@ class ViewLambda extends Component {
     //test
   }
 
+  addInput = () => {
+    var newInputs = this.state.lambda.inputs;
+    newInputs.push({
+      name: '',
+      type: '',
+      test: ''
+    });
+    this.setLambda({inputs: newInputs})
+  }
+
+  modifyInput = (i, value) => {
+    var newInputs = this.state.lambda.inputs;
+    newInputs[i] = value;
+    this.setLambda({inputs: newInputs})
+  }  
+
+  removeInput = (input) => {
+    var newInputs = this.state.lambda.inputs;
+    console.log(newInputs.indexOf(input));
+    newInputs.splice(newInputs.indexOf(input),1);
+    console.log(newInputs)
+    this.setLambda({inputs: newInputs})
+  }  
+
   render(){
     const { classes, slug } = this.props;
     const { lambda, ownerIsViewing, isEditing } = this.state;
@@ -285,6 +309,9 @@ class ViewLambda extends Component {
               editLambda={this.editLambda}
               loading={this.state.loadingOutput}
               errors={this.state.graphqlErrors}
+              modifyInput={this.modifyInput}
+              addInput={this.addInput}
+              removeInput={this.removeInput}
               lambda={lambda}
               output={this.state.editorOutput}
               testLambda={this.handleRunLambda} />
