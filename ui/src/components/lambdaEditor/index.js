@@ -71,10 +71,6 @@ class LambdaEditor extends Component {
     this.setState({ themeMenuOpen: false });
   };
 
-  handleSaveLambda = () => {
-    this.props.saveLambda();
-  }
-
   render(){
     const { classes } = this.props;
 
@@ -85,7 +81,7 @@ class LambdaEditor extends Component {
         <Grid container gutter={8}  className={classes.editorOptions}>
           <Grid item xs={12} xl={12}>
             <Grid container>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={2}>
                 {this.props.edit && (<TextField
                   id="lambda-name"
                   value={this.props.lambda.name}
@@ -93,21 +89,32 @@ class LambdaEditor extends Component {
                   label={`${this.props.errors && this.props.errors.name !== undefined ? '* ' : ''}Lambda Name`}                  
                   onChange={(event) => this.props.editLambda({name: event.target.value})}
                   fullWidth
-                  margin="dense"
+                  margin="none"
                 />)}
+                </Grid>
+                <Grid item xs={12} md={5}>
+                {this.props.edit && (<TextField
+                  id="lambda-description"
+                  value={this.props.lambda.description}
+                  error={this.props.errors && this.props.errors.description !== undefined}
+                  label={`${this.props.errors && this.props.errors.description !== undefined ? '* ' : ''}Lambda Description`}                  
+                  onChange={(event) => this.props.editLambda({description: event.target.value})}
+                  fullWidth
+                  margin="none"
+                />)}                
 
-                {!this.props.edit && (<Typography type="headline" className={classes.lambdaName}>{this.props.lambda.name}</Typography>)}
+                {!this.props.edit && (<Typography type="headline" className={classes.lambdaName}>{/*this.props.lambda.name*/}</Typography>)}
                
               </Grid>       
               
-              <Grid item xs={12} md={6} style={{textAlign:'right'}}>
+              <Grid item xs={12} md={5} className={classes.editorButtons}>
                 <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={()=>this.setState({showInputs: !this.state.showInputs})}>
                 { !validInputs ? (<InputIcon /> ) : 
                   (<Badge className={classes.badge} badgeContent={validInputs} color="accent">
                     <InputIcon /> 
                   </Badge>)}
                 </IconButton>
-                { this.props.ownerIsViewing && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleDeleteLambda}>
+                { this.props.ownerIsViewing && !this.props.edit && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleDeleteLambda}>
                   <DeleteIcon /> 
                 </IconButton> )}
                 { this.props.ownerIsViewing && !this.props.edit && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleToggleEdit}>
@@ -119,7 +126,7 @@ class LambdaEditor extends Component {
                
                 { this.props.edit && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleSaveLambda}>
                   <SaveIcon /> 
-                </IconButton> )}   
+                </IconButton> )}
 
                 { this.props.view && (<IconButton disabled className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleCloneLambda}>
                   <ContentCopyIcon /> 
@@ -132,11 +139,11 @@ class LambdaEditor extends Component {
                 </IconButton>
                 <FormControlLabel
                   className={classes.privacy}
-                  label="Public"
+                  label=""
                   control={
                     <Switch
                       disabled
-                      checked={this.props.lambda.public}
+                      checked={this.props.lambda.public === 1}
                       onChange={(event, checked) => this.props.editLambda({ public: checked })} />
                   }
                 />                 

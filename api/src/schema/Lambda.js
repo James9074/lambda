@@ -242,12 +242,8 @@ export const deleteLambda = mutationWithClientMutationId({
     result: { type: GraphQLString },
   },
   async mutateAndGetPayload(input, context) {
-    const { t } = context;
     const { slug } = input
 
-    //if (type !== 'Lambda') {
-    //  throw new Error(t('The lambda ID is invalid.'));
-   // }
     let errors = []
     const lambdaToDelete = await db.table('lambdas').where('slug', '=', slug).first('*');
 
@@ -270,23 +266,32 @@ export const deleteLambda = mutationWithClientMutationId({
 export const updateLambda = mutationWithClientMutationId({
   name: 'UpdateLambda',
   inputFields: {
-    id: { type: new GraphQLNonNull(GraphQLID) },
-    ...inputFields,
+    id: { type: GraphQLID },
+    slug: { type: GraphQLString },
+    ...inputFields
   },
   outputFields,
   async mutateAndGetPayload(input, context) {
     const { t } = context;
-    const { type, id } = fromGlobalId(input.id);
 
-    if (type !== 'Lambda') {
-      throw new Error(t('The lambda ID is invalid.'));
+    let lambdaToUpdate = db.table('lambdas');
+
+    if (input.id !== undefined) {
+      const { type, id } = fromGlobalId(input.id);
+      if (type !== 'Lambda') {
+        throw new Error(t('The lambda ID is invalid.'));
+      }
+      lambdaToUpdate = lambdaToUpdate.where('id', '=', id)
+    } else if (input.slug !== undefined){
+      lambdaToUpdate = lambdaToUpdate.where('slug', '=', input.slug)
     }
-
     const { data, errors } = validate(input, context);
-    const newLambda = await db.table('lambdas').where('id', '=', id).first('*');
+    lambdaToUpdate = await lambdaToUpdate.first('*');
 
-    if (!newLambda) {
-      errors.push({ key: '', message: 'Failed to save the lambda. Please make sure that it exists.' });
+    if (!lambdaToUpdate) {
+      errors.push({ key: '', message: 'That lambda was not found. Please make sure that it exists.' });
+    } else if (lambdaToUpdate.owner_id !== context.user.id){
+      errors.push({ key: '', message: 'Only the lambda owner can update this lambda' });
     }
 
     if (errors.length) {
@@ -295,14 +300,14 @@ export const updateLambda = mutationWithClientMutationId({
 
     data.updated_at = db.raw('CURRENT_TIMESTAMP');
 
-    await db.table('lambdas').where('id', '=', id).update(data);
-    await context.lambdas.clear(id);
-    return context.lambdas.load(id).then(x => ({ lambda: x }));
+    await db.table('lambdas').where('id', '=', lambdaToUpdate.id).update(data);
+    await context.lambdas.clear(lambdaToUpdate.id);
+    return context.lambdas.load(lambdaToUpdate.id).then(x => ({ lambda: x }));
   },
 });
 
-//Util
+// Util
 String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
+  let target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
 };

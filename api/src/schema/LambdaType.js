@@ -28,7 +28,7 @@ export default new GraphQLObjectType({
     },
 
     public: {
-      type: new GraphQLNonNull(GraphQLInt)
+      type: GraphQLInt
     },
 
 

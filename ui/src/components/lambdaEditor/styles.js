@@ -60,5 +60,13 @@ export default createStyleSheet('LambdaEditor', theme => ({
     top: '50%',
     transform: 'translate(0,-50%)',
     position: 'relative',
+  },
+  editorButtons:{
+    textAlign: 'right',
+    '& button':{
+      top: '50%',
+      transform: 'translate(0,-50%)',
+      position: 'relative',
+    }
   }
 }));

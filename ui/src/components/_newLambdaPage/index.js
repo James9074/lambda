@@ -181,27 +181,7 @@ function entryPoint(inputs){
                   onEditorUpdate={(newCode) => this.onEditorUpdate(newCode)} />
               </Grid>
             </Grid>
-          </Grid>
-          <Grid container gutter={40} className={classes.topOptions}>
-              <Grid item xs={12} md={12}>
-                <Grid container gutter={0} className={classes.description}>
-                  <Grid item xs={12}>
-                    <TextField
-                      id="lambda-description"
-                      label="Lambda Description"
-                      value={this.state.lambda.description}
-                      onChange={(event) => this.setLambda({ description: event.target.value })}
-                      className={classes.textField}
-                      fullWidth
-                      multiline
-                      rows="5"
-                      rowsMax="5"
-                      margin="normal"
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>          
+          </Grid>        
         </Paper>
 
         <Snackbar
