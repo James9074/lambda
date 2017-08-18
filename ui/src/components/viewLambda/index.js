@@ -145,9 +145,6 @@ class ViewLambda extends Component {
   }
 
   handleToggleEdit = () => {
-    if(this.state.cachedLambda){
-      console.log(this.state.lambda.name, this.state.cachedLambda.name)
-    }
     if(!this.state.isEditing)
       this.setState({cachedLambda:Object.assign({},this.state.lambda)})
     else
@@ -190,7 +187,10 @@ class ViewLambda extends Component {
         //this.context.router.history.push(`/${data.createLambda.lambda.slug}`)
       })
     }).catch(({graphQLErrors}) => {
-        this.setState({toastOpen: true, toastMessage: 'There was an error saving this Lambda', graphqlErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error'})
+        let message = 'There was an error saving this Lambda'
+        if(graphQLErrors !== undefined && graphQLErrors[0].state.inputs !== undefined)
+          message = graphQLErrors[0].state.inputs[0]
+        this.setState({toastOpen: true, toastMessage: message, graphqlErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error'})
     });
   }
   onEditorUpdate = (code) => {
@@ -215,9 +215,7 @@ class ViewLambda extends Component {
 
   removeInput = (input) => {
     var newInputs = this.state.lambda.inputs;
-    console.log(newInputs.indexOf(input));
     newInputs.splice(newInputs.indexOf(input),1);
-    console.log(newInputs)
     this.setLambda({inputs: newInputs})
   }  
 
@@ -319,6 +317,7 @@ class ViewLambda extends Component {
           </Grid>
           <Snackbar
             open={this.state.toastOpen}
+            className={classes.snackBar}
             onRequestClose={()=>this.setState({toastOpen: false, toastMessage: ''})}
             transition={Fade}
             SnackbarContentProps={{

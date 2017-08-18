@@ -73,7 +73,6 @@ class LambdaEditor extends Component {
 
   render(){
     const { classes } = this.props;
-
     let validInputs = this.props.lambda.inputs.filter(input => input.name.length > 0).length
 
     return (
@@ -108,9 +107,9 @@ class LambdaEditor extends Component {
               </Grid>       
               
               <Grid item xs={12} md={5} className={classes.editorButtons}>
-                <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={()=>this.setState({showInputs: !this.state.showInputs})}>
+                <IconButton aria-label="Theme" aria-owns="theme-menu" onClick={()=>this.setState({showInputs: !this.state.showInputs})} className={(this.props.errors && this.props.errors.inputs !== undefined) ? classes.error : ''}>
                 { !validInputs ? (<InputIcon /> ) : 
-                  (<Badge className={classes.badge} badgeContent={validInputs} color="accent">
+                  (<Badge className={classes.badge} badgeContent={validInputs} color='accent'>
                     <InputIcon /> 
                   </Badge>)}
                 </IconButton>

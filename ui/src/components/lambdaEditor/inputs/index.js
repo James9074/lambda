@@ -60,7 +60,7 @@ class LambdaInputs extends Component {
                   <div key={i}>
                     <Divider />
                     <ListItem>
-                      <ListItemText primary={input.name.length > 0 ? input.name : `Nameless Input #${i+1}`} secondary={`${input.example.length > 0 ? 'Example: ' + input.example : 'No example provided'}`}/>
+                      <ListItemText primary={input.name && input.name.length > 0 ? input.name : `Nameless Input #${i+1}`} secondary={`${input.example && input.example.length > 0 ? 'Example: ' + input.example : 'No example provided'}`}/>
                     </ListItem>
                   </div>
                 ))}

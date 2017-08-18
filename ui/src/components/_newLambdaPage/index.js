@@ -88,9 +88,7 @@ function entryPoint(inputs){
 
   removeInput = (input) => {
     var newInputs = this.state.lambda.inputs;
-    console.log(newInputs.indexOf(input));
     newInputs.splice(newInputs.indexOf(input),1);
-    console.log(newInputs)
     this.setLambda({inputs: newInputs})
   }
 
@@ -117,8 +115,6 @@ function entryPoint(inputs){
 
     request(settings, (err, response, body) => {
       this.setState({loadingOutput: false})
-      console.log(response.statusCode)
-      console.log(body) // this is empty instead of return the body that has been sent
       this.setState({editorOutput: body.output || body.lambda_error || body.error})
     })
     
@@ -142,7 +138,10 @@ function entryPoint(inputs){
         this.context.router.history.push(`/${data.createLambda.lambda.slug}`)
       })
     }).catch(({graphQLErrors}) => {
-        this.setState({toastOpen: true, toastMessage: 'There was an error saving this Lambda', saveErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error'})
+        let message = 'There was an error saving this Lambda'
+        if(graphQLErrors !== undefined && graphQLErrors[0].state.inputs !== undefined)
+          message = graphQLErrors[0].state.inputs[0]
+        this.setState({toastOpen: true, toastMessage: message, graphqlErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error'})        
     });
   }
 
@@ -168,7 +167,7 @@ function entryPoint(inputs){
                 <LambdaEditor 
                   edit
                   isNewLambda={true}
-                  errors={this.state.saveErrors}
+                  errors={this.state.graphqlErrors}
                   loading={this.state.loadingOutput}
                   lambda={this.state.lambda}
                   output={this.state.editorOutput}
@@ -186,6 +185,7 @@ function entryPoint(inputs){
 
         <Snackbar
           open={this.state.toastOpen}
+          className={classes.snackBar}
           onRequestClose={()=>this.setState({toastOpen: false, toastMessage: ''})}
           transition={Fade}
           SnackbarContentProps={{

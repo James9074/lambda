@@ -25,6 +25,7 @@ query GetAllLambdas($afterCursor: String!) {
         name
         description
         slug
+        inputs
         owner{
           displayName,
           username
@@ -122,7 +123,7 @@ class Lambdas extends Component {
           <Grid container gutter={24}>
             {data.lambdas.edges.map(function(item){
               return (<Grid item xs={12} lg={6} className={classes.lambdaCard} key={item.node.id}>
-                        <LambdaCard lambda={item.node}/>
+                        <LambdaCard lambda={Object.assign({},item.node,{inputs:JSON.parse(item.node.inputs)})}/>
                       </Grid>)
             })}
           </Grid>

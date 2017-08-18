@@ -191,6 +191,16 @@ function validate(input, { t, user }) {
   } else data.public = 0;
 
   /* Validations for inputs */
+  try {
+    let inputs = JSON.parse(input.inputs)
+    let inputArray = inputs.map(x => x.name)
+    let sortedInputs = inputArray.slice().sort()
+    for (let i = 0; i < sortedInputs.length; i += 1) {
+      if (i > 0 && sortedInputs[i].toLowerCase() === sortedInputs[i - 1].toLowerCase())
+        errors.push({ key: 'inputs', message: t('The inputs must have unique names') })
+    }
+  } catch (e) { errors.push({ key: 'inputs', message: t('The inputs must be a valid JSON object with unique names') }); }
+
   if (typeof input.inputs !== 'undefined') {
     if (!validator.isLength(input.inputs, { max: 400 })) {
       errors.push({ key: 'inputs', message: t('The inputs field cannot be longer than 400 characters long.') });

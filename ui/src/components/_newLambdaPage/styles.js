@@ -31,5 +31,13 @@ export default createStyleSheet('NewLambdaPage', theme => ({
     marginTop: '25px',
   },
   themeButton: {
+  },
+  snackBar:{
+    "& div":{
+      "& div":{
+        width: '100%',
+        textAlign: 'center'
+      } 
+    }
   }
 }));

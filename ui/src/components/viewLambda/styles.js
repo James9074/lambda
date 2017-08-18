@@ -29,5 +29,13 @@ export default createStyleSheet('ViewLambda', theme => ({
     float: 'right',
     marginTop: '15px',
     marginBottom:'15px'
+  },
+  snackBar:{
+    "& div":{
+      "& div":{
+        width: '100%',
+        textAlign: 'center'
+      } 
+    }
   }
 }));

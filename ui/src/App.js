@@ -30,25 +30,6 @@ class App extends Component {
     loginModalOpen:false,
   }
 
-
-  _handleShortcuts = (action, event) => {
-    console.log(event)
-    switch (action) {
-      case 'FIND':
-        this.child.focusSearch();
-        break;
-      default:
-        break;
-    }
-  }
-
-  // Handles login redirect if needed
-  componentWillUpdate(nextProps){
-   // if(nextProps.data.me === null)
-    //  window.location = '/login/test'
-    //  fetch('/login/facebook', { method: 'GET', credentials: 'include' }).then(() => window.location = window.location)
-  }
-
   addNew = (event, index) => {
     if(!this.props.data.me)
       this.setState({loginModalOpen:true})

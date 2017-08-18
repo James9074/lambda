@@ -68,5 +68,8 @@ export default createStyleSheet('LambdaEditor', theme => ({
       transform: 'translate(0,-50%)',
       position: 'relative',
     }
+  },
+  error:{
+    color: 'red',
   }
 }));
