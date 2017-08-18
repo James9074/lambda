@@ -1,0 +1,18 @@
+FROM node:8.1.2
+RUN yarn global add serve
+
+WORKDIR /usr/src/app
+
+# COPY package.json yarn.lock /tmp/
+# RUN cd /tmp && yarn install
+# RUN mkdir -p /usr/src/app && cd /usr/src/app && ln -s /tmp/node_modules
+
+COPY build/ /usr/src/app/build
+
+# RUN yarn build
+
+# RUN rm -rf node_modules && rm -rf /tmp/node_modules
+
+CMD ["serve", "-s" "build"]
+
+
