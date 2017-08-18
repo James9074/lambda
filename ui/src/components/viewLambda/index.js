@@ -26,7 +26,7 @@ import Fade from 'material-ui/transitions/Fade';
 
 import { gql, graphql, compose } from 'react-apollo';
 
-let userQuery = graphql(gql`query CurrentUser{ me { displayName username imageUrl } }`, { name: 'userQuery' })
+let userQuery = graphql(gql`query CurrentUser{ me { displayName username imageUrl admin } }`, { name: 'userQuery' })
 let lambdaQuery = graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lambda(slug:$slug) { name, id, slug, inputs, description, createdAt, code, owner_id, public, owner { username } } }`, 
   {
     name: 'lambdaQuery',
@@ -66,6 +66,7 @@ class ViewLambda extends Component {
       toastOpen: false,
       isEditing: false,
       ownerIsViewing: false,
+      adminIsViewing: false,
       toastMessage: ''
     }
   }
@@ -78,7 +79,8 @@ class ViewLambda extends Component {
     if(newProps.lambdaQuery.lambda && !newProps.lambdaQuery.loading &&  (this.state.lambda === undefined || (this.props.lambdaQuery.lambda.slug !== newProps.slug))){
       let newLambda = newProps.lambdaQuery.lambda === null ? "none" : Object.assign({...newProps.lambdaQuery.lambda},{inputs:JSON.parse(newProps.lambdaQuery.lambda.inputs)})
       let ownerIsViewing = newProps.userQuery.me && (newProps.userQuery.me.username === newProps.lambdaQuery.lambda.owner.username)
-      this.setState({lambda: newLambda, ownerIsViewing})
+      let adminIsViewing = newProps.userQuery.me && newProps.userQuery.me.admin === 1;
+      this.setState({lambda: newLambda, ownerIsViewing, adminIsViewing})
     }
   }
 
@@ -221,7 +223,7 @@ class ViewLambda extends Component {
 
   render(){
     const { classes, slug } = this.props;
-    const { lambda, ownerIsViewing, isEditing } = this.state;
+    const { lambda, ownerIsViewing, adminIsViewing, isEditing } = this.state;
     
     if(!lambda || !slug){
       return (<div className={classes.loading}>
@@ -301,6 +303,7 @@ class ViewLambda extends Component {
               handleToggleEdit={this.handleToggleEdit}
               onEditorUpdate={this.onEditorUpdate}
               ownerIsViewing={ownerIsViewing}
+              adminIsViewing={adminIsViewing}
               handleDeleteLambda={this.handleDeleteLambda}
               handleEditLambda={this.state.onEdit}
               handleSaveLambda={this.handleUpdateLambda}

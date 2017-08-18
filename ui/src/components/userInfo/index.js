@@ -77,8 +77,8 @@ class UserInfo extends Component {
           </Button>            
           <Hidden smDown>
             <div className={classes.nameText}>
-              <span className={classes.displayName}>{user.displayName}</span>
-              <span className={classes.userName}>{user.username}</span>
+              <span className={classes.displayName}>{user.displayName || user.username}</span>
+              <span className={classes.userName}>{user.displayName && user.username}</span>
             </div>
           </Hidden>
           </div>

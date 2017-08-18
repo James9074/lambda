@@ -149,7 +149,7 @@ function validate(input, { t, user }) {
   const data = {};
 
   if (!user) {
-    throw new ValidationError([{ key: '', message: t('Only authenticated users can create lambdas.') }]);
+    throw new ValidationError([{ key: '', message: t('Only authenticated users can create or update lambdas.') }]);
   }
 
   /* Validations for name */
@@ -254,12 +254,17 @@ export const deleteLambda = mutationWithClientMutationId({
   async mutateAndGetPayload(input, context) {
     const { slug } = input
 
+    let { t, user } = context
+    if (!user) {
+      throw new ValidationError([{ key: '', message: t('Only authenticated users can delete lambdas.') }]);
+    }
+
     let errors = []
     const lambdaToDelete = await db.table('lambdas').where('slug', '=', slug).first('*');
 
     if (!lambdaToDelete) {
       errors.push({ key: '', message: 'That lambda was not found. Please make sure that it exists.' });
-    } else if (lambdaToDelete.owner_id !== context.user.id){
+    } else if (!context.user.admin && lambdaToDelete.owner_id !== context.user.id){
       errors.push({ key: '', message: 'Only the lambda owner can delete this lambda' });
     }
 
@@ -300,7 +305,7 @@ export const updateLambda = mutationWithClientMutationId({
 
     if (!lambdaToUpdate) {
       errors.push({ key: '', message: 'That lambda was not found. Please make sure that it exists.' });
-    } else if (lambdaToUpdate.owner_id !== context.user.id){
+    } else if (!context.user.admin && lambdaToUpdate.owner_id !== context.user.id){
       errors.push({ key: '', message: 'Only the lambda owner can update this lambda' });
     }
 

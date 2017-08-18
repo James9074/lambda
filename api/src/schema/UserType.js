@@ -1,6 +1,6 @@
 /* @flow */
 
-import { GraphQLObjectType, GraphQLList, GraphQLString, } from 'graphql';
+import { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt } from 'graphql';
 import { globalIdField } from 'graphql-relay';
 import { nodeInterface } from './Node';
 
@@ -37,6 +37,10 @@ export default new GraphQLObjectType({
       resolve(parent) {
         return parent.image_url;
       },
+    },
+
+    admin: {
+      type: GraphQLInt,
     },
 
     lambdas: {

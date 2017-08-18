@@ -11,6 +11,7 @@ module.exports.up = async (db) => {
     table.string('display_name', 100);
     table.string('username', 100);
     table.string('image_url', 200);
+    table.integer('admin').notNullable().defaultTo(0);
     table.jsonb('emails').notNullable().defaultTo('[]');
     table.timestamps(false, true);
   });
