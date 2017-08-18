@@ -15,9 +15,7 @@ build-ui:
   stage: build  
   script:
     - cd ui
-    - yarn install
-    - yarn build   
-    - docker build . -t wlan1/robot-ui:$CI_COMMIT_REF_SLUG  --file Dockerfile-prod
+    - docker build . -t wlan1/robot-ui:$CI_COMMIT_REF_SLUG --file Dockerfile-prod --build-arg ANALYTICS_TRACKING_ID=$ANALYTICS_TRACKING_ID
     - docker tag wlan1/robot-ui:$CI_COMMIT_REF_SLUG wlan1/robot-ui:latest
     - docker login -u $docker_username -p $docker_password
     - docker push wlan1/robot-ui:$CI_COMMIT_REF_SLUG
