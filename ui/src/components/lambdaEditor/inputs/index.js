@@ -7,6 +7,8 @@ import List, { ListItem, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import DeleteIcon from 'material-ui-icons/Delete';
 import AddIcon from 'material-ui-icons/Add';
+import SaveIcon from 'material-ui-icons/Save';
+import EditIcon from 'material-ui-icons/Edit';
 import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField';
 import Slide from 'material-ui/transitions/Slide';
@@ -14,14 +16,18 @@ import styles from './styles'
 
 
 class LambdaInputs extends Component {
-  state = {
-    open: {
-      top: false,
-      left: false,
-      bottom: false,
-      right: false,
-    },
-  };
+  constructor(props, context){
+    super(props);
+    this.state = {
+      open: {
+        top: false,
+        left: false,
+        bottom: false,
+        right: false,
+      },
+      localInputs: props.lambdaInputs.slice()
+    };
+  }
 
   static contextTypes = {
     router: PropTypes.object.isRequired
@@ -35,10 +41,23 @@ class LambdaInputs extends Component {
   modifyInputExample = (event, i, input) => {
     let newInput = Object.assign(input,{example:event.target.value})
     this.props.modifyInput(i, newInput);
+  }
+
+  modifyInputTestValue = (event, i) => {
+    let newInputs = this.state.localInputs.slice();
+    newInputs[i].localExample = event.target.value;
+    this.setState({localInputs: newInputs});
+  }
+
+  toggleInputEditing = (event, i) => {
+    let newInputs = this.state.localInputs.slice();
+    newInputs[i].isEditing = newInputs[i].isEditing === undefined ? true : !newInputs[i].isEditing;
+    this.setState({localInputs: newInputs});
   }  
 
   render() {
     const { lambdaInputs, classes } = this.props;
+    const { localInputs } = this.state;
 
     return (
       <div className={classes.root + ' ' + (this.props.show ? classes.activeRoot : classes.hiddenRoot)}>
@@ -56,12 +75,32 @@ class LambdaInputs extends Component {
               <ListItem button>
                 <ListItemText primary="Inputs" secondary='Inputs with blank names are ignored'/>
               </ListItem>     
-                {!this.props.edit && lambdaInputs.map((input, i) => (
+                {!this.props.edit && localInputs.map((input, i) => (
                   <div key={i}>
                     <Divider />
-                    <ListItem>
-                      <ListItemText primary={input.name && input.name.length > 0 ? input.name : `Nameless Input #${i+1}`} secondary={`${input.example && input.example.length > 0 ? 'Example: ' + input.example : 'No example provided'}`}/>
-                    </ListItem>
+                    { !input.isEditing && 
+                      <ListItem>
+                        <ListItemText primary={input.name && input.name.length > 0 ? input.name : `Nameless Input #${i+1}`} secondary={`${input.example && input.example.length > 0 ? 'Example: ' + input.example : 'No example provided'}`}/>
+                        <IconButton className={classes.button} aria-label="Add" onClick={(e)=>this.toggleInputEditing(e,i)}>
+                          <EditIcon />
+                        </IconButton> 
+                      </ListItem> }
+                      
+                      { input.isEditing && 
+                        <ListItem>
+                          <TextField
+                            id="input-example"
+                            value={input.localExample || ''}
+                            placeholder={`Input #${i+1} Example`}
+                            onChange={(e)=>this.modifyInputTestValue(e,i)}
+                            fullWidth
+                            margin="none"
+                          /> 
+                          <IconButton className={classes.button} aria-label="Add" onClick={(e)=>this.toggleInputEditing(e,i)}>
+                            <SaveIcon />
+                          </IconButton> 
+                        </ListItem>}           
+                    
                   </div>
                 ))}
 
