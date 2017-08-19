@@ -53,7 +53,7 @@ class LambdaInputs extends Component {
     let newInputs = this.state.localInputs.slice();
     newInputs[i].isEditing = newInputs[i].isEditing === undefined ? true : !newInputs[i].isEditing;
     this.setState({localInputs: newInputs});
-  }  
+  }
 
   render() {
     const { lambdaInputs, classes } = this.props;
@@ -62,31 +62,31 @@ class LambdaInputs extends Component {
     return (
       <div className={classes.root + ' ' + (this.props.show ? classes.activeRoot : classes.hiddenRoot)}>
       <div className={classes.root} onClick={this.props.onClose}>
-        
+
       </div>
       <div className={classes.inputsContainer}>
-          <Slide 
+          <Slide
             in={this.props.show}
-            direction={'right'} 
+            direction={'right'}
             enterTransitionDuration={150}
             leaveTransitionDuration={150}
             transitionAppear={!this.state.firstMount}>
             <List className={classes.panel}>
               <ListItem button>
                 <ListItemText primary="Inputs" secondary='Inputs with blank names are ignored'/>
-              </ListItem>     
+              </ListItem>
                 {!this.props.edit && localInputs.map((input, i) => (
                   <div key={i}>
                     <Divider />
-                    { !input.isEditing && 
+                    { !input.isEditing &&
                       <ListItem>
                         <ListItemText primary={input.name && input.name.length > 0 ? input.name : `Nameless Input #${i+1}`} secondary={`${input.example && input.example.length > 0 ? 'Example: ' + input.example : 'No example provided'}`}/>
                         <IconButton className={classes.button} aria-label="Add" onClick={(e)=>this.toggleInputEditing(e,i)}>
                           <EditIcon />
-                        </IconButton> 
+                        </IconButton>
                       </ListItem> }
-                      
-                      { input.isEditing && 
+
+                      { input.isEditing &&
                         <ListItem>
                           <TextField
                             id="input-example"
@@ -95,12 +95,12 @@ class LambdaInputs extends Component {
                             onChange={(e)=>this.modifyInputTestValue(e,i)}
                             fullWidth
                             margin="none"
-                          /> 
+                          />
                           <IconButton className={classes.button} aria-label="Add" onClick={(e)=>this.toggleInputEditing(e,i)}>
                             <SaveIcon />
-                          </IconButton> 
-                        </ListItem>}           
-                    
+                          </IconButton>
+                        </ListItem>}
+
                   </div>
                 ))}
 
@@ -111,7 +111,7 @@ class LambdaInputs extends Component {
 
                 {this.props.edit && lambdaInputs.map((input, i) => (
                   <div key={i}>
-                    <Divider />   
+                    <Divider />
                     <ListItem>
                       { lambdaInputs.length === i+1 ? (
                         <IconButton className={classes.button} aria-label="Add" onClick={this.props.addInput}>
@@ -130,8 +130,8 @@ class LambdaInputs extends Component {
                         onChange={(event) => this.modifyInputName(event,i,input)}
                         fullWidth
                         margin="none"
-                      />    
-                                            
+                      />
+
                     </ListItem>
                     <ListItem>
                       <IconButton></IconButton>
@@ -142,12 +142,12 @@ class LambdaInputs extends Component {
                         onChange={(event) => this.modifyInputExample(event,i,input)}
                         fullWidth
                         margin="none"
-                       />                       
-                    </ListItem> 
+                       />
+                    </ListItem>
                   </div>
                 ))}
-            </List> 
-          </Slide>       
+            </List>
+          </Slide>
         </div>
       </div>
     );
