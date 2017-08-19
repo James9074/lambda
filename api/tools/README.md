@@ -10,6 +10,7 @@ back to the old state.
 ```bash
 $ node tools/db version         # Print database schema version (see "migrations" db table)
 $ node tools/db migrate         # Migrate database schema to the latest version
+$ node tools/db reset           # Reset database schema to a clean, dataless, migrated state
 $ node tools/db rollback        # Rollback the latest migration
 $ node tools/db migration       # Create a new migration file from the template
 $ node tools/db seed            # Seed the database with some test data (see /seeds folder)
