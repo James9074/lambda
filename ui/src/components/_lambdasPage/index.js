@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import LambdaCard from 'components/lambdaCard'
@@ -45,11 +45,11 @@ query GetAllLambdas($afterCursor: String!) {
 @graphql(GetLambdasQuery, {
   options: ownProps => ({
     variables: {
-      afterCursor: '' // ownProps are the props that are added from the parent component
+      afterCursor: ownProps.afterCursor || '' // ownProps are the props that are added from the parent component
     },
   }) })
 class Lambdas extends Component {
-  constructor(props, context){
+  constructor(props){
     super(props);
     this.state = {
       index: 0
@@ -121,9 +121,10 @@ class Lambdas extends Component {
         </AppBar>
 
           <Grid container gutter={24}>
-            {data.lambdas.edges.map(item => (<Grid item xs={12} lg={6} className={classes.lambdaCard} key={item.node.id}>
-                        <LambdaCard lambda={Object.assign({}, item.node, { inputs: JSON.parse(item.node.inputs) })}/>
-                      </Grid>))}
+            {data.lambdas.edges.map(item =>
+              (<Grid item xs={12} lg={6} className={classes.lambdaCard} key={item.node.id}>
+                  <LambdaCard lambda={Object.assign({}, item.node, { inputs: JSON.parse(item.node.inputs) })}/>
+                </Grid>))}
           </Grid>
       </div>
     );

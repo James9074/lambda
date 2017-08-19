@@ -1,10 +1,9 @@
 // @flow
 
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import SmallHeader from 'components/smallHeader';
 import styles from './styles'
@@ -25,7 +24,7 @@ import { gql, graphql } from 'react-apollo';
 })
 @withStyles(styles)
 class NewLambda extends Component {
-  constructor(props, context){
+  constructor(props){
     super(props);
     this.state = {
       loginModalOpen: false,
@@ -42,7 +41,7 @@ class NewLambda extends Component {
  * Access variables from the input section like so: */
 
 // Prints the first input above (an empty string by default)
-function entryPoint(inputs){        
+function entryPoint(inputs){
   console.log("This will be printed")
   return inputs[0]
 }

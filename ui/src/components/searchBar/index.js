@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import { Component, PropTypes } from 'react';
 import { withStyles } from 'material-ui/styles';
 import SearchIcon from 'material-ui-icons/Search';
 import TextField from 'material-ui/TextField';
@@ -60,13 +60,13 @@ function renderSuggestion(suggestion, { query, isHighlighted }, classes) {
         </div>
 
         <div className={classes.highlightDesc}>
-          {descParts.map((part, index) => part.highlight
+          {descParts.map((part, index) => {return part.highlight
               ? <span key={index} style={{ fontWeight: 500 }}>
                   {part.text}
                 </span>
               : <strong key={index} style={{ fontWeight: 300 }}>
                   {part.text}
-                </strong>)}
+                </strong> })}
         </div>
 
         <div className={classes.highlightOwner}> - by&nbsp;
@@ -222,4 +222,3 @@ SearchBar.propTypes = {
   client: PropTypes.instanceOf(ApolloClient),
 }
 export default withApollo(SearchBar);
-

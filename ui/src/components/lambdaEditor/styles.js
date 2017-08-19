@@ -1,5 +1,4 @@
 import { createStyleSheet } from 'material-ui/styles';
-import Slide from 'material-ui/transitions/Slide';
 
 export default createStyleSheet('LambdaEditor', theme => ({
   mainContainer: {

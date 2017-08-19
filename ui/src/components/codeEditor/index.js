@@ -1,5 +1,5 @@
 import React from 'react';
-import MonacoEditor from 'react-monaco-editor';
+import MonacoEditor from 'react-monaco-editor'; //eslint-disable-line
 
 class Editor extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Editor extends React.Component {
     this.setState({ activeEditor: monaco.editor })
   }
 
-  onChange(newValue, e) {
+  onChange(newValue) {
     this.props.onChange(newValue);
   }
 

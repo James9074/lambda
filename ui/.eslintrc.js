@@ -8,6 +8,10 @@ module.exports =
       "flowtype",
       "react"
     ],
+    "env": {
+      "browser": true,
+      "node": true
+    },
     "rules": {
       "curly": "off", // Ugly for one-liners
       "no-underscore-dangle": "off", // I like this one actually, but the library we're using enforces it.
@@ -22,7 +26,8 @@ module.exports =
       "react/jsx-uses-vars": 1,
       "import/extensions": "off",
       "import/first": "off",
-      "import/no-extraneous-dependencies": ["error", {"devDependencies": false, "optionalDependencies": false, "peerDependencies": false}]
+      "import/no-extraneous-dependencies": 0,
+      "max-len": "off"
     }
   },
   {settings: {

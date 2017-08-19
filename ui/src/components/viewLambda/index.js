@@ -53,7 +53,7 @@ let updateLambda = graphql(gql`mutation UpdateLambda($input: UpdateLambdaInput!)
 @compose(userQuery, lambdaQuery, deleteLambda, updateLambda)
 
 class ViewLambda extends Component {
-  constructor(props, context){
+  constructor(props){
     super(props);
 
     this.state = {
@@ -194,9 +194,6 @@ class ViewLambda extends Component {
         message = graphQLErrors[0].state.inputs[0]
       this.setState({ toastOpen: true, toastMessage: message, graphqlErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error' })
     });
-  }
-  onEditorUpdate = (code) => {
-    // test
   }
 
   addInput = () => {

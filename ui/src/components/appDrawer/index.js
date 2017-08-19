@@ -1,15 +1,12 @@
 // @flow weak
 
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import styles from './styles'
 import Drawer from 'material-ui/Drawer';
 import Button from 'material-ui/Button';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import DraftsIcon from 'material-ui-icons/Drafts';
-import StarIcon from 'material-ui-icons/Star';
 import SendIcon from 'material-ui-icons/Send';
 import HomeIcon from 'material-ui-icons/Home';
 import MenuIcon from 'material-ui-icons/Menu';
@@ -53,24 +50,12 @@ class AppDrawer extends Component {
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
-        {/* <ListItem button>
-          <ListItemIcon>
-            <StarIcon />
-          </ListItemIcon>
-          <ListItemText primary="Starred" />
-        </ListItem> */}
         { this.props.user && (<ListItem button onClick={() => this.context.router.history.push(`/users/${this.props.user.username}`)}>
           <ListItemIcon>
             <SendIcon />
           </ListItemIcon>
           <ListItemText primary="My Lambdas" />
         </ListItem>)}
-        {/* <ListItem button>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
-        </ListItem> */}
         <ListItem button onClick={() => this.context.router.history.push('/lambdas/new')}>
           <ListItemIcon>
             <AddIcon />

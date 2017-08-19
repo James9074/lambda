@@ -1,6 +1,6 @@
 import { createStyleSheet } from 'material-ui/styles'
 
-export default createStyleSheet('Breadcrumbs', theme => ({
+export default createStyleSheet('Breadcrumbs', {
   loading: {
     position: 'absolute',
     top: '50%',
@@ -13,4 +13,4 @@ export default createStyleSheet('Breadcrumbs', theme => ({
     width: '100%',
     height: '100%',
   },
-}))
+})

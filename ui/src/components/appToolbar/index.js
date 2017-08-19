@@ -1,7 +1,7 @@
 // @flow
 /* eslint-disable react/no-multi-comp */
 
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -20,10 +20,6 @@ import UserInfo from 'components/userInfo'
 @withRouter
 @withStyles(styles)
 class AppToolbar extends Component {
-  constructor(props, context){
-    super(props);
-  }
-
   componentDidMount() {
     this.props.onRef(this)
   }

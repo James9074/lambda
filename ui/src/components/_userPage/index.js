@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
@@ -10,7 +10,7 @@ import SmallHeader from 'components/smallHeader';
 
 @withStyles(styles)
 class UserPage extends Component {
-  constructor(props, context){
+  constructor(props){
     super(props);
     this.state = {
       index: 0

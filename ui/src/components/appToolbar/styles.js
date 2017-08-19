@@ -1,8 +1,7 @@
 import { createStyleSheet } from 'material-ui/styles';
 
-export default createStyleSheet('AppToolbar', theme => ({
+export default createStyleSheet('AppToolbar', {
   barContainer: {
-    // position: 'sticky !important'
     paddingRight: '0px !important'
   },
   appBar: {
@@ -50,4 +49,4 @@ export default createStyleSheet('AppToolbar', theme => ({
     marginLeft: '15px',
     position: 'relative',
   },
-}));
+});

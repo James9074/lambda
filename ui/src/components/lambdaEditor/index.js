@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
@@ -33,7 +33,7 @@ const themeOptions = [
 
 @withStyles(styles)
 class LambdaEditor extends Component {
-  constructor(props, context){
+  constructor(props){
     super(props);
     this.state = {
       editorTheme: 1,
@@ -185,8 +185,6 @@ class LambdaEditor extends Component {
                   }}/>
               </Paper>
             </Grid>
-            {// + ' ' +  (!this.props.loading && classes.outputLoaded}
-            }
             <Grid item xs={12} className={classes.output} style={{ height: this.state.outputHeight }}>
               {this.props.loading && (
                 <div className={classes.loadingOutput}>
