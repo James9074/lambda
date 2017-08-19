@@ -1,7 +1,7 @@
 import { createStyleSheet } from 'material-ui/styles';
 
 export default createStyleSheet('LambdaInputs', theme => ({
-  root:{
+  root: {
     textAlign: 'center',
     width: '100%',
     height: '100%',
@@ -10,26 +10,26 @@ export default createStyleSheet('LambdaInputs', theme => ({
     left: '0',
     zIndex: '100'
   },
-  activeRoot:{
+  activeRoot: {
     backgroundColor: 'rgba(0, 0, 0, 0.38)',
   },
-  hiddenRoot:{
+  hiddenRoot: {
     pointerEvents: 'none'
   },
-  inputsContainer:{
-    zIndex:'100',
+  inputsContainer: {
+    zIndex: '100',
     position: 'absolute',
-    width:'300px',
+    width: '300px',
     maxWidth: '80%',
     height: '100%',
-    " & ul":{
+    ' & ul': {
       padding: '0px !important',
-      " & li":{
-        paddingLeft: '0px !important', 
-      } 
+      ' & li': {
+        paddingLeft: '0px !important',
+      }
     }
   },
-  panel:{
+  panel: {
     height: '100%',
     background: theme.palette.background.paper
   }

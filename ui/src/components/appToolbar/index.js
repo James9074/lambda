@@ -45,7 +45,7 @@ class AppToolbar extends Component {
           <Grid container className="Grid" gutter={0}>
             <Grid item xs={2} md={3} lg={2} className={classes.centerItems}>
             <AppDrawer user={this.props.data.me}/>
-              {/*<Button onClick={()=> {if(this.context.router.route.location.pathname !== "/") this.context.router.history.push("/")}} disableFocusRipple>*/}
+              {/* <Button onClick={()=> {if(this.context.router.route.location.pathname !== "/") this.context.router.history.push("/")}} disableFocusRipple> */}
               <Hidden smDown>
                 <Button href="/" disableFocusRipple>
                   <Typography type="title" color="inherit" className={classes.title}>
@@ -56,11 +56,11 @@ class AppToolbar extends Component {
             </Grid>
             <Grid item xs={7} sm={8} md={6} lg={8}>
               <div className={classes.center} id="toolbar">
-                <SearchBar 
+                <SearchBar
                     searchFocused={this.props.searchFocused} />
               </div>
             </Grid>
-            <Grid item xs={1} style={{textAlign:'right'}} className={classes.centerItems}>
+            <Grid item xs={1} style={{ textAlign: 'right' }} className={classes.centerItems}>
               <UserInfo user={this.props.data.me}/>
             </Grid>
           </Grid>

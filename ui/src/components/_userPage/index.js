@@ -30,9 +30,9 @@ class UserPage extends Component {
     const user = this.context.router.route.match.params.user;
 
     return (
-      <div className={classes.root}>          
-          <SmallHeader content={"Lambdas for " + user}/>
-        
+      <div className={classes.root}>
+          <SmallHeader content={`Lambdas for ${user}`}/>
+
           <Grid container gutter={24}>
             <UserLambdaListing username={user} />
           </Grid>

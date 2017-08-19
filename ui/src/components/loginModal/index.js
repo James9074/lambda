@@ -28,7 +28,7 @@ class LoginModal extends Component {
     return (
         <Dialog open={isOpen} onRequestClose={onClose}>
           <DialogTitle>
-            {"Login"}
+            {'Login'}
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -41,10 +41,10 @@ class LoginModal extends Component {
             </Button>
             <Button raised onClick={() => this.directToAuth('github')} color="accent">
               GitHub
-            </Button>       
+            </Button>
             <Button disabled raised onClick={() => this.directToAuth('twitter')} color="primary">
               Twitter
-            </Button>                  
+            </Button>
           </DialogActions>
         </Dialog>
     )

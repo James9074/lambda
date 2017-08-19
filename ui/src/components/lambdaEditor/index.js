@@ -55,16 +55,16 @@ class LambdaEditor extends Component {
 
 
   onEditorUpdate(newCode){
-    this.setState({editorCode: newCode})
+    this.setState({ editorCode: newCode })
     this.props.onEditorUpdate(newCode)
   }
 
-  handleThemeMenuOpen = event => {
+  handleThemeMenuOpen = (event) => {
     this.setState({ themeMenuOpen: true, themeAnchorEl: event.currentTarget });
   };
 
   handleThemeMenuClick = (event, index) => {
-    this.setState({ editorTheme: index, themeMenuOpen: false});
+    this.setState({ editorTheme: index, themeMenuOpen: false });
   };
 
   handleThemeMenuClose = () => {
@@ -77,7 +77,7 @@ class LambdaEditor extends Component {
 
     return (
       <div>
-        <Grid container gutter={8}  className={classes.editorOptions}>
+        <Grid container gutter={8} className={classes.editorOptions}>
           <Grid item xs={12} xl={12}>
             <Grid container>
               <Grid item xs={12} md={2}>
@@ -85,8 +85,8 @@ class LambdaEditor extends Component {
                   id="lambda-name"
                   value={this.props.lambda.name}
                   error={this.props.errors && this.props.errors.name !== undefined}
-                  label={`${this.props.errors && this.props.errors.name !== undefined ? '* ' : ''}Lambda Name`}                  
-                  onChange={(event) => this.props.editLambda({name: event.target.value})}
+                  label={`${this.props.errors && this.props.errors.name !== undefined ? '* ' : ''}Lambda Name`}
+                  onChange={event => this.props.editLambda({ name: event.target.value })}
                   fullWidth
                   margin="none"
                 />)}
@@ -96,40 +96,40 @@ class LambdaEditor extends Component {
                   id="lambda-description"
                   value={this.props.lambda.description}
                   error={this.props.errors && this.props.errors.description !== undefined}
-                  label={`${this.props.errors && this.props.errors.description !== undefined ? '* ' : ''}Lambda Description`}                  
-                  onChange={(event) => this.props.editLambda({description: event.target.value})}
+                  label={`${this.props.errors && this.props.errors.description !== undefined ? '* ' : ''}Lambda Description`}
+                  onChange={event => this.props.editLambda({ description: event.target.value })}
                   fullWidth
                   margin="none"
-                />)}                
+                />)}
 
-                {!this.props.edit && (<Typography type="headline" className={classes.lambdaName}>{/*this.props.lambda.name*/}</Typography>)}
-               
-              </Grid>       
-              
+                {!this.props.edit && (<Typography type="headline" className={classes.lambdaName}>{/* this.props.lambda.name */}</Typography>)}
+
+              </Grid>
+
               <Grid item xs={12} md={5} className={classes.editorButtons}>
-                <IconButton aria-label="Theme" aria-owns="theme-menu" onClick={()=>this.setState({showInputs: !this.state.showInputs})} className={(this.props.errors && this.props.errors.inputs !== undefined) ? classes.error : ''}>
-                { !validInputs ? (<InputIcon /> ) : 
+                <IconButton aria-label="Theme" aria-owns="theme-menu" onClick={() => this.setState({ showInputs: !this.state.showInputs })} className={(this.props.errors && this.props.errors.inputs !== undefined) ? classes.error : ''}>
+                { !validInputs ? (<InputIcon />) :
                   (<Badge className={classes.badge} badgeContent={validInputs} color='accent'>
-                    <InputIcon /> 
+                    <InputIcon />
                   </Badge>)}
                 </IconButton>
                 { (this.props.adminIsViewing || this.props.ownerIsViewing) && !this.props.edit && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleDeleteLambda}>
-                  <DeleteIcon /> 
-                </IconButton> )}
+                  <DeleteIcon />
+                </IconButton>)}
                 { (this.props.adminIsViewing || this.props.ownerIsViewing) && !this.props.edit && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleToggleEdit}>
                   <EditIcon />
-                </IconButton> )}
+                </IconButton>)}
                 { (this.props.adminIsViewing || this.props.ownerIsViewing) && this.props.edit && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleToggleEdit}>
                   <UndoIcon />
-                </IconButton> )}                
-               
+                </IconButton>)}
+
                 { this.props.edit && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleSaveLambda}>
-                  <SaveIcon /> 
-                </IconButton> )}
+                  <SaveIcon />
+                </IconButton>)}
 
                 { this.props.view && (<IconButton disabled className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleCloneLambda}>
-                  <ContentCopyIcon /> 
-                </IconButton> )}       
+                  <ContentCopyIcon />
+                </IconButton>)}
                 <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.testLambda}>
                   <PlayArrowIcon />
                 </IconButton>
@@ -145,7 +145,7 @@ class LambdaEditor extends Component {
                       checked={this.props.lambda.public === 1}
                       onChange={(event, checked) => this.props.editLambda({ public: checked })} />
                   }
-                />                 
+                />
                   <Menu
                     id="theme-menu"
                     anchorEl={this.state.themeAnchorEl}
@@ -162,32 +162,32 @@ class LambdaEditor extends Component {
                       </MenuItem>,
                     )}
                 </Menu>
-              </Grid>            
+              </Grid>
             </Grid>
             <Grid item xs={12} className={classes.mainEditor}>
-              
-              <LambdaInputs 
+
+              <LambdaInputs
                 edit={this.props.edit}
                 show={this.state.showInputs}
                 lambdaInputs={this.props.lambda.inputs}
                 addInput={this.props.addInput}
                 removeInput={this.props.removeInput}
                 modifyInput={this.props.modifyInput}
-                onClose={()=>{this.setState({showInputs: false})}} />
+                onClose={() => { this.setState({ showInputs: false }) }} />
 
               <Paper elevation={4}>
-                <Editor 
-                  editorTheme={themeOptions[this.state.editorTheme].key} 
-                  code={this.state.editorCode} 
-                  onChange={(newCode)=>this.onEditorUpdate(newCode)}
+                <Editor
+                  editorTheme={themeOptions[this.state.editorTheme].key}
+                  code={this.state.editorCode}
+                  onChange={newCode => this.onEditorUpdate(newCode)}
                   editorOptions={{
                     readOnly: !this.props.edit
                   }}/>
               </Paper>
             </Grid>
-            {//+ ' ' +  (!this.props.loading && classes.outputLoaded}
+            {// + ' ' +  (!this.props.loading && classes.outputLoaded}
             }
-            <Grid item xs={12} className={classes.output} style={{height:this.state.outputHeight}}>
+            <Grid item xs={12} className={classes.output} style={{ height: this.state.outputHeight }}>
               {this.props.loading && (
                 <div className={classes.loadingOutput}>
                   <LinearProgress color="accent" />
@@ -196,7 +196,7 @@ class LambdaEditor extends Component {
               <Paper elevation={4}>
                 <Editor
                   height={this.state.outputHeight}
-                  editorTheme={themeOptions[this.state.editorTheme].key} 
+                  editorTheme={themeOptions[this.state.editorTheme].key}
                   code={this.props.output}
                   editorOptions={{
                     minimap: { enabled: false },
@@ -205,7 +205,7 @@ class LambdaEditor extends Component {
                   }} />
               </Paper>
             </Grid>
-          </Grid>            
+          </Grid>
           </Grid>
       </div>
     );

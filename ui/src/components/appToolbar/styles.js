@@ -2,7 +2,7 @@ import { createStyleSheet } from 'material-ui/styles';
 
 export default createStyleSheet('AppToolbar', theme => ({
   barContainer: {
-    //position: 'sticky !important'
+    // position: 'sticky !important'
     paddingRight: '0px !important'
   },
   appBar: {
@@ -10,23 +10,23 @@ export default createStyleSheet('AppToolbar', theme => ({
     minHeight: '60px',
   },
   title: {
-    fontSize: "22px",
-    fontWeight:400,
+    fontSize: '22px',
+    fontWeight: 400,
     color: 'white',
     textTransform: 'none'
   },
   name: {
-    fontSize: "14px",
-    fontWeight:400
+    fontSize: '14px',
+    fontWeight: 400
   },
   centerItems: {
-    "& div button ":{
+    '& div button ': {
       'vertical-align': 'middle'
     },
-    "& a ":{
+    '& a ': {
       'vertical-align': 'middle'
     },
-    "& button ":{
+    '& button ': {
       'vertical-align': 'middle'
     }
   },
@@ -38,16 +38,16 @@ export default createStyleSheet('AppToolbar', theme => ({
     top: '50%',
     width: '100%',
     transform: 'translate(0, -50%)',
-    position: 'relative',    
+    position: 'relative',
   },
   center: {
-    '& button' : {
+    '& button': {
       minWidth: '85px'
     },
     top: '50%',
     width: '100%',
     transform: 'translate(0, -50%)',
     marginLeft: '15px',
-    position: 'relative',    
+    position: 'relative',
   },
 }));

@@ -28,7 +28,7 @@ class AppDrawer extends Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
-  }  
+  }
 
   toggleDrawer = (side, open) => {
     const drawerState = {};
@@ -45,38 +45,38 @@ class AppDrawer extends Component {
     const mailFolderListItems = (
       <div>
         <ListItem>
-          
+
         </ListItem>
         <ListItem button onClick={() => this.context.router.history.push('/')}>
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
-        </ListItem>        
-        {/*<ListItem button>
+        </ListItem>
+        {/* <ListItem button>
           <ListItemIcon>
             <StarIcon />
           </ListItemIcon>
           <ListItemText primary="Starred" />
-        </ListItem>*/}
+        </ListItem> */}
         { this.props.user && (<ListItem button onClick={() => this.context.router.history.push(`/users/${this.props.user.username}`)}>
           <ListItemIcon>
             <SendIcon />
           </ListItemIcon>
           <ListItemText primary="My Lambdas" />
         </ListItem>)}
-        {/*<ListItem button>
+        {/* <ListItem button>
           <ListItemIcon>
             <DraftsIcon />
           </ListItemIcon>
           <ListItemText primary="Drafts" />
-        </ListItem>*/}
+        </ListItem> */}
         <ListItem button onClick={() => this.context.router.history.push('/lambdas/new')}>
           <ListItemIcon>
             <AddIcon />
           </ListItemIcon>
           <ListItemText primary="New Lambda" />
-        </ListItem>        
+        </ListItem>
       </div>
     );
 
@@ -89,7 +89,7 @@ class AppDrawer extends Component {
     );
 
     return (
-      <div style={{display:'inline-block'}}>
+      <div style={{ display: 'inline-block' }}>
         <Button onClick={this.handleLeftOpen} className={classes.menuButton} ><MenuIcon color="white" /></Button>
         <Drawer
           open={this.state.open.left}

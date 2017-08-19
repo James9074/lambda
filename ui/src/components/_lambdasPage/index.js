@@ -43,11 +43,11 @@ query GetAllLambdas($afterCursor: String!) {
 }`
 @withStyles(styles)
 @graphql(GetLambdasQuery, {
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: {
-      afterCursor: "" // ownProps are the props that are added from the parent component
+      afterCursor: '' // ownProps are the props that are added from the parent component
     },
-  })})
+  }) })
 class Lambdas extends Component {
   constructor(props, context){
     super(props);
@@ -67,7 +67,7 @@ class Lambdas extends Component {
   render(){
     const { data, classes } = this.props;
 
-    if(!data.lambdas){
+    if (!data.lambdas){
       return (<div className={classes.loading}>
         <CircularProgress color="accent" size={100} />
         <Typography type="headline">Loading</Typography>
@@ -92,7 +92,7 @@ class Lambdas extends Component {
                     <span className={classes.definition}>In computer programming, an anonymous function (function literal, lambda abstraction) is a function definition that is not bound to an identifier. Anonymous functions are often:</span>
                         <span className={classes.bullet}>• Arguments being passed to higher-order functions, or </span>
                         <span className={classes.bullet}>• Used for constructing the result of a higher-order function that needs to return a function. </span>
-                    
+
                   </div>
                 </Grid>
               </Grid>
@@ -101,7 +101,7 @@ class Lambdas extends Component {
         </Hidden>
 
         <Hidden mdUp>
-          <SmallHeader content={"View Lambdas"}/>                  
+          <SmallHeader content={'View Lambdas'}/>
         </Hidden>
 
         <AppBar position="static" color="default" className={classes.tabs}>
@@ -121,11 +121,9 @@ class Lambdas extends Component {
         </AppBar>
 
           <Grid container gutter={24}>
-            {data.lambdas.edges.map(function(item){
-              return (<Grid item xs={12} lg={6} className={classes.lambdaCard} key={item.node.id}>
-                        <LambdaCard lambda={Object.assign({},item.node,{inputs:JSON.parse(item.node.inputs)})}/>
-                      </Grid>)
-            })}
+            {data.lambdas.edges.map(item => (<Grid item xs={12} lg={6} className={classes.lambdaCard} key={item.node.id}>
+                        <LambdaCard lambda={Object.assign({}, item.node, { inputs: JSON.parse(item.node.inputs) })}/>
+                      </Grid>))}
           </Grid>
       </div>
     );

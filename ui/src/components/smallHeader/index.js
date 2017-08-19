@@ -32,7 +32,7 @@ class NewLambda extends Component {
       <div className={classes.root}>
         <Paper elevation={3}>
           <Grid item xs={12} className={classes.header}>
-              <Grid container style={{height:'70px'}}>
+              <Grid container style={{ height: '70px' }}>
                 <Grid item xs={1} className={classes.lambdaContainer}>
                   <Typography type="headline" className={classes.lambdaIcon}>
                     λ
@@ -46,7 +46,7 @@ class NewLambda extends Component {
                   </div>
                 </Grid>
               </Grid>
-            
+
           </Grid>
         </Paper>
       </div>

@@ -40,7 +40,7 @@ function renderSuggestion(suggestion, { query, isHighlighted }, classes) {
   const nameMatches = match(suggestion.label, query);
   const nameParts = parse(suggestion.label, nameMatches);
 
-  const descMatches = match(suggestion.description || "", query);
+  const descMatches = match(suggestion.description || '', query);
   const descParts = parse(suggestion.description, descMatches);
 
   const userMatches = match(suggestion.owner.username, query);
@@ -50,39 +50,33 @@ function renderSuggestion(suggestion, { query, isHighlighted }, classes) {
     <MenuItem selected={isHighlighted} component="div">
       <div className={classes.highlights}>
         <div className={classes.highlightName}>
-          {nameParts.map((part, index) => {
-            return part.highlight
+          {nameParts.map((part, index) => part.highlight
               ? <span key={index} style={{ fontWeight: 500 }}>
                   {part.text}
                 </span>
               : <strong key={index} style={{ fontWeight: 300 }}>
                   {part.text}
-                </strong>;
-          })}
+                </strong>)}
         </div>
 
         <div className={classes.highlightDesc}>
-          {descParts.map((part, index) => {
-            return part.highlight
+          {descParts.map((part, index) => part.highlight
               ? <span key={index} style={{ fontWeight: 500 }}>
                   {part.text}
                 </span>
               : <strong key={index} style={{ fontWeight: 300 }}>
                   {part.text}
-                </strong>;
-          })}
+                </strong>)}
         </div>
 
         <div className={classes.highlightOwner}> - by&nbsp;
-          {userParts.map((part, index) => {
-            return part.highlight
+          {userParts.map((part, index) => part.highlight
               ? <span key={index} style={{ fontWeight: 500 }}>
                   {part.text}
                 </span>
               : <strong key={index} style={{ fontWeight: 300 }}>
                   {part.text}
-                </strong>;
-          })}
+                </strong>)}
         </div>
       </div>
     </MenuItem>
@@ -117,11 +111,11 @@ class SearchBar extends Component {
 
   focusSearch(){
     ReactDOM.findDOMNode(this.refs.searchField).firstChild.firstChild.firstChild.focus()
-  }  
+  }
 
   handleSuggestionsFetchRequested = ({ value }) => {
-    this.onChange(value).then((results)=>{
-      var newSuggestions = results.data.lambdas.edges.map((x)=> ({
+    this.onChange(value).then((results) => {
+      let newSuggestions = results.data.lambdas.edges.map(x => ({
         label: x.node.name,
         ...x.node,
       }))
@@ -153,12 +147,10 @@ class SearchBar extends Component {
     });
   };
 
-  onChange = (searchValue) => {
-    return this.props.client.query({
-      query: searchLambdas,
-      variables: { search: searchValue },
-    });
-  }
+  onChange = searchValue => this.props.client.query({
+    query: searchLambdas,
+    variables: { search: searchValue },
+  })
 
   render() {
     const classes = this.props.classes;
@@ -167,8 +159,8 @@ class SearchBar extends Component {
         <IconButton color="contrast" aria-label="Search" className={classes.searchIcon} disabled>
           <SearchIcon />
         </IconButton>
-        
-        {/*<TextField
+
+        {/* <TextField
           id="uncontrolled"
           placeholder="Search"
           helperTextClassName={classes.search}
@@ -176,7 +168,7 @@ class SearchBar extends Component {
           onChange={(e) => this.onChange(e.target.value)}
           margin="normal"
           className={classes.searchInput}
-        />*/}
+        /> */}
 
           <Autosuggest
             ref='searchField'
@@ -191,9 +183,9 @@ class SearchBar extends Component {
             onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
             onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
             onSuggestionSelected={this.handleSuggestionSelected}
-            renderSuggestionsContainer={(options) => renderSuggestionsContainer(options, classes)}
+            renderSuggestionsContainer={options => renderSuggestionsContainer(options, classes)}
             getSuggestionValue={getSuggestionValue}
-            renderSuggestion={(e,v) => renderSuggestion(e,v,classes)}
+            renderSuggestion={(e, v) => renderSuggestion(e, v, classes)}
             inputProps={{
               autoFocus: false,
               classes,
@@ -202,7 +194,7 @@ class SearchBar extends Component {
               onChange: this.handleChange
             }}
           />
-      
+
       </div>
     )
   }

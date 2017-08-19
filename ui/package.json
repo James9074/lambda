@@ -29,6 +29,7 @@
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
     "promise": "7.1.1",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-apollo": "^1.4.8",
     "react-autosuggest": "^9.3.2",
@@ -50,8 +51,6 @@
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-flowtype": "^2.35.0",
-    "eslint-plugin-import": "^2.7.0",
     "eslint-config-react-app": "^1.0.5",
     "eslint-loader": "1.7.1",
     "eslint-plugin-flowtype": "2.34.0",

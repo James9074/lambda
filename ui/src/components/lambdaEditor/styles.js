@@ -2,44 +2,44 @@ import { createStyleSheet } from 'material-ui/styles';
 import Slide from 'material-ui/transitions/Slide';
 
 export default createStyleSheet('LambdaEditor', theme => ({
-  mainContainer:{
+  mainContainer: {
     padding: '10px',
     paddingBottom: '40px',
     marginBottom: '55px'
   },
   topOptions: {
-    padding:'0 55px 0 55px'
+    padding: '0 55px 0 55px'
   },
   title: {
-    marginTop:'20px'
+    marginTop: '20px'
   },
-  inputContainer:{
+  inputContainer: {
     height: '246px',
     'overflow-y': 'auto',
     'overflow-x': 'hidden',
   },
   button: {
-    marginTop:'25px'
+    marginTop: '25px'
   },
   themeButton: {
   },
   output: {
     width: '100%',
     position: 'relative',
-    borderTop: '5px solid ' + theme.palette.accent[500],
+    borderTop: `5px solid ${theme.palette.accent[500]}`,
   },
-  mainEditor:{
+  mainEditor: {
     width: '100%',
     height: '600px',
     position: 'relative',
-    borderTop: '5px solid ' + theme.palette.accent[500],
+    borderTop: `5px solid ${theme.palette.accent[500]}`,
   },
-  inputsOverlay:{
+  inputsOverlay: {
 
   },
-  loadingOutput:{
-    "& div":{
-      top:'-10px'
+  loadingOutput: {
+    '& div': {
+      top: '-10px'
     },
     borderTop: '5px solid transparent',
     textAlign: 'center',
@@ -54,22 +54,22 @@ export default createStyleSheet('LambdaEditor', theme => ({
   badge: {
     margin: `0 ${theme.spacing.unit * 2}px`,
   },
-  lambdaName:{
+  lambdaName: {
     borderLeft: '5px solid #229dff',
     paddingLeft: '10px',
     top: '50%',
     transform: 'translate(0,-50%)',
     position: 'relative',
   },
-  editorButtons:{
+  editorButtons: {
     textAlign: 'right',
-    '& button':{
+    '& button': {
       top: '50%',
       transform: 'translate(0,-50%)',
       position: 'relative',
     }
   },
-  error:{
+  error: {
     color: 'red',
   }
 }));

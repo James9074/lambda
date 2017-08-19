@@ -5,15 +5,15 @@ export default createStyleSheet('LambdasPage', theme => ({
     flexGrow: 1,
     marginTop: '20px',
   },
-  header:{
+  header: {
     overflow: 'hidden',
-    marginBottom:'20px',
+    marginBottom: '20px',
     backgroundColor: theme.palette.primary[400],
-    "& div":{
-      padding:'5px',
-      height:'50px',
-      "& h1":{
-        color:'white',
+    '& div': {
+      padding: '5px',
+      height: '50px',
+      '& h1': {
+        color: 'white',
         textAlign: 'center',
       }
     }
@@ -24,13 +24,13 @@ export default createStyleSheet('LambdasPage', theme => ({
     lineHeight: '50px'
   },
   messageContainer: {
-    "& h1":{
+    '& h1': {
       fontSize: '30px',
       textAlign: 'left !important'
     }
-    
+
   },
-  lambdaContainer:{
-    minWidth:  '55px'
+  lambdaContainer: {
+    minWidth: '55px'
   }
 }));

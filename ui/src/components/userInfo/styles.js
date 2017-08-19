@@ -1,17 +1,17 @@
 import { createStyleSheet } from 'material-ui/styles';
 
 export default createStyleSheet('UserInfo', theme => ({
-  root:{
+  root: {
     position: 'absolute',
     top: '50%',
     transform: 'translateY(-50%)',
     right: '0px',
   },
-  login:{
+  login: {
     color: 'white',
     right: '15px',
   },
-  loginSmall:{
+  loginSmall: {
     color: 'white',
     right: '10px',
     minWidth: '60px'
@@ -26,7 +26,7 @@ export default createStyleSheet('UserInfo', theme => ({
     top: '50%',
     transform: 'translateY(-50%)',
   },
-  userPopup:{
+  userPopup: {
     position: 'absolute',
     width: '246px',
     right: '9px',
@@ -37,10 +37,10 @@ export default createStyleSheet('UserInfo', theme => ({
     padding: '10px',
     textAlign: 'left'
   },
-  nameInfo:{
+  nameInfo: {
     textAlign: 'right',
     fontWeight: '300',
-    "& div":{
+    '& div': {
       display: 'inline-block',
     },
     textTransform: 'none'
@@ -49,11 +49,11 @@ export default createStyleSheet('UserInfo', theme => ({
     position: 'relative',
     right: '65px'
   },
-  displayName:{
+  displayName: {
     display: 'block',
     color: 'white'
   },
-  userName:{
+  userName: {
     display: 'block',
     color: theme.palette.primary[100],
     fontSize: '14px'

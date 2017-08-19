@@ -13,11 +13,11 @@ import { gql, graphql } from 'react-apollo';
 
 @withStyles(styles)
 @graphql(gql`query GetAllLambdasByUsername($name: String!) { lambdas(username:$name) { edges { node { id name slug owner_id createdAt owner{ displayName, username, emails { email } } } } } }`, {
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: {
       name: ownProps.username // ownProps are the props that are added from the parent component
     },
-  })})
+  }) })
 
 class UserLambdaListing extends Component {
   constructor(props, context){
@@ -27,12 +27,12 @@ class UserLambdaListing extends Component {
   static propTypes = {
     username: PropTypes.string.isRequired
   }
-  
+
 
   render(){
     const { data, classes, username } = this.props;
-    
-    if(!data.lambdas || !username){
+
+    if (!data.lambdas || !username){
       return (<div className={classes.loading}>
         <CircularProgress color="accent" size={100} />
         <Typography type="headline">Loading</Typography>
@@ -41,13 +41,11 @@ class UserLambdaListing extends Component {
 
     return (
       <div className={classes.root}>
-        
+
           <Grid container gutter={24}>
-            {data.lambdas.edges.map(function(item){
-              return (<Grid key={item.node.id} item xs={12} lg={6} className={classes.lambdaCard}>
+            {data.lambdas.edges.map(item => (<Grid key={item.node.id} item xs={12} lg={6} className={classes.lambdaCard}>
                         <LambdaCard lambda={item.node}/>
-                      </Grid>)
-            })}
+                      </Grid>))}
           </Grid>
       </div>
     );

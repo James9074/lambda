@@ -1,6 +1,6 @@
 // @flow weak
 
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List';
@@ -16,7 +16,7 @@ import styles from './styles'
 
 
 class LambdaInputs extends Component {
-  constructor(props, context){
+  constructor(props){
     super(props);
     this.state = {
       open: {
@@ -34,25 +34,25 @@ class LambdaInputs extends Component {
   }
 
   modifyInputName = (event, i, input) => {
-    let newInput = Object.assign(input,{name:event.target.value})
+    let newInput = Object.assign(input, { name: event.target.value })
     this.props.modifyInput(i, newInput);
   }
 
   modifyInputExample = (event, i, input) => {
-    let newInput = Object.assign(input,{example:event.target.value})
+    let newInput = Object.assign(input, { example: event.target.value })
     this.props.modifyInput(i, newInput);
   }
 
   modifyInputTestValue = (event, i) => {
     let newInputs = this.state.localInputs.slice();
     newInputs[i].localExample = event.target.value;
-    this.setState({localInputs: newInputs});
+    this.setState({ localInputs: newInputs });
   }
 
   toggleInputEditing = (event, i) => {
     let newInputs = this.state.localInputs.slice();
     newInputs[i].isEditing = newInputs[i].isEditing === undefined ? true : !newInputs[i].isEditing;
-    this.setState({localInputs: newInputs});
+    this.setState({ localInputs: newInputs });
   }
 
   render() {
@@ -60,7 +60,7 @@ class LambdaInputs extends Component {
     const { localInputs } = this.state;
 
     return (
-      <div className={classes.root + ' ' + (this.props.show ? classes.activeRoot : classes.hiddenRoot)}>
+      <div className={`${classes.root} ${this.props.show ? classes.activeRoot : classes.hiddenRoot}`}>
       <div className={classes.root} onClick={this.props.onClose}>
 
       </div>
@@ -80,8 +80,8 @@ class LambdaInputs extends Component {
                     <Divider />
                     { !input.isEditing &&
                       <ListItem>
-                        <ListItemText primary={input.name && input.name.length > 0 ? input.name : `Nameless Input #${i+1}`} secondary={`${input.example && input.example.length > 0 ? 'Example: ' + input.example : 'No example provided'}`}/>
-                        <IconButton className={classes.button} aria-label="Add" onClick={(e)=>this.toggleInputEditing(e,i)}>
+                        <ListItemText primary={input.name && input.name.length > 0 ? input.name : `Nameless Input #${i + 1}`} secondary={`${input.example && input.example.length > 0 ? `Example: ${input.example}` : 'No example provided'}`}/>
+                        <IconButton className={classes.button} aria-label="Add" onClick={e => this.toggleInputEditing(e, i)}>
                           <EditIcon />
                         </IconButton>
                       </ListItem> }
@@ -91,12 +91,12 @@ class LambdaInputs extends Component {
                           <TextField
                             id="input-example"
                             value={input.localExample || ''}
-                            placeholder={`Input #${i+1} Example`}
-                            onChange={(e)=>this.modifyInputTestValue(e,i)}
+                            placeholder={`Input #${i + 1} Example`}
+                            onChange={e => this.modifyInputTestValue(e, i)}
                             fullWidth
                             margin="none"
                           />
-                          <IconButton className={classes.button} aria-label="Add" onClick={(e)=>this.toggleInputEditing(e,i)}>
+                          <IconButton className={classes.button} aria-label="Add" onClick={e => this.toggleInputEditing(e, i)}>
                             <SaveIcon />
                           </IconButton>
                         </ListItem>}
@@ -113,12 +113,12 @@ class LambdaInputs extends Component {
                   <div key={i}>
                     <Divider />
                     <ListItem>
-                      { lambdaInputs.length === i+1 ? (
+                      { lambdaInputs.length === i + 1 ? (
                         <IconButton className={classes.button} aria-label="Add" onClick={this.props.addInput}>
                           <AddIcon />
                         </IconButton>)
                         : (
-                        <IconButton className={classes.button} aria-label="Delete" onClick={()=>this.props.removeInput(input)}>
+                        <IconButton className={classes.button} aria-label="Delete" onClick={() => this.props.removeInput(input)}>
                           <DeleteIcon />
                         </IconButton>
                         )
@@ -126,8 +126,8 @@ class LambdaInputs extends Component {
                       <TextField
                         id="input-name"
                         value={input.name}
-                        placeholder={`Input #${i+1} Name`}
-                        onChange={(event) => this.modifyInputName(event,i,input)}
+                        placeholder={`Input #${i + 1} Name`}
+                        onChange={event => this.modifyInputName(event, i, input)}
                         fullWidth
                         margin="none"
                       />
@@ -138,8 +138,8 @@ class LambdaInputs extends Component {
                       <TextField
                         id="input-example"
                         value={input.example}
-                        placeholder={`Input #${i+1} Example (Optional)`}
-                        onChange={(event) => this.modifyInputExample(event,i,input)}
+                        placeholder={`Input #${i + 1} Example (Optional)`}
+                        onChange={event => this.modifyInputExample(event, i, input)}
                         fullWidth
                         margin="none"
                        />

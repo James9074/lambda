@@ -1,13 +1,13 @@
 import { createStyleSheet } from 'material-ui/styles';
 
 export default createStyleSheet('LambdasPage', theme => ({
-  loading:{
+  loading: {
     width: '100%',
-    textAlign:'center',
-    marginTop:'100px',
-    fontSize:'35px'
+    textAlign: 'center',
+    marginTop: '100px',
+    fontSize: '35px'
   },
-  lambdaCard:{
+  lambdaCard: {
     overflow: 'hidden'
   }
 }));

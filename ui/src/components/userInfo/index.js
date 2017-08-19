@@ -16,9 +16,9 @@ class UserInfo extends Component {
   constructor(props, context){
     super(props);
     this.state = {
-      loginModalOpen:false,
+      loginModalOpen: false,
       userMenuOpen: false,
-      userAnchorEl: undefined,      
+      userAnchorEl: undefined,
     }
   }
 
@@ -27,20 +27,20 @@ class UserInfo extends Component {
   }
 
   componentDidMount = () => {
-    this.setState({'avatarNode':ReactDOM.findDOMNode(this.refs.avatar)})
+    this.setState({ avatarNode: ReactDOM.findDOMNode(this.refs.avatar) })
   }
 
   handleRequestClose = () => {
-    this.setState({loginModalOpen:false})
+    this.setState({ loginModalOpen: false })
   }
 
-  handleUserMenuOpen = event => {
+  handleUserMenuOpen = (event) => {
     this.setState({ userMenuOpen: true, userAnchorEl: event.currentTarget });
   };
 
   handleUserMenuClick = (event, index) => {
-    this.setState({ editoruser: index, userMenuOpen: false});
-    switch(index){
+    this.setState({ editoruser: index, userMenuOpen: false });
+    switch (index){
       case 1:
         window.location = '/login/clear';
         break;
@@ -51,11 +51,11 @@ class UserInfo extends Component {
 
   handleUserMenuClose = () => {
     this.setState({ userMenuOpen: false });
-  }; 
+  };
 
   render(){
     const { user, classes } = this.props;
-    if(!user)
+    if (!user)
       return (
         <div className={classes.root}>
           <Hidden smUp>
@@ -68,13 +68,13 @@ class UserInfo extends Component {
         </div>
       )
     let profilePic = user.imageUrl || `https://robohash.org/${user.username}.png?size=300x300`
-    //TODO: Wow the css for this is abysmal. Let's fix that.
+    // TODO: Wow the css for this is abysmal. Let's fix that.
     return (
       <div className={classes.root}>
           <div className={classes.nameInfo}>
-          <Button className={classes.avatar}  onClick={this.handleUserMenuOpen}>
-            <Avatar alt="Avatar" src={profilePic}  ref="avatar"/>
-          </Button>            
+          <Button className={classes.avatar} onClick={this.handleUserMenuOpen}>
+            <Avatar alt="Avatar" src={profilePic} ref="avatar"/>
+          </Button>
           <Hidden smDown>
             <div className={classes.nameText}>
               <span className={classes.displayName}>{user.displayName || user.username}</span>
@@ -90,7 +90,7 @@ class UserInfo extends Component {
             onRequestClose={this.handleUserMenuClose}
           >
           <MenuItem onClick={event => this.handleUserMenuClick(event, 1)}>Logout</MenuItem>
-        </Menu>        
+        </Menu>
       </div>
     );
   }

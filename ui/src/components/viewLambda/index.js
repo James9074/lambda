@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
@@ -9,7 +9,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import styles from './styles'
 import LambdaEditor from 'components/lambdaEditor'
 import SmallHeader from 'components/smallHeader'
-//import TextField from 'material-ui/TextField';
+// import TextField from 'material-ui/TextField';
 import LambdaCard from 'components/lambdaCard'
 import Button from 'material-ui/Button';
 import Dialog, {
@@ -27,30 +27,30 @@ import Fade from 'material-ui/transitions/Fade';
 import { gql, graphql, compose } from 'react-apollo';
 
 let userQuery = graphql(gql`query CurrentUser{ me { displayName username imageUrl admin } }`, { name: 'userQuery' })
-let lambdaQuery = graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lambda(slug:$slug) { name, id, slug, inputs, description, createdAt, code, owner_id, public, owner { username } } }`, 
+let lambdaQuery = graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lambda(slug:$slug) { name, id, slug, inputs, description, createdAt, code, owner_id, public, owner { username } } }`,
   {
     name: 'lambdaQuery',
-    options: (ownProps) => ({
+    options: ownProps => ({
       variables: {
         slug: ownProps.slug
       },
     }
-  )})
+  ) })
 
-  let deleteLambda = graphql(gql`mutation DeleteLambda($input: DeleteLambdaInput!) { deleteLambda(input: $input) { result } }`, {
-    props: ({ mutate }) => ({
-      delete: (input) => mutate(input),
-    })
-  }) 
+let deleteLambda = graphql(gql`mutation DeleteLambda($input: DeleteLambdaInput!) { deleteLambda(input: $input) { result } }`, {
+  props: ({ mutate }) => ({
+    delete: input => mutate(input),
+  })
+})
 
-  let updateLambda = graphql(gql`mutation UpdateLambda($input: UpdateLambdaInput!){ updateLambda(input: $input) { lambda { id slug inputs } } }`, {
-    props: ({ mutate }) => ({
-      update: (input) => mutate(input),
-    })
-  })  
-    
+let updateLambda = graphql(gql`mutation UpdateLambda($input: UpdateLambdaInput!){ updateLambda(input: $input) { lambda { id slug inputs } } }`, {
+  props: ({ mutate }) => ({
+    update: input => mutate(input),
+  })
+})
+
 @withStyles(styles)
-@compose(userQuery,lambdaQuery, deleteLambda, updateLambda)
+@compose(userQuery, lambdaQuery, deleteLambda, updateLambda)
 
 class ViewLambda extends Component {
   constructor(props, context){
@@ -74,13 +74,13 @@ class ViewLambda extends Component {
   static contextTypes = {
     router: PropTypes.object.isRequired
   }
-  
+
   componentWillReceiveProps(newProps){
-    if(newProps.lambdaQuery.lambda && !newProps.lambdaQuery.loading &&  (this.state.lambda === undefined || (this.props.lambdaQuery.lambda.slug !== newProps.slug))){
-      let newLambda = newProps.lambdaQuery.lambda === null ? "none" : Object.assign({...newProps.lambdaQuery.lambda},{inputs:JSON.parse(newProps.lambdaQuery.lambda.inputs)})
+    if (newProps.lambdaQuery.lambda && !newProps.lambdaQuery.loading && (this.state.lambda === undefined || (this.props.lambdaQuery.lambda.slug !== newProps.slug))){
+      let newLambda = newProps.lambdaQuery.lambda === null ? 'none' : Object.assign({ ...newProps.lambdaQuery.lambda }, { inputs: JSON.parse(newProps.lambdaQuery.lambda.inputs) })
       let ownerIsViewing = newProps.userQuery.me && (newProps.userQuery.me.username === newProps.lambdaQuery.lambda.owner.username)
       let adminIsViewing = newProps.userQuery.me && newProps.userQuery.me.admin === 1;
-      this.setState({lambda: newLambda, ownerIsViewing, adminIsViewing})
+      this.setState({ lambda: newLambda, ownerIsViewing, adminIsViewing })
     }
   }
 
@@ -88,23 +88,23 @@ class ViewLambda extends Component {
     slug: PropTypes.string.isRequired
   }
 
-  //Shortcut for updating the Lambda object
+  // Shortcut for updating the Lambda object
   setLambda(data) {
     this.setState({ lambda: Object.assign(this.state.lambda, data) })
   }
 
   modifyInput(i, value){
-    var newInputs = this.state.lambda.inputs;
+    let newInputs = this.state.lambda.inputs;
     newInputs[i] = value;
-    this.setLambda({inputs: newInputs})
-  }      
+    this.setLambda({ inputs: newInputs })
+  }
 
   handleRunLambda = () => {
-    if(this.state.loadingOutput) return;
-    this.setState({loadingOutput: true})
+    if (this.state.loadingOutput) return;
+    this.setState({ loadingOutput: true })
     let fullURL = url.parse(document.location.href);
-    let baseURL = fullURL.protocol + '//' + fullURL.hostname + (fullURL.port ? (':' + fullURL.port) : '')
-    const settings = { 
+    let baseURL = `${fullURL.protocol}//${fullURL.hostname}${fullURL.port ? (`:${fullURL.port}`) : ''}`
+    const settings = {
       method: 'POST',
       followAllRedirects: true,
       followOriginalHttpMethod: true,
@@ -116,54 +116,54 @@ class ViewLambda extends Component {
     }
 
     request(settings, (err, response, body) => {
-      this.setState({loadingOutput: false})
-      //console.log(response.statusCode)
-      //console.log(body) // this is empty instead of return the body that has been sent
-      this.setState({editorOutput: body.output || body.lambda_error || body.error})
-    }) 
+      this.setState({ loadingOutput: false })
+      // console.log(response.statusCode)
+      // console.log(body) // this is empty instead of return the body that has been sent
+      this.setState({ editorOutput: body.output || body.lambda_error || body.error })
+    })
   }
 
   deleteLambda = () => {
-    //Try to delete
+    // Try to delete
     this.props.delete({
-      variables: { 
-        input: { 'slug': this.state.lambda.slug }
+      variables: {
+        input: { slug: this.state.lambda.slug }
       }
     })
     .then(({ data }) => {
-      this.setState({toastOpen: true, toastMessage: 'Lambda Deleted!', graphqlErrors:[]},()=>{
-        this.context.router.history.push(`/`)
+      this.setState({ toastOpen: true, toastMessage: 'Lambda Deleted!', graphqlErrors: [] }, () => {
+        this.context.router.history.push('/')
       })
-    }).catch(({graphQLErrors}) => {
-        this.setState({toastOpen: true, toastMessage: 'There was an error deleting this Lambda', graphqlErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error'})
+    }).catch(({ graphQLErrors }) => {
+      this.setState({ toastOpen: true, toastMessage: 'There was an error deleting this Lambda', graphqlErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error' })
     });
 
-    //window.location = '/'
-    this.setState({modalOpen:false})
+    // window.location = '/'
+    this.setState({ modalOpen: false })
   }
 
-  handleDeleteLambda = () =>{
-    this.setState({modalOpen:true})
+  handleDeleteLambda = () => {
+    this.setState({ modalOpen: true })
   }
 
   handleToggleEdit = () => {
-    if(!this.state.isEditing)
-      this.setState({cachedLambda:Object.assign({},this.state.lambda)})
+    if (!this.state.isEditing)
+      this.setState({ cachedLambda: Object.assign({}, this.state.lambda) })
     else
-      this.setState({lambda: this.state.cachedLambda})
+      this.setState({ lambda: this.state.cachedLambda })
 
 
-    this.setState({isEditing:!this.state.isEditing})
+    this.setState({ isEditing: !this.state.isEditing })
   }
 
   editLambda = (newData) => {
-    this.setState({lambda: Object.assign({},this.state.lambda,newData)})
+    this.setState({ lambda: Object.assign({}, this.state.lambda, newData) })
   }
 
   handleUpdateLambda = () => {
-    if(this.state.loadingOutput) return;
+    if (this.state.loadingOutput) return;
 
-    //Filter out blank Inputs
+    // Filter out blank Inputs
     let filteredInputs = JSON.parse(JSON.stringify(this.state.lambda.inputs))
     filteredInputs = filteredInputs.filter(input => input.name.length > 0)
 
@@ -177,63 +177,61 @@ class ViewLambda extends Component {
       owner_id: this.state.lambda.owner_id,
       inputs: JSON.stringify(filteredInputs)
     }
-    //Try to submit
+    // Try to submit
     this.props.update({
-      variables: { 
+      variables: {
         input: updatedLambda
       }
     })
     .then(({ data }) => {
-      //TODO: Figure out how to really deal with this parsing bznz
-      this.setState({toastOpen: true, toastMessage: 'Lambda Saved!', graphqlErrors:[], isEditing: false, lambda: Object.assign({},this.state.lambda, {inputs: JSON.parse(data.updateLambda.lambda.inputs)})},()=>{
-        //this.context.router.history.push(`/${data.createLambda.lambda.slug}`)
+      // TODO: Figure out how to really deal with this parsing bznz
+      this.setState({ toastOpen: true, toastMessage: 'Lambda Saved!', graphqlErrors: [], isEditing: false, lambda: Object.assign({}, this.state.lambda, { inputs: JSON.parse(data.updateLambda.lambda.inputs) }) }, () => {
+        // this.context.router.history.push(`/${data.createLambda.lambda.slug}`)
       })
-    }).catch(({graphQLErrors}) => {
-        let message = 'There was an error saving this Lambda'
-        if(graphQLErrors !== undefined && graphQLErrors[0].state.inputs !== undefined)
-          message = graphQLErrors[0].state.inputs[0]
-        this.setState({toastOpen: true, toastMessage: message, graphqlErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error'})
+    }).catch(({ graphQLErrors }) => {
+      let message = 'There was an error saving this Lambda'
+      if (graphQLErrors !== undefined && graphQLErrors[0].state.inputs !== undefined)
+        message = graphQLErrors[0].state.inputs[0]
+      this.setState({ toastOpen: true, toastMessage: message, graphqlErrors: graphQLErrors !== undefined ? graphQLErrors[0].state : 'Unknown Error' })
     });
   }
   onEditorUpdate = (code) => {
-    //test
+    // test
   }
 
   addInput = () => {
-    var newInputs = this.state.lambda.inputs;
+    let newInputs = this.state.lambda.inputs;
     newInputs.push({
       name: '',
       type: '',
       example: ''
     });
-    this.setLambda({inputs: newInputs})
+    this.setLambda({ inputs: newInputs })
   }
 
   modifyInput = (i, value) => {
-    var newInputs = this.state.lambda.inputs;
+    let newInputs = this.state.lambda.inputs;
     newInputs[i] = value;
-    this.setLambda({inputs: newInputs})
-  }  
+    this.setLambda({ inputs: newInputs })
+  }
 
   removeInput = (input) => {
-    var newInputs = this.state.lambda.inputs;
-    newInputs.splice(newInputs.indexOf(input),1);
-    this.setLambda({inputs: newInputs})
-  }  
+    let newInputs = this.state.lambda.inputs;
+    newInputs.splice(newInputs.indexOf(input), 1);
+    this.setLambda({ inputs: newInputs })
+  }
 
   render(){
     const { classes, slug } = this.props;
     const { lambda, ownerIsViewing, adminIsViewing, isEditing } = this.state;
-    
-    if(!lambda || !slug){
+
+    if (!lambda || !slug){
       return (<div className={classes.loading}>
         <CircularProgress color="accent" size={100} />
         <Typography type="headline">Loading</Typography>
         </div>)
-    }
-
-    else if(lambda === "none")
-      return(
+    } else if (lambda === 'none')
+      return (
         <Grid container gutter={24}>
           <Grid item xs={12}>
             <SmallHeader content={"404: This Lambda Doesn't Exist!"}/>
@@ -245,9 +243,9 @@ class ViewLambda extends Component {
     return (
       <div className={classes.root}>
           <Grid container gutter={0}>
-            <Dialog open={this.state.modalOpen} onRequestClose={() => this.setState({modalOpen: false})}>
+            <Dialog open={this.state.modalOpen} onRequestClose={() => this.setState({ modalOpen: false })}>
               <DialogTitle>
-                {"Delete"}
+                {'Delete'}
               </DialogTitle>
               <DialogContent>
                 <DialogContentText>
@@ -258,7 +256,7 @@ class ViewLambda extends Component {
                 <Button onClick={this.deleteLambda}>
                   Yes
                 </Button>
-                <Button onClick={() => this.setState({modalOpen: false})}>
+                <Button onClick={() => this.setState({ modalOpen: false })}>
                   No
                 </Button>
               </DialogActions>
@@ -267,7 +265,7 @@ class ViewLambda extends Component {
               <LambdaCard lambda={lambda} type={'single'}/>
             </Grid>
 
-            {/*(<Grid item xs={12} className={classes.inputs}>
+            {/* (<Grid item xs={12} className={classes.inputs}>
               <Grid container gutter={0}>
                 <Grid item xs={12}>
                   <Typography type="headline" className={classes.title}>Lambda Inputs</Typography>
@@ -293,12 +291,12 @@ class ViewLambda extends Component {
                       )
                     }.bind(this))}
                   </Grid>
-                </Grid>          
-              </Grid>   
-            </Grid>)*/}
+                </Grid>
+              </Grid>
+            </Grid>) */}
 
             <Grid item xs={12} className={classes.viewEditor}>
-            <LambdaEditor 
+            <LambdaEditor
               edit={isEditing}
               handleToggleEdit={this.handleToggleEdit}
               onEditorUpdate={this.onEditorUpdate}
@@ -316,12 +314,12 @@ class ViewLambda extends Component {
               lambda={lambda}
               output={this.state.editorOutput}
               testLambda={this.handleRunLambda} />
-            </Grid> 
+            </Grid>
           </Grid>
           <Snackbar
             open={this.state.toastOpen}
             className={classes.snackBar}
-            onRequestClose={()=>this.setState({toastOpen: false, toastMessage: ''})}
+            onRequestClose={() => this.setState({ toastOpen: false, toastMessage: '' })}
             transition={Fade}
             SnackbarContentProps={{
               'aria-describedby': 'message-id',

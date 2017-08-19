@@ -6,17 +6,17 @@ export default createStyleSheet('LambdasPage', theme => ({
     marginTop: '20px'
   },
   title: {
-    marginBottom:'15px'
+    marginBottom: '15px'
   },
-  jumbo:{
+  jumbo: {
     overflow: 'hidden',
-    marginBottom:'20px',
-    "& div":{
-      padding:'5px',
-      height:'50px',
+    marginBottom: '20px',
+    '& div': {
+      padding: '5px',
+      height: '50px',
       backgroundColor: theme.palette.primary[400],
-      "& h1":{
-        color:'white',
+      '& h1': {
+        color: 'white',
         textAlign: 'center',
       }
     }
@@ -27,14 +27,14 @@ export default createStyleSheet('LambdasPage', theme => ({
     lineHeight: '45px'
   },
   welcomeContainer: {
-    "& h1":{
+    '& h1': {
       fontSize: '40px',
       textAlign: 'left !important'
     }
-    
+
   },
-  avatar:{
-    height:'32px',
-    width:'32px'
+  avatar: {
+    height: '32px',
+    width: '32px'
   }
 }));

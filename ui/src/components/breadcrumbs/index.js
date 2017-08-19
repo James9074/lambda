@@ -1,6 +1,5 @@
 // @flow
 
-import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
@@ -11,7 +10,7 @@ function Breadcrumbs(props, context) {
 
   return (
     <div>
-      <Button color="accent" className={classes.button} onClick={()=> context.router.history.goBack()} disableRipple disableFocusRipple>
+      <Button color="accent" className={classes.button} onClick={() => context.router.history.goBack()} disableRipple disableFocusRipple>
         &lt; Back
       </Button>
     </div>

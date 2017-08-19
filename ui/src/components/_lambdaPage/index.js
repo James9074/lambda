@@ -1,12 +1,9 @@
 // @flow
 
-import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-//import Breadcrumbs from 'components/breadcrumbs'
 import styles from './styles'
 import ViewLambda from 'components/viewLambda'
 
@@ -16,7 +13,7 @@ function lambdaPage(props, context) {
   return (
     <Grid container gutter={0} justify="flex-start" className={classes.card}>
       <Grid item xs={3} >
-        {/*<Breadcrumbs />*/}
+        {/* <Breadcrumbs /> */}
       </Grid>
       <Grid item xs={12}>
         <Paper className={classes.root}>
@@ -37,5 +34,3 @@ lambdaPage.contextTypes = {
 };
 
 export default withStyles(styles)(lambdaPage);
-
-

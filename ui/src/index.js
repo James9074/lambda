@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -13,7 +12,7 @@ const networkInterface = createNetworkInterface({
 });
 
 const client = new ApolloClient({
-  networkInterface: networkInterface
+  networkInterface
 });
 
 ReactDOM.render((
@@ -21,5 +20,5 @@ ReactDOM.render((
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </ApolloProvider>        
-), document.getElementById('root'))
+  </ApolloProvider>
+), document.getElementById('root')) //eslint-disable-line

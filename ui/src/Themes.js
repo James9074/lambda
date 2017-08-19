@@ -47,7 +47,7 @@ export const RobotThemeDark = createMuiTheme({
 export const MainTheme = createMuiTheme({
   palette: createPalette({
     type: 'light',
-    primary: { 
+    primary: {
       50: '#757495',
       100: '#5E5D83',
       200: '#474671',
@@ -58,11 +58,11 @@ export const MainTheme = createMuiTheme({
       700: '#030132',
       800: '#03012D',
       900: '#020127',
-      'A100': '#5E5C8F',
-      'A200': '#47457F',
-      'A400': '#19175F',
-      'A700': '#020041',
-      'contrastDefaultColor': '#88003C'
+      A100: '#5E5C8F',
+      A200: '#47457F',
+      A400: '#19175F',
+      A700: '#020041',
+      contrastDefaultColor: '#88003C'
     },
     accent: blue,
     error: red,

@@ -1,26 +1,26 @@
 import { createStyleSheet } from 'material-ui/styles';
 
 export default createStyleSheet('ViewLambda', theme => ({
-  loading:{
+  loading: {
     width: '100%',
-    textAlign:'center',
-    marginTop:'100px',
-    fontSize:'35px',
-    "& h1":{
+    textAlign: 'center',
+    marginTop: '100px',
+    fontSize: '35px',
+    '& h1': {
       color: theme.palette.primary[500]
     }
   },
-  textField:{
-    fontSize:'15px'
+  textField: {
+    fontSize: '15px'
   },
-  noLambda:{
-    textAlign:'center'
+  noLambda: {
+    textAlign: 'center'
   },
-  inputs:{
+  inputs: {
     marginTop: '25px',
-    paddingLeft:'5px',
+    paddingLeft: '5px',
   },
-  viewEditor:{
+  viewEditor: {
     marginTop: '10px',
     overflow: 'hidden'
   },
@@ -28,14 +28,14 @@ export default createStyleSheet('ViewLambda', theme => ({
     color: 'white',
     float: 'right',
     marginTop: '15px',
-    marginBottom:'15px'
+    marginBottom: '15px'
   },
-  snackBar:{
-    "& div":{
-      "& div":{
+  snackBar: {
+    '& div': {
+      '& div': {
         width: '100%',
         textAlign: 'center'
-      } 
+      }
     }
   }
 }));
