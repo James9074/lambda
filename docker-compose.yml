@@ -2,20 +2,19 @@ version: '2'
 services:
   nginx:
     image: wlan1/robot-nginx
-    build: 
+    build:
       context: ./nginx
     depends_on:
       - api
       - ui
   api:
     image: wlan1/robot-api
-    build: 
-      context: ./api   
+    build:
+      context: ./api
     hostname: api
     depends_on:
       - db
       - redis
-      - runner
     env_file: .env
     user: root
     volumes:
@@ -34,7 +33,7 @@ services:
       - database:/var/lib/postgresql/data
   ui:
     image: wlan1/robot-ui
-    build: 
+    build:
       context: ./ui
     hostname: ui
     command: yarn start
@@ -44,11 +43,6 @@ services:
     volumes:
       - redis:/data
     user: redis
-  runner:
-    image: docker
-    hostname: runner
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   redis:
   database:
