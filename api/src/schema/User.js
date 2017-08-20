@@ -13,7 +13,8 @@ import UserType from './UserType';
 
 export const me = {
   type: UserType,
-  resolve(root, args, { user, users }) {
+  // $FlowFixMe
+  resolve(root: Object, args: Object, { user, users }) {
     return user && users.load(user.id);
   },
 };
@@ -28,7 +29,8 @@ export const user = {
       type: GraphQLString
     }
   },
-  resolve(root, args, { users, userByUsername }) {
+  // $FlowFixMe
+  resolve(root: Object, args: Object, { users, userByUsername }) {
     if (args.id)
       return args.id && users.load(args.id);
     else if (args.username)
@@ -45,7 +47,7 @@ export const users = {
     },
   }).connectionType,
   args: forwardConnectionArgs,
-  async resolve(root, args) {
+  async resolve(root: Object, args: Object) {
     const limit = typeof args.first === 'undefined' ? '10' : args.first;
     const offset = args.after ? cursorToOffset(args.after) + 1 : 0;
 

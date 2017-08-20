@@ -32,16 +32,17 @@ function mapTo(keys, keyFn, type, rows) {
 function mapToMany(keys, keyFn, type, rows) {
   if (!rows) return mapToMany.bind(null, keys, keyFn, type);
   const group = new Map(keys.map(key => [key, []]));
+  // $FlowFixMe
   rows.forEach(row => group.get(keyFn(row)).push(assignType(row, type)));
   return Array.from(group.values());
 }
 
-function mapToValues(keys, keyFn, valueFn, rows) {
+/*  function mapToValues(keys, keyFn, valueFn, rows) {
   if (!rows) return mapToValues.bind(null, keys, keyFn, valueFn);
   const group = new Map(keys.map(key => [key, null]));
   rows.forEach(row => group.set(keyFn(row), valueFn(row)));
   return Array.from(group.values());
-}
+}  */
 
 
 export default {

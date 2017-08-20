@@ -160,7 +160,8 @@ app.get('/lambda/:slug', (req, res) => {
       if (queryValues.length !== inputNames.length)
         error = 'Incorrect Param Length'
 
-      if (!inputNames.every((e, i) => e.toLowerCase() === (Object.keys(req.query)[i] === undefined ? false : Object.keys(req.query)[i].toLowerCase())))
+      if (!inputNames.every((e, i) => e.toLowerCase() === (Object.keys(req.query)[i] === undefined ?
+          false : Object.keys(req.query)[i].toLowerCase())))
         error = 'Incorrect Param Names'
 
       if (error)
@@ -169,7 +170,7 @@ app.get('/lambda/:slug', (req, res) => {
           expected: lambda.inputs
         })
 
-      lambda.inputs.forEach((input, index) => { input.value = queryValues[index] })
+      lambda.inputs.forEach((input, index) => { input.value = queryValues[index] }) //eslint-disable-line
       processLambda(lambda, req, res)
     })
 });
@@ -185,6 +186,7 @@ app.use('/graphql', expressGraphQL(req => ({
   pretty: process.env.NODE_ENV !== 'production',
   formatError: error => ({
     message: error.message,
+    // $FlowFixMe
     state: error.originalError && error.originalError.state,
     locations: error.locations,
     path: error.path,

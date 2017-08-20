@@ -28,7 +28,8 @@ export const lambda = {
       type: GraphQLString
     }
   },
-  resolve(root, args, { lambdas, lambdaBySlug }) {
+  // $FlowFixMe
+  resolve(root: Object, args: Object, { lambdas, lambdaBySlug }) {
     if (args.id)
       return args.id && lambdas.load(args.id);
     else if (args.slug){
@@ -49,7 +50,7 @@ export const lambdas = {
     username: { type: GraphQLString },
     search: { type: GraphQLString },
     ...forwardConnectionArgs },
-  async resolve(root, args) {
+  async resolve(root: Object, args: Object) {
     const limit = typeof args.first === 'undefined' ? '10' : args.first;
     const offset = args.after ? cursorToOffset(args.after) + 1 : 0;
 
@@ -322,7 +323,8 @@ export const updateLambda = mutationWithClientMutationId({
 });
 
 // Util
-String.prototype.replaceAll = function(search, replacement) {
+// $FlowFixMe
+String.prototype.replaceAll = function(search, replacement) { //eslint-disable-line
   let target = this;
   return target.replace(new RegExp(search, 'g'), replacement);
 };

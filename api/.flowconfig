@@ -1,8 +1,10 @@
 [ignore]
 .*/build/.*
-.*/config/.*
 .*/coverage/.*
 .*/tools/.*
+yarn.lock
+Dockerfile
+Dockerfile-prod
 
 [options]
 esproposal.export_star_as=enable
