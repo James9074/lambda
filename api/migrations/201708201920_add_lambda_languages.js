@@ -1,11 +1,11 @@
 module.exports.up = async (db) => {
-  await db.table('lambdas', (t) => {
-    t.string('language').notNull().defaultTo('node');
+  await db.schema.table('lambdas', (t) => {
+    t.string('language', 200).notNull().defaultTo('node');
   });
 };
 
 module.exports.down = async (db) => {
-  db.schema.table('lambdas', (t) => {
+  await db.schema.table('lambdas', (t) => {
     t.dropColumn('language');
   });
 };
