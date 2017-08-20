@@ -26,7 +26,6 @@ module.exports =
       "react/jsx-uses-vars": 1,
       "react/jsx-uses-react": 1,
       "import/extensions": "off",
-      //"import/first": "off",
       "import/no-extraneous-dependencies": 0, //I'm still confused why this is an issue
       "max-len": "off", //TODO: Turn this back on
       "no-confusing-arrow": 0 //It's not confusing.

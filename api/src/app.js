@@ -9,12 +9,10 @@ import session from 'express-session';
 import connectRedis from 'connect-redis';
 import flash from 'express-flash';
 import i18next from 'i18next';
-import * as child from 'child_process';
 import i18nextMiddleware, { LanguageDetector } from 'i18next-express-middleware';
 import i18nextBackend from 'i18next-node-fs-backend';
 import expressGraphQL from 'express-graphql';
 import PrettyError from 'pretty-error';
-import fs from 'fs'
 import { printSchema } from 'graphql';
 import email from './email';
 import redis from './redis';
@@ -23,6 +21,7 @@ import schema from './schema';
 import DataLoaders from './DataLoaders';
 import accountRoutes from './routes/account';
 import db from './db';
+import startRunner from './runners';
 
 i18next
   .use(LanguageDetector)
@@ -67,64 +66,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8); //eslint-disable-line
-    return v.toString(16);
-  });
-}
-
-function execute(command, callback){
-  child.exec(command, (err, stdout, stderr) => callback(err, stdout, stderr))
-}
-
 function processLambda(lambda, req, res) {
   let lambdaInputArray = []
   try {
     lambdaInputArray = lambda.inputs.map(x => `${x.value.toString()}`)
   } catch (e) { return res.status(400).json({ error: 'Values were not provided for all inputs' }) }
 
-  let expression = `
-  ${lambda.code}
-  if(typeof(entryPoint) === 'function'){
-    if (entryPoint.constructor.name === 'AsyncFunction')
-      entryPoint(${JSON.stringify(lambdaInputArray)}).then((x)=>console.log(x))
-    else
-      console.log(entryPoint(${JSON.stringify(lambdaInputArray)}))
-  } else
-    console.log("You must provide a function named entryPoint")`;
-  let result = '';
-
-  try {
-    let tempFile = `/tmp/files/${uuidv4()}.js`
-    fs.writeFile(tempFile, expression, 'utf8', (saveError) => {
-      if (saveError)
-        return res.json({ error: 'Error saving file', details: saveError });
-
-      let dockerstr = `docker run --rm -v ${tempFile}:${tempFile} node:8-alpine node ${tempFile} && rm ${tempFile}`
-      execute(dockerstr, (err, stdout, stderr) => {
-        if (/(entryPoint is not defined)+/.test(stderr)) stderr = "You must provide a function named 'entryPoint'" //eslint-disable-line
-        if (stdout.trim() === 'undefined') stdout = 'Nothing returned!'; //eslint-disable-line
-        if (stderr){
-          return res.status(400).json({ lambda_error: stderr.trim() })
-        } else if (err){
-          return res.status(500).json({ error: err })
-        } else {
-          return res.json({ output: stdout.trim() })
-        }
-      });
-    });
-  } catch (e) {
-    result = e.toString();
-    if (result === undefined)
-      result = 'undefined'
-    if (result === null)
-      result = 'null'
-    if (result.length === 0)
-      result = 'Nothing returned'
-
-    res.json(result)
-  }
+  startRunner(lambda, lambdaInputArray, req, res);
 }
 
 

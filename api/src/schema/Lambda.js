@@ -130,6 +130,10 @@ const inputFields = {
     type: GraphQLString
   },
 
+  language: {
+    type: GraphQLString
+  },
+
   code: {
     type: GraphQLString
   },

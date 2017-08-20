@@ -6,7 +6,6 @@ import { nodeInterface } from './Node';
 import CommentType from './CommentType';
 import UserType from './UserType';
 
-
 export default new GraphQLObjectType({
   name: 'Lambda',
   description: 'A lambda object',
@@ -31,7 +30,6 @@ export default new GraphQLObjectType({
       type: GraphQLInt
     },
 
-
     inputs: {
       type: GraphQLString,
       resolve(parent) {
@@ -40,6 +38,10 @@ export default new GraphQLObjectType({
     },
 
     code: {
+      type: GraphQLString
+    },
+
+    language: {
       type: GraphQLString
     },
 
