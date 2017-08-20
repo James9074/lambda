@@ -12,37 +12,50 @@ function Lambdas(props) {
   const { classes, lambda, type } = props;
 
   let lambdaLink = `/api/lambda/${lambda.slug}${Array.isArray(lambda.inputs) ? `/?${lambda.inputs.map((input, i) => `${input.name}=${input.example}${i + 1 < lambda.inputs.length ? '&' : ''}`).join('')}` : ''}`;
+
+  let logoImg = '';
+  switch (lambda.language){
+    case 'node':
+      logoImg = 'https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png'
+      break;
+    case 'java':
+      logoImg = 'https://www.seeklogo.net/wp-content/uploads/2011/06/java-logo-vector.png'
+      break;
+    default:
+      break;
+  }
+
   if (type && type === 'single')
     return (
-    <Card className={classes.card}>
-      <CardContent className={classes.content}>
-      <Grid container justify="flex-start">
+      <Card className={classes.card}>
+        <CardContent className={classes.content}>
+        <Grid container justify="flex-start">
 
-        <Grid item className={classes.info}>
+          <Grid item className={classes.info}>
 
-          <Typography type="headline" className={classes.largeTitle}>
-            <a href={`${lambda.owner.username}/${lambda.slug}`} className={classes.headlineLink}>{lambda.name}</a>
-          </Typography>
+            <Typography type="headline" className={classes.largeTitle}>
+              <a href={`${lambda.owner.username}/${lambda.slug}`} className={classes.headlineLink}>{lambda.name}</a>
+            </Typography>
 
-          <Typography className={classes.largeDesc} component='div'>
-            {lambda.description || 'No description provided'}
-          </Typography>
+            <Typography className={classes.largeDesc} component='div'>
+              {lambda.description || 'No description provided'}
+            </Typography>
 
-          <Typography color="secondary" className={classes.created} component='div'>
-          <a href={`/users/${lambda.owner.username}`}>{lambda.owner.username}</a> | {moment(lambda.createdAt).format('MM/DD/YYYY')}  | <a href={lambdaLink}>View in API</a>
-          </Typography>
+            <Typography color="secondary" className={classes.created} component='div'>
+            <a href={`/users/${lambda.owner.username}`}>{lambda.owner.username}</a> | {moment(lambda.createdAt).format('MM/DD/YYYY')}  | <a href={lambdaLink}>View in API</a>
+            </Typography>
+
+          </Grid>
+
+          <Grid item>
+            <div className={classes.logo}>
+              <img src={logoImg} alt="lambda logo"/>
+            </div>
+          </Grid>
 
         </Grid>
-
-        <Grid item>
-          <div className={classes.logo}>
-            <img src={'https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png'} alt="lambda logo"/>
-          </div>
-        </Grid>
-
-      </Grid>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
     )
 
   return (
@@ -69,7 +82,7 @@ function Lambdas(props) {
 
         <Grid item>
           <div className={classes.logo}>
-            <img src={'https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png'} alt="lambda logo"/>
+            <img src={logoImg} alt="lambda logo"/>
           </div>
         </Grid>
 
@@ -84,7 +97,7 @@ function Lambdas(props) {
         </Button>
       </CardActions> */}
     </Card>
-  );
+  )
 }
 
 Lambdas.propTypes = {

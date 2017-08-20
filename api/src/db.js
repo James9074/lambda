@@ -1,14 +1,8 @@
 /* @flow */
 
 import knex from 'knex';
+import knexfile from '../knexfile'
 
-const db = knex({
-  client: 'pg',
-  connection: process.env.DATABASE_URL,
-  migrations: {
-    tableName: 'migrations',
-  },
-  debug: process.env.DATABASE_DEBUG === 'true',
-});
+const db = knex(knexfile.development);
 
 export default db;

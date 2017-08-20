@@ -24,7 +24,7 @@ import { gql, graphql, compose } from 'react-apollo';
 import styles from './styles'
 
 let userQuery = graphql(gql`query CurrentUser{ me { displayName username imageUrl admin } }`, { name: 'userQuery' })
-let lambdaQuery = graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lambda(slug:$slug) { name, id, slug, inputs, description, createdAt, code, owner_id, public, owner { username } } }`,
+let lambdaQuery = graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lambda(slug:$slug) { name, id, slug, inputs, description, createdAt, code, owner_id, public, language, owner { username } } }`,
   {
     name: 'lambdaQuery',
     options: ownProps => ({
@@ -168,10 +168,12 @@ class ViewLambda extends Component {
       slug: this.state.lambda.slug,
       description: this.state.lambda.description,
       public: this.state.lambda.public,
+      language: this.state.lambda.language,
       code: this.state.lambda.code,
       owner_id: this.state.lambda.owner_id,
       inputs: JSON.stringify(filteredInputs)
     }
+    console.log(updatedLambda)
     // Try to submit
     this.props.update({
       variables: {

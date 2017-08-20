@@ -1,6 +1,9 @@
 /* eslint-disable no-restricted-syntax, no-await-in-loop, prefer-template*/
 
+const shortid = require('shortid');
 const faker = require('faker');
+
+shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@');
 
 module.exports.seed = async (db) => {
   // Create 10 random website users (as an example)
@@ -21,8 +24,9 @@ module.exports.seed = async (db) => {
     {
       owner_id: users[Math.floor(Math.random() * users.length)].id,
       name: faker.lorem.words(),
-      slug: faker.lorem.slug(),
-      description: faker.lorem.sentence() + faker.lorem.words() + faker.lorem.sentence() + faker.lorem.sentence(),
+      slug: shortid.generate(),
+      description: faker.lorem.sentence() + faker.lorem.words() +
+                   faker.lorem.sentence() + faker.lorem.sentence(),
       public: 1,
       inputs: '[{"id":0,"name":"number_one","type":"","example":"2"},{"id":1,"name":"number_two","type":"","test":"","example":"5"},{"id":2,"name":"operation","type":"","test":"","example":"add"}]',
       code: `

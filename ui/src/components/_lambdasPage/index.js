@@ -25,6 +25,8 @@ query GetAllLambdas($afterCursor: String!) {
         description
         slug
         inputs
+        language
+        createdAt
         owner{
           displayName,
           username

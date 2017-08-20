@@ -10,6 +10,7 @@ import Switch from 'material-ui/Switch';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import Button from 'material-ui/Button';
 import SortIcon from 'material-ui-icons/Sort';
 import EditIcon from 'material-ui-icons/Edit';
 import UndoIcon from 'material-ui-icons/Undo';
@@ -31,6 +32,11 @@ const themeOptions = [
   { name: 'High Contrast', key: 'hc-black' },
 ];
 
+const languageOptions = [
+  { name: 'Node JS', key: 'node' },
+  { name: 'Java', key: 'java' }
+];
+
 @withStyles(styles)
 class LambdaEditor extends Component {
   constructor(props){
@@ -39,6 +45,8 @@ class LambdaEditor extends Component {
       editorTheme: 1,
       themeMenuOpen: false,
       themeAnchorEl: undefined,
+      languageMenuOpen: false,
+      languageAnchorEl: undefined,
       codeOutput: '',
       codeErrors: '',
       saveErrors: [],
@@ -59,6 +67,8 @@ class LambdaEditor extends Component {
     this.props.onEditorUpdate(newCode)
   }
 
+  /* Theme Menu Methods */
+
   handleThemeMenuOpen = (event) => {
     this.setState({ themeMenuOpen: true, themeAnchorEl: event.currentTarget });
   };
@@ -69,6 +79,21 @@ class LambdaEditor extends Component {
 
   handleThemeMenuClose = () => {
     this.setState({ themeMenuOpen: false });
+  };
+
+  /* Language Menu Methods */
+
+  handleLanguageMenuOpen = (event) => {
+    this.setState({ languageMenuOpen: true, languageAnchorEl: event.currentTarget });
+  };
+
+  handleLanguageMenuClick = (event, index) => {
+    this.setState({ language: index, languageMenuOpen: false });
+    this.props.editLambda({ language: languageOptions[index].key })
+  };
+
+  handleLanguageMenuClose = () => {
+    this.setState({ languageMenuOpen: false });
   };
 
   render(){
@@ -136,6 +161,14 @@ class LambdaEditor extends Component {
                 <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleThemeMenuOpen}>
                   <SortIcon />
                 </IconButton>
+                { this.props.edit && <Button
+                  style={{ top: '25%' }}
+                  aria-owns={this.state.languageMenuOpen ? 'simple-menu' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleLanguageMenuOpen}
+                >
+                  {languageOptions.filter(o => o.key === this.props.lambda.language)[0].name}
+                </Button>}
                 <FormControlLabel
                   className={classes.privacy}
                   label=""
@@ -147,21 +180,38 @@ class LambdaEditor extends Component {
                   }
                 />
                   <Menu
-                    id="theme-menu"
-                    anchorEl={this.state.themeAnchorEl}
-                    open={this.state.themeMenuOpen}
-                    onRequestClose={this.handleThemeMenuClose}
+                    id="language-menu"
+                    anchorEl={this.state.languageAnchorEl}
+                    open={this.state.languageMenuOpen}
+                    onRequestClose={this.handleLanguageMenuClose}
                   >
-                    {themeOptions.map((option, index) =>
+                    {languageOptions.map((option, index) =>
                       <MenuItem
                         key={index}
-                        selected={index === this.state.editorTheme}
-                        onClick={event => this.handleThemeMenuClick(event, index)}
+                        selected={index === this.state.editorLanguage}
+                        onClick={event => this.handleLanguageMenuClick(event, index)}
                       >
                         {option.name}
                       </MenuItem>,
                     )}
                 </Menu>
+
+                <Menu
+                  id="theme-menu"
+                  anchorEl={this.state.themeAnchorEl}
+                  open={this.state.themeMenuOpen}
+                  onRequestClose={this.handleThemeMenuClose}
+                >
+                  {themeOptions.map((option, index) =>
+                    <MenuItem
+                      key={index}
+                      selected={index === this.state.editorTheme}
+                      onClick={event => this.handleThemeMenuClick(event, index)}
+                    >
+                      {option.name}
+                    </MenuItem>,
+                  )}
+              </Menu>
               </Grid>
             </Grid>
             <Grid item xs={12} className={classes.mainEditor}>

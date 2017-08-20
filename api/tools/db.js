@@ -1,19 +1,14 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const knex = require('knex');
+const knexfile = require('../knexfile')
 const task = require('./task');
 
 // The list of available commands, e.g. node tools/db.js rollback
 const commands = ['version', 'migrate', 'rollback', 'migration', 'seed', 'reset'];
 const command = process.argv[2];
 
-const config = {
-  client: 'pg',
-  connection: process.env.DATABASE_URL,
-  migrations: {
-    tableName: 'migrations',
-  },
-};
+const config = knexfile.development;
 
 // The template for database migration files (see templates/*.js)
 const version = new Date().toISOString().substr(0, 16).replace(/\D/g, '');
@@ -37,22 +32,12 @@ module.exports = task('db', async () => {
       case 'migration':
         fs.writeFileSync(`migrations/${version}_${process.argv[3] || 'new'}.js`, template, 'utf8');
         break;
-      case 'rollback':
-        db = knex(config);
-        await db.migrate.rollback(config);
-        break;
       case 'seed':
         db = knex(config);
         await db.seed.run(config);
         break;
-      case 'reset':
-        db = knex(config);
-        await db.migrate.rollback(config);
-        await db.migrate.latest(config);
-        break;
       default:
-        db = knex(config);
-        await db.migrate.latest(config);
+        break;
     }
   } finally {
     if (db) {

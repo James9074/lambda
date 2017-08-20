@@ -223,6 +223,14 @@ function validate(input, { t, user }) {
     data.code = input.code;
   }
 
+  /* Validations for language */
+  let validLanguages = ['node', 'java']
+  if (typeof input.language === 'undefined' || !validator.isIn(input.language, validLanguages)) {
+    errors.push({ key: 'language', message: t(`The language field must be one of ${JSON.stringify(validLanguages)}`) });
+  } else {
+    data.language = input.language;
+  }
+
   return { data, errors };
 }
 

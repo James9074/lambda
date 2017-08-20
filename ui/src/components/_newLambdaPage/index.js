@@ -29,6 +29,7 @@ class NewLambda extends Component {
       lambda: {
         name: '',
         public: true,
+        language: 'node',
         inputs: [{
           name: '',
           type: '',
