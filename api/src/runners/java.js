@@ -7,8 +7,8 @@ export default function JavaRunner(lambda: Object, inputs: Array, req: Object, r
   let result = '';
   inputs.forEach((input, i) => inputs[i] = input.replace(/'/g, "\\\'").replace(/"/g, '\\\"').replace(/`/g, '\\\`')) //eslint-disable-line
   let javaArgs = `"${inputs.join('" "')}"`
-  console.log(inputs)
-  console.log(javaArgs)
+  //console.log(inputs)
+  //console.log(javaArgs)
   try {
     let tempFile = `/tmp/files/${uuidv4()}.java`
     fs.writeFile(tempFile, expression, 'utf8', (saveError) => {
