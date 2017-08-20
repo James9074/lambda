@@ -147,7 +147,7 @@ function entryPoint(inputs){
 
   render(){
     const { classes } = this.props;
-    if (!this.props.appData.me){
+    if (this.props.appData && !this.props.appData.me){
       return (<LoginModal onClose={() => this.context.router.history.push('/')}
       isOpen={true}
       returnTo='/lambdas/new' />)
@@ -192,6 +192,5 @@ function entryPoint(inputs){
     );
   }
 }
-
 
 export default NewLambda;
