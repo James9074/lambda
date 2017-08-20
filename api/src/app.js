@@ -68,8 +68,8 @@ app.use(passport.session());
 app.use(flash());
 
 function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8); //eslint-disable-line
     return v.toString(16);
   });
 }
@@ -78,16 +78,11 @@ function execute(command, callback){
   child.exec(command, (err, stdout, stderr) => callback(err, stdout, stderr))
 }
 
-// Used to determine if this lambda is a async or not
-function isAsync(fn) {
-  return fn.constructor.name === 'AsyncFunction';
-}
-
 function processLambda(lambda, req, res) {
   let lambdaInputArray = []
-  try{
+  try {
     lambdaInputArray = lambda.inputs.map(x => `${x.value.toString()}`)
-  } catch(e) { return res.status(400).json({ error: 'Values were not provided for all inputs' }) }
+  } catch (e) { return res.status(400).json({ error: 'Values were not provided for all inputs' }) }
 
   let expression = `
   ${lambda.code}
@@ -106,11 +101,10 @@ function processLambda(lambda, req, res) {
       if (saveError)
         return res.json({ error: 'Error saving file', details: saveError });
 
-
       let dockerstr = `docker run --rm -v ${tempFile}:${tempFile} node:8-alpine node ${tempFile} && rm ${tempFile}`
       execute(dockerstr, (err, stdout, stderr) => {
-        if (/(entryPoint is not defined)+/.test(stderr)) stderr = "You must provide a function named 'entryPoint'"
-        if (stdout.trim() === 'undefined') stdout = 'Nothing returned!';
+        if (/(entryPoint is not defined)+/.test(stderr)) stderr = "You must provide a function named 'entryPoint'" //eslint-disable-line
+        if (stdout.trim() === 'undefined') stdout = 'Nothing returned!'; //eslint-disable-line
         if (stderr){
           return res.status(400).json({ lambda_error: stderr.trim() })
         } else if (err){
@@ -141,7 +135,7 @@ app.get('/graphql/schema', (req, res) => {
 app.post('/lambda', (req, res) => {
   let lambda = Object.assign({}, req.body.lambda)
   if (lambda){
-    lambda.inputs.forEach((input) => { input.value = input.example })
+    lambda.inputs.forEach((input) => { input.value = input.example }) //eslint-disable-line
     return processLambda(lambda, req, res);
   } else return res.json({ error: 'You need to provide a Lambda object!' })
 });

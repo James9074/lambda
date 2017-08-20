@@ -1,15 +1,13 @@
 // @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
-import styles from './styles'
 import LambdaEditor from 'components/lambdaEditor'
 import SmallHeader from 'components/smallHeader'
-// import TextField from 'material-ui/TextField';
 import LambdaCard from 'components/lambdaCard'
 import Button from 'material-ui/Button';
 import Dialog, {
@@ -20,11 +18,10 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import request from 'request'
 import url from 'url'
-
 import Snackbar from 'material-ui/Snackbar';
 import Fade from 'material-ui/transitions/Fade';
-
 import { gql, graphql, compose } from 'react-apollo';
+import styles from './styles'
 
 let userQuery = graphql(gql`query CurrentUser{ me { displayName username imageUrl admin } }`, { name: 'userQuery' })
 let lambdaQuery = graphql(gql`query GetSingleLambdaBySlug($slug: String!) { lambda(slug:$slug) { name, id, slug, inputs, description, createdAt, code, owner_id, public, owner { username } } }`,
@@ -117,8 +114,6 @@ class ViewLambda extends Component {
 
     request(settings, (err, response, body) => {
       this.setState({ loadingOutput: false })
-      // console.log(response.statusCode)
-      // console.log(body) // this is empty instead of return the body that has been sent
       this.setState({ editorOutput: body.output || body.lambda_error || body.error })
     })
   }
@@ -130,7 +125,7 @@ class ViewLambda extends Component {
         input: { slug: this.state.lambda.slug }
       }
     })
-    .then(({ data }) => {
+    .then(() => {
       this.setState({ toastOpen: true, toastMessage: 'Lambda Deleted!', graphqlErrors: [] }, () => {
         this.context.router.history.push('/')
       })
@@ -261,36 +256,6 @@ class ViewLambda extends Component {
             <Grid item xs={12} key={lambda.id}>
               <LambdaCard lambda={lambda} type={'single'}/>
             </Grid>
-
-            {/* (<Grid item xs={12} className={classes.inputs}>
-              <Grid container gutter={0}>
-                <Grid item xs={12}>
-                  <Typography type="headline" className={classes.title}>Lambda Inputs</Typography>
-                  {!this.state.lambda.inputs.length && (
-                    <Typography type="body1">There are no inputs for this Lambda</Typography>
-                  )}
-                </Grid>
-                <Grid item xs={12}>
-                   <Grid container gutter={8}>
-                    {Array.isArray(this.state.lambda.inputs) && this.state.lambda.inputs.map(function(input, i){
-                      return (
-                        <Grid key={i} item xs={3}>
-                          <TextField
-                            id="input-example"
-                            label={this.state.lambda.inputs[i].name || "Input #1"}
-                            value={this.state.lambda.inputs[i].example}
-                            onChange={(event)=>this.modifyInput(Object.assign(input,{example:event.target.value}))}
-                            className={classes.textField}
-                            fullWidth
-                            margin="dense"
-                          />
-                        </Grid>
-                      )
-                    }.bind(this))}
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>) */}
 
             <Grid item xs={12} className={classes.viewEditor}>
             <LambdaEditor

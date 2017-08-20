@@ -1,12 +1,12 @@
 // @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import UserLambdaListing from 'components/userLambdaListing'
-import styles from './styles'
 import SmallHeader from 'components/smallHeader';
+import styles from './styles'
 
 @withStyles(styles)
 class UserPage extends Component {

@@ -14,6 +14,7 @@
     "func-names": "off", // Often Cleaner
     "space-before-function-paren": "off", // Personal preference
     "space-before-blocks": "off", // Personal preference
-    "no-else-return": "off" // Sometimes an if/else block looks cleaner, even if unnecessary
+    "no-else-return": "off", // Sometimes an if/else block looks cleaner, even if unnecessary
+    "no-bitwise": "off" // Bitwise operators are fun!
   }
 }

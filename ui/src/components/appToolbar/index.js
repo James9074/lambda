@@ -1,7 +1,6 @@
-// @flow
-/* eslint-disable react/no-multi-comp */
+// @flowimport { LinearProgress } from 'material-ui/Progress';
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -10,12 +9,12 @@ import Grid from 'material-ui/Grid';
 import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import styles from './styles'
 import { LinearProgress } from 'material-ui/Progress';
 import Hidden from 'material-ui/Hidden'
 import AppDrawer from 'components/appDrawer'
 import SearchBar from 'components/searchBar'
 import UserInfo from 'components/userInfo'
+import styles from './styles'
 
 @withRouter
 @withStyles(styles)

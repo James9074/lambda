@@ -10,7 +10,7 @@ import styles from './styles'
 
 @withStyles(styles)
 class NewLambda extends Component {
-  constructor(props, context){
+  constructor(props){
     super(props);
     this.state = {
       index: 0
@@ -53,6 +53,5 @@ class NewLambda extends Component {
     );
   }
 }
-
 
 export default NewLambda;

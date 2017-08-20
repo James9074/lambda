@@ -1,6 +1,6 @@
 // @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom'
 import { gql, graphql } from 'react-apollo';
@@ -15,9 +15,9 @@ import FullPageLoader from 'components/fullPageLoader/'
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import { MuiThemeProvider } from 'material-ui/styles';
-import { RobotTheme } from './Themes'
 import 'typeface-roboto'
-import css from './App.css' // eslint-disable-line no-unused-vars
+import { RobotTheme } from './Themes'
+import './App.css'
 
 @graphql(gql`query { me { displayName username imageUrl } }`)
 class App extends Component {
@@ -54,7 +54,7 @@ class App extends Component {
                 <Grid item xs={12} sm={10} lg={8}>
                   <Grid item xs={12}>
                     <Switch>
-                      <Route path='/lambdas/new' render={<NewLambdaPage appData={this.props.data}/>}/>
+                      <Route path='/lambdas/new' component={NewLambdaPage} appData={this.props.data}/>
                       <Route path='/users/:user' component={User} appData={this.props.data}/>
                       <Route path='/:slug' component={LambdaPage} appData={this.props.data}/>
                       <Route path='/' component={Lambdas} appData={this.props.data}/>

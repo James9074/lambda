@@ -1,5 +1,5 @@
 // @flow
-
+import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import { CircularProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';

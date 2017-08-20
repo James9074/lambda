@@ -7,9 +7,8 @@ import LambdaCard from 'components/lambdaCard'
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
-import styles from './styles'
-
 import { gql, graphql } from 'react-apollo';
+import styles from './styles'
 
 @withStyles(styles)
 @graphql(gql`query GetAllLambdasByUsername($name: String!) { lambdas(username:$name) { edges { node { id name slug owner_id createdAt owner{ displayName, username, emails { email } } } } } }`, {
@@ -20,14 +19,9 @@ import { gql, graphql } from 'react-apollo';
   }) })
 
 class UserLambdaListing extends Component {
-  constructor(props, context){
-    super(props);
-  }
-
   static propTypes = {
     username: PropTypes.string.isRequired
   }
-
 
   render(){
     const { data, classes, username } = this.props;

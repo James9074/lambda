@@ -1,12 +1,12 @@
 // @flow
-
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import Card, { CardContent } from 'material-ui/Card';
-import styles from './styles'
 import moment from 'moment'
+import styles from './styles'
 
 function Lambdas(props) {
   const { classes, lambda, type } = props;

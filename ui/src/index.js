@@ -1,8 +1,9 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import { BrowserRouter } from 'react-router-dom'
 import { ApolloClient, ApolloProvider, createNetworkInterface } from 'react-apollo';
+import './index.css';
+import App from './App';
 
 const networkInterface = createNetworkInterface({
   uri: '/graphql',

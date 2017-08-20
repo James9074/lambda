@@ -7,13 +7,13 @@ import { withStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import LoginModal from 'components/loginModal'
-import styles from './styles'
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Hidden from 'material-ui/Hidden'
+import styles from './styles'
 
 @withStyles(styles)
 class UserInfo extends Component {
-  constructor(props, context){
+  constructor(props){
     super(props);
     this.state = {
       loginModalOpen: false,

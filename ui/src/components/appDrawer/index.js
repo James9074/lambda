@@ -1,9 +1,8 @@
 // @flow weak
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import styles from './styles'
 import Drawer from 'material-ui/Drawer';
 import Button from 'material-ui/Button';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
@@ -11,7 +10,7 @@ import SendIcon from 'material-ui-icons/Send';
 import HomeIcon from 'material-ui-icons/Home';
 import MenuIcon from 'material-ui-icons/Menu';
 import AddIcon from 'material-ui-icons/Add';
-
+import styles from './styles'
 
 class AppDrawer extends Component {
   state = {

@@ -1,21 +1,19 @@
 // @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
-import SmallHeader from 'components/smallHeader';
-import styles from './styles'
-import LambdaEditor from 'components/lambdaEditor'
-import LoginModal from 'components/loginModal'
-import request from 'request'
-import url from 'url'
-
 import Snackbar from 'material-ui/Snackbar';
 import Fade from 'material-ui/transitions/Fade';
-
+import SmallHeader from 'components/smallHeader';
+import LambdaEditor from 'components/lambdaEditor'
+import LoginModal from 'components/loginModal'
 import { gql, graphql } from 'react-apollo';
+import request from 'request'
+import url from 'url'
+import styles from './styles'
 
 @graphql(gql`mutation CreateLambda($input: CreateLambdaInput!){ createLambda(input: $input) { lambda{ id slug } } }`, {
   props: ({ mutate }) => ({

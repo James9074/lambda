@@ -1,6 +1,6 @@
 // @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import LambdaCard from 'components/lambdaCard'
@@ -12,9 +12,8 @@ import Paper from 'material-ui/Paper';
 import Hidden from 'material-ui/Hidden'
 import { CircularProgress } from 'material-ui/Progress';
 import SmallHeader from 'components/smallHeader'
-import styles from './styles'
-
 import { gql, graphql } from 'react-apollo';
+import styles from './styles'
 
 const GetLambdasQuery = gql`
 query GetAllLambdas($afterCursor: String!) {

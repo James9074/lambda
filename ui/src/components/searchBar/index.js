@@ -1,17 +1,36 @@
-import { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { withStyles } from 'material-ui/styles';
 import SearchIcon from 'material-ui-icons/Search';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import Autosuggest from 'react-autosuggest';
 import ApolloClient from 'apollo-client';
-import styles from './styles'
 import { gql, withApollo } from 'react-apollo';
 import Paper from 'material-ui/Paper';
 import { MenuItem } from 'material-ui/Menu';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import ReactDOM from 'react-dom'
+import styles from './styles'
+
+const searchLambdas = gql`
+  query SearchAllLambdas($search: String!) {
+    lambdas(first: 10, search: $search) {
+      edges {
+        node {
+          name
+          slug
+          owner_id
+          description
+          owner{
+            displayName
+            username
+          }
+        }
+      }
+    }
+  }
+`;
 
 function renderInput(inputProps) {
   const { classes, home, value, ref, ...other } = inputProps;
@@ -60,13 +79,13 @@ function renderSuggestion(suggestion, { query, isHighlighted }, classes) {
         </div>
 
         <div className={classes.highlightDesc}>
-          {descParts.map((part, index) => {return part.highlight
+          {descParts.map((part, index) => part.highlight
               ? <span key={index} style={{ fontWeight: 500 }}>
                   {part.text}
                 </span>
               : <strong key={index} style={{ fontWeight: 300 }}>
                   {part.text}
-                </strong> })}
+                </strong>)}
         </div>
 
         <div className={classes.highlightOwner}> - by&nbsp;
@@ -98,8 +117,8 @@ function getSuggestionValue(suggestion) {
 }
 
 @withStyles(styles)
-class SearchBar extends Component {
-
+@withApollo
+export default class SearchBar extends Component {
   state = {
     value: '',
     suggestions: [],
@@ -107,6 +126,10 @@ class SearchBar extends Component {
 
   static contextTypes = {
     router: PropTypes.object.isRequired
+  }
+
+  static propTypes = {
+    client: PropTypes.instanceOf(ApolloClient)
   }
 
   focusSearch(){
@@ -199,26 +222,3 @@ class SearchBar extends Component {
     )
   }
 }
-const searchLambdas = gql`
-  query SearchAllLambdas($search: String!) {
-    lambdas(first: 10, search: $search) {
-      edges {
-        node {
-          name
-          slug
-          owner_id
-          description
-          owner{
-            displayName
-            username
-          }
-        }
-      }
-    }
-  }
-`;
-
-SearchBar.propTypes = {
-  client: PropTypes.instanceOf(ApolloClient),
-}
-export default withApollo(SearchBar);

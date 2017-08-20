@@ -1,6 +1,6 @@
 // @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
@@ -8,7 +8,6 @@ import { FormControlLabel } from 'material-ui/Form';
 import Badge from 'material-ui/Badge';
 import Switch from 'material-ui/Switch';
 import Paper from 'material-ui/Paper';
-import styles from './styles'
 import Typography from 'material-ui/Typography';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import SortIcon from 'material-ui-icons/Sort';
@@ -21,9 +20,10 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import InputIcon from 'material-ui-icons/Input';
 import IconButton from 'material-ui/IconButton';
 import Editor from 'components/codeEditor'
-import LambdaInputs from './inputs'
 import { LinearProgress } from 'material-ui/Progress';
 import TextField from 'material-ui/TextField';
+import LambdaInputs from './inputs'
+import styles from './styles'
 
 const themeOptions = [
   { name: 'VS Light', key: 'vs' },

@@ -1,11 +1,12 @@
 // @flow
 
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
-import styles from './styles'
 import ViewLambda from 'components/viewLambda'
+import styles from './styles'
 
 function lambdaPage(props, context) {
   const classes = props.classes;
