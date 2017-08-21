@@ -13,14 +13,13 @@ export default function NodeRunner(lambda: Object, inputs: Array, req: Object, r
   } else
     console.log("You must provide a function named entryPoint")`;
   let result = '';
-
   try {
     let tempFile = `/tmp/files/${uuidv4()}.js`
     fs.writeFile(tempFile, expression, 'utf8', (saveError) => {
       if (saveError)
         return res.json({ error: 'Error saving file', details: saveError });
 
-      let dockerstr = `docker run --rm -v ${tempFile}:${tempFile} node:8-alpine node ${tempFile} && rm ${tempFile}`
+      let dockerstr = `docker run --rm -v ${tempFile}:${tempFile}:ro node:8-alpine node ${tempFile} && rm ${tempFile}`
       execute(dockerstr, (err, stdout, stderr) => {
         if (/(entryPoint is not defined)+/.test(stderr)) stderr = "You must provide a function named 'entryPoint'" //eslint-disable-line
         if (stdout.trim() === 'undefined') stdout = 'Nothing returned!'; //eslint-disable-line

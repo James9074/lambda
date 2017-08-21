@@ -8,8 +8,15 @@ class Editor extends React.Component {
       activeEditor: null
     }
   }
+
   editorDidMount(editor, monaco) {
-    this.setState({ activeEditor: monaco.editor })
+    this.setState({ monaco, activeEditor: editor, activeModel: editor.getModel() })
+    if (!window.editors)
+      window.editors = []
+    if (!window.monacos)
+      window.monacos = []
+    window.editors.push(editor)
+    window.monacos.push(monaco)
   }
 
   onChange(newValue) {
@@ -31,8 +38,15 @@ class Editor extends React.Component {
       ...this.props.editorOptions
     };
     if (this.state.activeEditor){
-      this.state.activeEditor.setTheme(this.props.editorTheme)
+      // this.state.monaco.editor.setModelLanguage(this.state.activeEditor, 'java')
+      if (this.state.activeEditor._themeService._theme.id !== this.props.editorTheme){
+        this.state.monaco.editor.setTheme(this.props.editorTheme)
+      }
+      if (this.props.language && this.state.activeEditor.model._languageIdentifier.language !== this.props.language){
+        this.state.monaco.editor.setModelLanguage(this.state.activeEditor.model, this.props.language)
+      }
     }
+    // console.log(1)
     return (
       <MonacoEditor
         width="100%"

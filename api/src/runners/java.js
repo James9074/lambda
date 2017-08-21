@@ -7,15 +7,14 @@ export default function JavaRunner(lambda: Object, inputs: Array, req: Object, r
   let result = '';
   inputs.forEach((input, i) => inputs[i] = input.replace(/'/g, "\\\'").replace(/"/g, '\\\"').replace(/`/g, '\\\`')) //eslint-disable-line
   let javaArgs = `"${inputs.join('" "')}"`
-  //console.log(inputs)
-  //console.log(javaArgs)
+  let base64Args = `"${new Buffer(inputs.join('" "')).toString('base64')}"`
   try {
     let tempFile = `/tmp/files/${uuidv4()}.java`
     fs.writeFile(tempFile, expression, 'utf8', (saveError) => {
       if (saveError)
         return res.json({ error: 'Error saving file', details: saveError });
 
-      let dockerstr = `docker run --rm -v ${tempFile}:/tmp/Lambda.java java:alpine sh -c 'cd /tmp && javac Lambda.java && \
+      let dockerstr = `docker run --rm -v ${tempFile}:/tmp/Lambda.java:ro openjdk:8-jdk-alpine sh -c 'cd /tmp && javac Lambda.java && \
 java Lambda ${javaArgs}'`
                        console.log(dockerstr)
       execute(dockerstr, (err, stdout, stderr) => {

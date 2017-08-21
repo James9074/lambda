@@ -99,7 +99,8 @@ class LambdaEditor extends Component {
   render(){
     const { classes } = this.props;
     let validInputs = this.props.lambda.inputs.filter(input => input.name.length > 0).length
-
+    let language = this.props.lambda.language;
+    if (language === 'node') language = 'javascript'
     return (
       <div>
         <Grid container gutter={8} className={classes.editorOptions}>
@@ -228,6 +229,7 @@ class LambdaEditor extends Component {
               <Paper elevation={4}>
                 <Editor
                   editorTheme={themeOptions[this.state.editorTheme].key}
+                  language={language}
                   code={this.state.editorCode}
                   onChange={newCode => this.onEditorUpdate(newCode)}
                   editorOptions={{
