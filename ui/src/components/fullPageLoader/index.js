@@ -6,7 +6,13 @@ import Typography from 'material-ui/Typography';
 import styles from './styles'
 
 function FullPageLoader(props) {
-  const { classes } = props
+  const { classes, error } = props
+
+  if (error)
+    return (
+      <div className={classes.loadingContainer} ><div className={classes.loading}>
+        <Typography type="headline" style={{ color: props.theme.palette.primary[500] }}>There was an error loading Lambda</Typography>
+      </div></div>)
 
   return (
     <div className={classes.loadingContainer} ><div className={classes.loading}>

@@ -68,6 +68,11 @@ class Lambdas extends Component {
   render(){
     const { data, classes } = this.props;
 
+    if (data && data.error){
+      return (<div className={classes.loading}>
+        <Typography type="headline">There is Error</Typography>
+        </div>)
+    }
     if (!data.lambdas){
       return (<div className={classes.loading}>
         <CircularProgress color="accent" size={100} />

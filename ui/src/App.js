@@ -39,6 +39,10 @@ class App extends Component {
 
   render() {
     const theme = RobotTheme;
+
+    if (this.props.data && this.props.data.error){
+      return (<FullPageLoader theme={theme} error/>)
+    }
     if (!this.props.data || this.props.data.loading){
       return <FullPageLoader theme={theme}/>
     }
