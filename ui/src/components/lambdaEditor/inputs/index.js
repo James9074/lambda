@@ -81,7 +81,7 @@ class LambdaInputs extends Component {
                     { !input.isEditing &&
                       <ListItem>
                         <ListItemText primary={input.name && input.name.length > 0 ? input.name : `Nameless Input #${i + 1}`} secondary={`${input.example && input.example.length > 0 ? `Example: ${input.example}` : 'No example provided'}`}/>
-                        <IconButton className={classes.button} aria-label="Add" onClick={e => this.toggleInputEditing(e, i)}>
+                        <IconButton className={classes.button} aria-label="Add" disabled onClick={e => this.toggleInputEditing(e, i)}>
                           <EditIcon />
                         </IconButton>
                       </ListItem> }
