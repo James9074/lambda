@@ -60,7 +60,7 @@ function spawnServer() {
   return cp.spawn('node',
     [
       // Pre-load application dependencies to improve "hot reload" restart time
-      ...Object.keys(pkg.dependencies).reduce((requires, val) => requires.concat(['--require', val]), []),
+      // ...Object.keys(pkg.dependencies).reduce((requires, val) => requires.concat(['--require', val]), []),
       // If the parent Node.js process is running in debug (inspect) mode,
       // launch a debugger for Express.js app on the next port
       ...process.execArgv.map((arg) => {
