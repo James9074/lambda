@@ -93,12 +93,9 @@ class Lambdas extends Component {
                 <Grid item xs={12} sm={8}>
                   <div className={classes.welcomeContainer}>
                     <Typography type="headline">
-                      <b>lambda</b> | noun | lamb·da | \ˈlam-də\
+                      <b>lambda</b> | noun | lamb·da
                     </Typography>
-                    <span className={classes.definition}>In computer programming, an anonymous function (function literal, lambda abstraction) is a function definition that is not bound to an identifier. Anonymous functions are often:</span>
-                        <span className={classes.bullet}>• Arguments being passed to higher-order functions, or </span>
-                        <span className={classes.bullet}>• Used for constructing the result of a higher-order function that needs to return a function. </span>
-
+                    <span className={classes.definition}>In computer programming, an anonymous function (function literal, lambda abstraction) is a function definition that is not bound to an identifier.</span>
                   </div>
                 </Grid>
               </Grid>
