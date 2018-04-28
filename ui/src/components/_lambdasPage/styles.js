@@ -33,7 +33,7 @@ export default createStyleSheet('LambdasPage', theme => ({
     marginBottom: '20px',
     '& div': {
       padding: '10px',
-      height: '150px',
+      height: '115px',
       backgroundColor: theme.palette.primary[400],
       '& h1': {
         color: 'white',
