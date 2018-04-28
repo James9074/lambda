@@ -1,7 +1,5 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('lambdaPage', {
+export default {
   root: {
-    padding: '15px'
+    padding: '15px',
   },
-});
+};

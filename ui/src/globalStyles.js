@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('globalStyles', {
+export default theme => ({
   paperContainer: {
     padding: '10px'
   }

@@ -1,51 +1,58 @@
 // @flow
 
 import { createMuiTheme } from 'material-ui/styles';
-import createPalette from 'material-ui/styles/palette';
 import red from 'material-ui/colors/red';
 import blue from 'material-ui/colors/blue';
 import indigo from 'material-ui/colors/indigo';
 import blueGrey from 'material-ui/colors/blueGrey';
-import grey from 'material-ui/colors/grey';
 
 // This is just an example of how we can extend themes
 export const DarkTheme = createMuiTheme({
-  palette: createPalette({
+  palette: {
     type: 'dark',
     primary: blueGrey,
-    accent: {
+    secondary: {
       ...blue
     },
     error: red,
-  }),
+    action: red
+  },
+  canvasColor: { 900: 'grey' }
 });
 
 export const RobotTheme = createMuiTheme({
-  palette: createPalette({
+  palette: {
     type: 'light',
-    primary: blue,
-    accent: {
+    primary: {
+      ...blue,
+      contrastText: '#fff',
+    },
+    secondary: {
       ...indigo
     },
-    error: red
-  }),
+    error: red,
+    action: red,
+    test: red,
+    text: 'white'
+  },
   canvasColor: { 900: 'white' }
 });
 
 export const RobotThemeDark = createMuiTheme({
-  palette: createPalette({
+  palette: {
     type: 'dark',
     primary: indigo,
-    accent: {
+    secondary: {
       ...blue
     },
-    error: red
-  }),
-  canvasColor: grey
+    error: red,
+    action: red
+  },
+  canvasColor: { 900: 'grey' }
 });
 
 export const MainTheme = createMuiTheme({
-  palette: createPalette({
+  palette: {
     type: 'light',
     primary: {
       50: '#757495',
@@ -64,7 +71,8 @@ export const MainTheme = createMuiTheme({
       A700: '#020041',
       contrastDefaultColor: '#88003C'
     },
-    accent: blue,
+    secondary: blue,
     error: red,
-  }),
+    action: red
+  },
 });

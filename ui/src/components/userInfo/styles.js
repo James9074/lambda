@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('UserInfo', theme => ({
+export default theme => ({
   root: {
     position: 'absolute',
     top: '50%',
@@ -58,4 +56,4 @@ export default createStyleSheet('UserInfo', theme => ({
     color: theme.palette.primary[100],
     fontSize: '14px'
   }
-}));
+})

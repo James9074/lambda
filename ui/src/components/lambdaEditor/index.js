@@ -11,15 +11,16 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
-import SortIcon from 'material-ui-icons/Sort';
-import EditIcon from 'material-ui-icons/Edit';
-import UndoIcon from 'material-ui-icons/Undo';
-import PlayArrowIcon from 'material-ui-icons/PlayArrow';
-import ContentCopyIcon from 'material-ui-icons/ContentCopy';
-import SaveIcon from 'material-ui-icons/Save';
-import DeleteIcon from 'material-ui-icons/Delete';
-import InputIcon from 'material-ui-icons/Input';
+import SortIcon from '@material-ui/icons/Sort';
+import EditIcon from '@material-ui/icons/Edit';
+import UndoIcon from '@material-ui/icons/Undo';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import ContentCopyIcon from '@material-ui/icons/ContentCopy';
+import SaveIcon from '@material-ui/icons/Save';
+import DeleteIcon from '@material-ui/icons/Delete';
+import InputIcon from '@material-ui/icons/Input';
 import IconButton from 'material-ui/IconButton';
+import Tooltip from 'material-ui/Tooltip';
 import Editor from 'components/codeEditor'
 import { LinearProgress } from 'material-ui/Progress';
 import TextField from 'material-ui/TextField';
@@ -103,7 +104,7 @@ class LambdaEditor extends Component {
     if (language === 'node') language = 'javascript'
     return (
       <div>
-        <Grid container gutter={8} className={classes.editorOptions}>
+        <Grid container spacing={8} className={classes.editorOptions}>
           <Grid item xs={12} xl={12}>
             <Grid container>
               <Grid item xs={12} md={2}>
@@ -128,14 +129,14 @@ class LambdaEditor extends Component {
                   margin="none"
                 />)}
 
-                {!this.props.edit && (<Typography type="headline" className={classes.lambdaName}>{/* this.props.lambda.name */}</Typography>)}
+                {!this.props.edit && (<Typography variant="headline" className={classes.lambdaName}>{/* this.props.lambda.name */}</Typography>)}
 
               </Grid>
 
               <Grid item xs={12} md={5} className={classes.editorButtons}>
                 <IconButton aria-label="Theme" aria-owns="theme-menu" onClick={() => this.setState({ showInputs: !this.state.showInputs })} className={(this.props.errors && this.props.errors.inputs !== undefined) ? classes.error : ''}>
                 { !validInputs ? (<InputIcon />) :
-                  (<Badge className={classes.badge} badgeContent={validInputs} color='accent'>
+                  (<Badge className={classes.badge} badgeContent={validInputs} color='secondary'>
                     <InputIcon />
                   </Badge>)}
                 </IconButton>
@@ -174,17 +175,18 @@ class LambdaEditor extends Component {
                   className={classes.privacy}
                   label=""
                   control={
-                    <Switch
-                      disabled
-                      checked={this.props.lambda.public === 1}
-                      onChange={(event, checked) => this.props.editLambda({ public: checked })} />
+                    <Tooltip placement="right" id="tooltip-icon" title="Delete">
+                      <Switch
+                        checked={this.props.lambda.public === 1}
+                        onChange={(event, checked) => this.props.editLambda({ public: checked })} />
+                    </Tooltip>
                   }
                 />
                   <Menu
                     id="language-menu"
                     anchorEl={this.state.languageAnchorEl}
                     open={this.state.languageMenuOpen}
-                    onRequestClose={this.handleLanguageMenuClose}
+                    onClose={this.handleLanguageMenuClose}
                   >
                     {languageOptions.map((option, index) =>
                       <MenuItem
@@ -201,7 +203,7 @@ class LambdaEditor extends Component {
                   id="theme-menu"
                   anchorEl={this.state.themeAnchorEl}
                   open={this.state.themeMenuOpen}
-                  onRequestClose={this.handleThemeMenuClose}
+                  onClose={this.handleThemeMenuClose}
                 >
                   {themeOptions.map((option, index) =>
                     <MenuItem
@@ -240,7 +242,7 @@ class LambdaEditor extends Component {
             <Grid item xs={12} className={classes.output} style={{ height: this.state.outputHeight }}>
               {this.props.loading && (
                 <div className={classes.loadingOutput}>
-                  <LinearProgress color="accent" />
+                  <LinearProgress color="secondary" />
                 </div>
               )}
               <Paper elevation={4}>

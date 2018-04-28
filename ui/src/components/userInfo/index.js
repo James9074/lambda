@@ -59,10 +59,10 @@ class UserInfo extends Component {
       return (
         <div className={classes.root}>
           <Hidden smUp>
-            <Button raised color="accent" className={classes.loginSmall} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
+            <Button raised color="secondary" className={classes.loginSmall} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
           </Hidden>
           <Hidden xsDown>
-            <Button raised color="accent" className={classes.login} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
+            <Button raised color="secondary" className={classes.login} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
           </Hidden>
           <LoginModal onClose={this.handleRequestClose} isOpen={this.state.loginModalOpen} />
         </div>
@@ -87,7 +87,7 @@ class UserInfo extends Component {
             id="user-menu"
             anchorEl={this.state.avatarNode}
             open={this.state.userMenuOpen}
-            onRequestClose={this.handleUserMenuClose}
+            onClose={this.handleUserMenuClose}
           >
           <MenuItem onClick={event => this.handleUserMenuClick(event, 1)}>Logout</MenuItem>
         </Menu>

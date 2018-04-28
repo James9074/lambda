@@ -10,3 +10,4 @@ Dockerfile
 .eslintrc
 .editorconfig
 .gitlab-ci.yml
+yarn.lock

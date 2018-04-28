@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('SearchBar', theme => ({
+export default theme => ({
   searchIcon: {
     left: '-10px',
     zIndex: '100',
@@ -87,4 +85,4 @@ export default createStyleSheet('SearchBar', theme => ({
     color: '#525252',
     fontSize: '13px',
   }
-}));
+})

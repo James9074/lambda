@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet({
+export default {
   list: {
     width: 250,
     flex: 'initial',
@@ -12,4 +10,4 @@ export default createStyleSheet({
   menuButton: {
     minWidth: '10px'
   }
-});
+}

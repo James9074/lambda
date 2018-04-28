@@ -26,7 +26,7 @@ class LoginModal extends Component {
   render(){
     const { isOpen, onClose } = this.props
     return (
-        <Dialog open={isOpen} onRequestClose={onClose}>
+        <Dialog open={isOpen} onClose={onClose}>
           <DialogTitle>
             {'Login'}
           </DialogTitle>
@@ -39,7 +39,7 @@ class LoginModal extends Component {
             <Button disabled raised onClick={() => this.directToAuth('google')} color="primary">
               Google
             </Button>
-            <Button raised onClick={() => this.directToAuth('github')} color="accent">
+            <Button raised onClick={() => this.directToAuth('github')} color="secondary">
               GitHub
             </Button>
             <Button disabled raised onClick={() => this.directToAuth('twitter')} color="primary">

@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('LambdaEditor', theme => ({
+export default theme => ({
   mainContainer: {
     padding: '10px',
     paddingBottom: '40px',
@@ -25,13 +23,13 @@ export default createStyleSheet('LambdaEditor', theme => ({
   output: {
     width: '100%',
     position: 'relative',
-    borderTop: `5px solid ${theme.palette.accent[500]}`,
+    borderTop: `5px solid ${theme.palette.secondary[500]}`,
   },
   mainEditor: {
     width: '100%',
     height: '600px',
     position: 'relative',
-    borderTop: `5px solid ${theme.palette.accent[500]}`,
+    borderTop: `5px solid ${theme.palette.secondary[500]}`,
   },
   inputsOverlay: {
 
@@ -71,4 +69,4 @@ export default createStyleSheet('LambdaEditor', theme => ({
   error: {
     color: 'red',
   }
-}));
+})

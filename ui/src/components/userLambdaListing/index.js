@@ -28,15 +28,15 @@ class UserLambdaListing extends Component {
 
     if (!data.lambdas || !username){
       return (<div className={classes.loading}>
-        <CircularProgress color="accent" size={100} />
-        <Typography type="headline">Loading</Typography>
+        <CircularProgress color="secondary" size={100} />
+        <Typography variant="headline">Loading</Typography>
         </div>)
     }
 
     return (
       <div className={classes.root}>
 
-          <Grid container gutter={24}>
+          <Grid container spacing={24}>
             {data.lambdas.edges.map(item => (<Grid key={item.node.id} item xs={12} lg={6} className={classes.lambdaCard}>
                         <LambdaCard lambda={item.node}/>
                       </Grid>))}

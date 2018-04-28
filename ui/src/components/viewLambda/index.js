@@ -64,7 +64,8 @@ class ViewLambda extends Component {
       isEditing: false,
       ownerIsViewing: false,
       adminIsViewing: false,
-      toastMessage: ''
+      toastMessage: '',
+      modalOpen: false
     }
   }
 
@@ -173,7 +174,7 @@ class ViewLambda extends Component {
       owner_id: this.state.lambda.owner_id,
       inputs: JSON.stringify(filteredInputs)
     }
-    console.log(updatedLambda)
+
     // Try to submit
     this.props.update({
       variables: {
@@ -221,23 +222,23 @@ class ViewLambda extends Component {
 
     if (!lambda || !slug){
       return (<div className={classes.loading}>
-        <CircularProgress color="accent" size={100} />
-        <Typography type="headline">Loading</Typography>
+        <CircularProgress color="secondary" size={100} />
+        <Typography variant="headline">Loading</Typography>
         </div>)
     } else if (lambda === 'none')
       return (
-        <Grid container gutter={24}>
+        <Grid container spacing={24}>
           <Grid item xs={12}>
             <SmallHeader content={"404: This Lambda Doesn't Exist!"}/>
-            <Typography type="headline" className={classes.noLambda}></Typography>
+            <Typography variant="headline" className={classes.noLambda}></Typography>
           </Grid>
         </Grid>
       )
 
     return (
       <div className={classes.root}>
-          <Grid container gutter={0}>
-            <Dialog open={this.state.modalOpen} onRequestClose={() => this.setState({ modalOpen: false })}>
+          <Grid container spacing={0}>
+            <Dialog open={this.state.modalOpen} onClose={() => this.setState({ modalOpen: false })}>
               <DialogTitle>
                 {'Delete'}
               </DialogTitle>
@@ -283,7 +284,7 @@ class ViewLambda extends Component {
           <Snackbar
             open={this.state.toastOpen}
             className={classes.snackBar}
-            onRequestClose={() => this.setState({ toastOpen: false, toastMessage: '' })}
+            onClose={() => this.setState({ toastOpen: false, toastMessage: '' })}
             transition={Fade}
             SnackbarContentProps={{
               'aria-describedby': 'message-id',

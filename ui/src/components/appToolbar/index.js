@@ -32,18 +32,18 @@ class AppToolbar extends Component {
 
   render() {
     const classes = this.props.classes;
-    let loading = this.props.loading ? (<LinearProgress color="accent" />) : ('')
+    let loading = this.props.loading ? (<LinearProgress color="secondary" />) : ('')
 
     return (
       <AppBar position="fixed" className={classes.barContainer}>
         <Toolbar className={classes.appBar}>
-          <Grid container className="Grid" gutter={0}>
+          <Grid container className="Grid">
             <Grid item xs={2} md={3} lg={2} className={classes.centerItems}>
             <AppDrawer user={this.props.data.me}/>
               {/* <Button onClick={()=> {if(this.context.router.route.location.pathname !== "/") this.context.router.history.push("/")}} disableFocusRipple> */}
               <Hidden smDown>
                 <Button href="/" disableFocusRipple>
-                  <Typography type="title" color="inherit" className={classes.title}>
+                  <Typography variant="title" color="inherit" className={classes.title}>
                     λ Lambda
                   </Typography>
                 </Button>

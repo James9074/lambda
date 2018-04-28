@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('NewLambdaPage', {
+export default {
   mainContainer: {
     paddingBottom: '40px',
     marginBottom: '55px',
@@ -40,4 +38,4 @@ export default createStyleSheet('NewLambdaPage', {
       }
     }
   }
-});
+}

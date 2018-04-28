@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('LambdasPage', {
+export default {
   loading: {
     width: '100%',
     textAlign: 'center',
@@ -10,4 +8,4 @@ export default createStyleSheet('LambdasPage', {
   lambdaCard: {
     overflow: 'hidden'
   }
-});
+}

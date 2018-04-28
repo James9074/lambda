@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import Card, { CardContent } from 'material-ui/Card';
+
 import moment from 'moment'
 import styles from './styles'
 
@@ -33,7 +34,7 @@ function Lambdas(props) {
 
           <Grid item className={classes.info}>
 
-            <Typography type="headline" className={classes.largeTitle}>
+            <Typography variant="headline" className={classes.largeTitle}>
               <a href={`${lambda.owner.username}/${lambda.slug}`} className={classes.headlineLink}>{lambda.name}</a>
             </Typography>
 
@@ -41,7 +42,7 @@ function Lambdas(props) {
               {lambda.description || 'No description provided'}
             </Typography>
 
-            <Typography color="secondary" className={classes.created} component='div'>
+            <Typography color="inherit" className={classes.created} component='div'>
             <a href={`/users/${lambda.owner.username}`}>{lambda.owner.username}</a> | {moment(lambda.createdAt).format('MM/DD/YYYY')}  | <a href={lambdaLink}>View in API</a>
             </Typography>
 
@@ -65,7 +66,7 @@ function Lambdas(props) {
 
         <Grid item className={classes.info}>
 
-          <Typography type="headline" className={classes.title}>
+          <Typography variant="headline" className={classes.title}>
             <a href={`/${lambda.slug}`} className={classes.headlineLink}>{lambda.name}</a>
           </Typography>
 
@@ -73,7 +74,7 @@ function Lambdas(props) {
             {lambda.description || 'No description provided'}
           </Typography>
 
-          <Typography color="secondary" className={classes.created} component='div'>
+          <Typography color="inherit" className={classes.created} component='div'>
             <a href={`/users/${lambda.owner.username}`}>{lambda.owner.username}</a> | {moment(lambda.createdAt).format('MM/DD/YYYY')} | <a href={lambdaLink}>View in API</a>
           </Typography>
 
@@ -89,7 +90,7 @@ function Lambdas(props) {
       </Grid>
       </CardContent>
       {/* <CardActions className={classes.actions}>
-        <Button color="accent">
+        <Button color="inherit">
           View
         </Button>
         <Button>

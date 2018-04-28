@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('Breadcrumbs', theme => ({
+export default theme => ({
   button: {
     margin: theme.spacing.unit * 1.5,
     marginLeft: 0,
@@ -8,4 +6,4 @@ export default createStyleSheet('Breadcrumbs', theme => ({
     padding: 0,
     fontSize: '12px'
   },
-}))
+})

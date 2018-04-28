@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { withStyles } from 'material-ui/styles';
-import SearchIcon from 'material-ui-icons/Search';
+import SearchIcon from '@material-ui/icons/Search';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import Autosuggest from 'react-autosuggest';
@@ -39,8 +39,8 @@ function renderInput(inputProps) {
     <TextField
       id="uncontrolled"
       placeholder="Search"
-      helperTextClassName={classes.search}
-      InputClassName={classes.search}
+      // helperTextClassName={classes.search}
+      // InputClassName={classes.search}
       margin="normal"
       className={classes.searchInput}
       autoFocus={false}
@@ -179,7 +179,7 @@ export default class SearchBar extends Component {
     const classes = this.props.classes;
     return (
       <div className={classes.searchContainer}>
-        <IconButton color="contrast" aria-label="Search" className={classes.searchIcon} disabled>
+        <IconButton color="inherit" aria-label="Search" className={classes.searchIcon} disabled>
           <SearchIcon />
         </IconButton>
 

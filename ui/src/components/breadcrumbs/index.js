@@ -10,7 +10,7 @@ function Breadcrumbs(props, context) {
 
   return (
     <div>
-      <Button color="accent"
+      <Button color="secondary"
         className={classes.button}
         onClick={() => context.router.history.goBack()}
         disableRipple

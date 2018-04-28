@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('LambdasPage', theme => ({
+export default theme => ({
   root: {
     flexGrow: 1,
     marginTop: '20px'
@@ -21,9 +19,7 @@ export default createStyleSheet('LambdasPage', theme => ({
     backgroundColor: 'inherit',
     boxShadow: 'none',
     margin: '-10px 0 15px 0',
-    '& .undefined': {
-      color: `${theme.palette.primary[500]} !important`
-    }
+    color: `${theme.palette.grey[500]} !important`
   },
   title: {
     marginBottom: '15px'
@@ -32,7 +28,7 @@ export default createStyleSheet('LambdasPage', theme => ({
     overflow: 'hidden',
     marginBottom: '20px',
     '& div': {
-      padding: '10px',
+      padding: '2px',
       height: '115px',
       backgroundColor: theme.palette.primary[400],
       '& h1': {
@@ -67,4 +63,4 @@ export default createStyleSheet('LambdasPage', theme => ({
     height: '32px',
     width: '32px'
   }
-}));
+})

@@ -12,7 +12,7 @@ function lambdaPage(props, context) {
   const classes = props.classes;
 
   return (
-    <Grid container gutter={0} justify="flex-start" className={classes.card}>
+    <Grid container justify="flex-start" className={classes.card}>
       <Grid item xs={3} >
         {/* <Breadcrumbs /> */}
       </Grid>

@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('LambdaCard', theme => ({
+export default theme => ({
   root: {
     overflow: 'hidden',
   },
@@ -40,6 +38,7 @@ export default createStyleSheet('LambdaCard', theme => ({
   },
   created: {
     fontSize: '12px',
+    color: `${theme.palette.grey[600]}`
   },
   largeTitle: {
     fontSize: '35px'
@@ -69,7 +68,7 @@ export default createStyleSheet('LambdaCard', theme => ({
   largeDesc: {
     margin: '5px 0 5px 0',
     padding: '10px 0 10px 10px',
-    borderLeft: `4px solid ${theme.palette.accent[100]}`,
+    borderLeft: `4px solid ${theme.palette.secondary[100]}`,
     fontSize: '18px'
   }
-}));
+})

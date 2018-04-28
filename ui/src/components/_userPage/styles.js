@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('LambdasPage', theme => ({
+export default theme => ({
   root: {
     flexGrow: 1,
     marginTop: '20px'
@@ -37,4 +35,4 @@ export default createStyleSheet('LambdasPage', theme => ({
     height: '32px',
     width: '32px'
   }
-}));
+})

@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-import DeleteIcon from 'material-ui-icons/Delete';
-import AddIcon from 'material-ui-icons/Add';
-import SaveIcon from 'material-ui-icons/Save';
-import EditIcon from 'material-ui-icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+import SaveIcon from '@material-ui/icons/Save';
+import EditIcon from '@material-ui/icons/Edit';
 import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField';
 import Slide from 'material-ui/transitions/Slide';
@@ -67,10 +67,7 @@ class LambdaInputs extends Component {
       <div className={classes.inputsContainer}>
           <Slide
             in={this.props.show}
-            direction={'right'}
-            enterTransitionDuration={150}
-            leaveTransitionDuration={150}
-            transitionAppear={!this.state.firstMount}>
+            direction={'right'}>
             <List className={classes.panel}>
               <ListItem button>
                 <ListItemText primary="Inputs" secondary='Inputs with blank names are ignored'/>

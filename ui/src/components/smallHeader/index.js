@@ -34,13 +34,13 @@ class NewLambda extends Component {
           <Grid item xs={12} className={classes.header}>
               <Grid container style={{ height: '70px' }}>
                 <Grid item xs={1} className={classes.lambdaContainer}>
-                  <Typography type="headline" className={classes.lambdaIcon}>
+                  <Typography variant="headline" className={classes.lambdaIcon}>
                     λ
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
                   <div className={classes.messageContainer}>
-                    <Typography type="headline">
+                    <Typography variant="headline">
                       <b>{content}</b>
                     </Typography>
                   </div>

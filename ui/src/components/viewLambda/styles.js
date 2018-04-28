@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('ViewLambda', theme => ({
+export default theme => ({
   loading: {
     width: '100%',
     textAlign: 'center',
@@ -38,4 +36,4 @@ export default createStyleSheet('ViewLambda', theme => ({
       }
     }
   }
-}));
+})

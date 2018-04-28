@@ -1,6 +1,4 @@
-import { createStyleSheet } from 'material-ui/styles';
-
-export default createStyleSheet('LambdaInputs', theme => ({
+export default theme => ({
   root: {
     textAlign: 'center',
     width: '100%',
@@ -33,4 +31,4 @@ export default createStyleSheet('LambdaInputs', theme => ({
     height: '100%',
     background: theme.palette.background.paper
   }
-}));
+})

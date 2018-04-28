@@ -33,7 +33,7 @@ class UserPage extends Component {
       <div className={classes.root}>
           <SmallHeader content={`Lambdas for ${user}`}/>
 
-          <Grid container gutter={24}>
+          <Grid container>
             <UserLambdaListing username={user} />
           </Grid>
       </div>

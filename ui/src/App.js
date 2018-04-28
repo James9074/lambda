@@ -13,7 +13,7 @@ import AppToolbar from 'components/appToolbar/'
 import LoginModal from 'components/loginModal'
 import FullPageLoader from 'components/fullPageLoader/'
 import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
+import AddIcon from '@material-ui/icons/Add';
 import { MuiThemeProvider } from 'material-ui/styles';
 import 'typeface-roboto'
 import { RobotTheme } from './Themes'
@@ -54,7 +54,7 @@ class App extends Component {
                 onRef={ref => (this.child = ref)} //eslint-disable-line
                 loading={false}
                 {...this.props} />
-              <Grid container gutter={0} justify="center" style={{ padding: '0 15px 0 15px', marginTop: '60px', backgroundColor: theme.canvasColor[900] }}>
+              <Grid container justify="center" style={{ padding: '0 15px 0 15px', marginTop: '60px', backgroundColor: theme.canvasColor[900] }}>
                 <Grid item xs={12} sm={10} lg={8}>
                   <Grid item xs={12}>
                     <Switch>
@@ -65,7 +65,7 @@ class App extends Component {
                     </Switch>
                   </Grid>
 
-                  {this.context.router.route.location.pathname.indexOf('/lambdas/new') === -1 && (<Button onClick={this.addNew} fab color="primary" style={{ position: 'fixed', right: '15px', bottom: '15px' }}>
+                  {this.context.router.route.location.pathname.indexOf('/lambdas/new') === -1 && (<Button onClick={this.addNew} color="primary" style={{ position: 'fixed', right: '15px', bottom: '15px' }}>
                     <AddIcon />
                   </Button>)}
                   <LoginModal onClose={() => this.setState({ loginModalOpen: false })}

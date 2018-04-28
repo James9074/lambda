@@ -158,7 +158,7 @@ function entryPoint(inputs){
         <SmallHeader content={'New Lambda'}/>
         <Paper className={classes.mainContainer} elevation={4}>
           <Grid item xs={12} >
-            <Grid container gutter={0} className={classes.editorOptions}>
+            <Grid container spacing={0} className={classes.editorOptions}>
               <Grid item xs={12} >
                 <LambdaEditor
                   edit
@@ -182,7 +182,7 @@ function entryPoint(inputs){
         <Snackbar
           open={this.state.toastOpen}
           className={classes.snackBar}
-          onRequestClose={() => this.setState({ toastOpen: false, toastMessage: '' })}
+          onClose={() => this.setState({ toastOpen: false, toastMessage: '' })}
           transition={Fade}
           SnackbarContentProps={{
             'aria-describedby': 'message-id',

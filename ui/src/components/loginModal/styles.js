@@ -1,5 +1,3 @@
-import { createStyleSheet } from 'material-ui/styles';
+export default {
 
-export default createStyleSheet('LoginModal', {
-
-});
+}

@@ -70,13 +70,13 @@ class Lambdas extends Component {
 
     if (data && data.error){
       return (<div className={classes.loading}>
-        <Typography type="headline">There is Error</Typography>
+        <Typography variant="headline">There is Error</Typography>
         </div>)
     }
     if (!data.lambdas){
       return (<div className={classes.loading}>
-        <CircularProgress color="accent" size={100} />
-        <Typography type="headline">Loading</Typography>
+        <CircularProgress color="secondary" size={100} />
+        <Typography variant="headline">Loading</Typography>
         </div>)
     }
     return (
@@ -86,13 +86,13 @@ class Lambdas extends Component {
             <Paper>
               <Grid container>
                 <Grid item xs={2}>
-                  <Typography type="headline" className={classes.lambdaIcon}>
+                  <Typography color="primary" variant="headline" className={classes.lambdaIcon}>
                     λ
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={8}>
                   <div className={classes.welcomeContainer}>
-                    <Typography type="headline">
+                    <Typography variant="headline">
                       <b>lambda</b> | noun | lamb·da
                     </Typography>
                     <span className={classes.definition}>In computer programming, an anonymous function (function literal, lambda abstraction) is a function definition that is not bound to an identifier.</span>
@@ -109,10 +109,10 @@ class Lambdas extends Component {
 
         <AppBar position="static" color="default" className={classes.tabs}>
           <Tabs
-            index={this.state.index}
+            value={this.state.index}
             onChange={this.handleChange}
-            indicatorColor="accent"
-            textColor="#a9a9a9"
+            indicatorColor="primary"
+            textColor="primary"
             fullWidth
           >
             <Tab label="Popular" />
@@ -123,7 +123,7 @@ class Lambdas extends Component {
           </Tabs>
         </AppBar>
 
-          <Grid container gutter={24}>
+          <Grid container spacing={24}>
             {data.lambdas.edges.map(item =>
               (<Grid item xs={12} lg={6} className={classes.lambdaCard} key={item.node.id}>
                   <LambdaCard lambda={Object.assign({}, item.node, { inputs: JSON.parse(item.node.inputs) })}/>

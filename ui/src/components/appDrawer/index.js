@@ -6,10 +6,10 @@ import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import Button from 'material-ui/Button';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import SendIcon from 'material-ui-icons/Send';
-import HomeIcon from 'material-ui-icons/Home';
-import MenuIcon from 'material-ui-icons/Menu';
-import AddIcon from 'material-ui-icons/Add';
+import SendIcon from '@material-ui/icons/Send';
+import HomeIcon from '@material-ui/icons/Home';
+import MenuIcon from '@material-ui/icons/Menu';
+import AddIcon from '@material-ui/icons/Add';
 import styles from './styles'
 
 class AppDrawer extends Component {
@@ -74,10 +74,12 @@ class AppDrawer extends Component {
 
     return (
       <div style={{ display: 'inline-block' }}>
-        <Button onClick={this.handleLeftOpen} className={classes.menuButton} ><MenuIcon color="white" /></Button>
+        <Button onClick={this.handleLeftOpen} className={classes.menuButton} >
+          <MenuIcon color="inherit" />
+        </Button>
         <Drawer
           open={this.state.open.left}
-          onRequestClose={this.handleLeftClose}
+          onClose={this.handleLeftClose}
           onClick={this.handleLeftClose}
         >
           {sideList}
