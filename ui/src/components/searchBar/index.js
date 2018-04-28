@@ -44,8 +44,10 @@ function renderInput(inputProps) {
       margin="normal"
       className={classes.searchInput}
       autoFocus={false}
+      fullWidth={true}
       value={value}
       InputProps={{
+        inputProps: { className: classes.search },
         classes: {
           input: classes.input,
         },
@@ -201,6 +203,7 @@ export default class SearchBar extends Component {
               suggestionsList: classes.suggestionsList,
               suggestion: classes.suggestion,
             }}
+            underlineShow={false}
             renderInputComponent={renderInput}
             suggestions={this.state.suggestions}
             onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
@@ -214,7 +217,8 @@ export default class SearchBar extends Component {
               classes,
               placeholder: 'Search for Lambdas',
               value: this.state.value,
-              onChange: this.handleChange
+              onChange: this.handleChange,
+              disableUnderline: true
             }}
           />
 

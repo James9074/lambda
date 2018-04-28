@@ -14,10 +14,9 @@ export default theme => ({
     // transform: 'translate(-50%, -50%)',
     backgroundColor: theme.palette.primary[400],
     '& div': {
-      marginTop: '-30px'
     }
   },
-  searchInput2: {
+  searchInput: {
     margin: '0',
     position: 'absolute',
     top: '50%',
@@ -28,14 +27,15 @@ export default theme => ({
     backgroundColor: theme.palette.primary[400],
     '& input': {
       width: '98%',
-      paddingLeft: '10px',
-      paddingRight: '10px'
+      paddingLeft: '60px',
+      paddingRight: '10px',
+      height: '30px',
     },
     '& input:focus': {
-      // backgroundColor: theme.palette.primary[300]
+      backgroundColor: theme.palette.primary[300]
     },
   },
-  search2: {
+  search: {
     color: 'white',
     paddingLeft: '60px',
     padding: '5px 10px 5px 10px',
@@ -54,7 +54,8 @@ export default theme => ({
     '& ul': {
       margin: '0px',
       padding: '0px',
-      listStyle: 'none'
+      listStyle: 'none',
+      color: theme.palette.grey[900],
     }
   },
   highlights: {
