@@ -175,7 +175,7 @@ class LambdaEditor extends Component {
                   className={classes.privacy}
                   label=""
                   control={
-                    <Tooltip placement="right" id="tooltip-icon" title="Delete">
+                    <Tooltip placement="right" id="tooltip-icon" title="Private">
                       <Switch
                         checked={this.props.lambda.public === 1}
                         onChange={(event, checked) => this.props.editLambda({ public: checked })} />

@@ -65,7 +65,8 @@ class App extends Component {
                     </Switch>
                   </Grid>
 
-                  {this.context.router.route.location.pathname.indexOf('/lambdas/new') === -1 && (<Button onClick={this.addNew} color="primary" style={{ position: 'fixed', right: '15px', bottom: '15px' }}>
+                  {this.context.router.route.location.pathname.indexOf('/lambdas/new') === -1 && (
+                  <Button variant="fab" onClick={this.addNew} color="primary" style={{ position: 'fixed', right: '15px', bottom: '15px' }}>
                     <AddIcon />
                   </Button>)}
                   <LoginModal onClose={() => this.setState({ loginModalOpen: false })}

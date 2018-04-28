@@ -13,8 +13,11 @@ export default theme => ({
     height: '40px',
     // transform: 'translate(-50%, -50%)',
     backgroundColor: theme.palette.primary[400],
+    '& div': {
+      marginTop: '-30px'
+    }
   },
-  searchInput: {
+  searchInput2: {
     margin: '0',
     position: 'absolute',
     top: '50%',
@@ -32,7 +35,7 @@ export default theme => ({
       // backgroundColor: theme.palette.primary[300]
     },
   },
-  search: {
+  search2: {
     color: 'white',
     paddingLeft: '60px',
     padding: '5px 10px 5px 10px',
