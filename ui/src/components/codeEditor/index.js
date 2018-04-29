@@ -24,9 +24,10 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(newProps){
-    // console.log(newProps.edit, this.state.activeEditor);
-    if (newProps.edit !== undefined)
+    if (newProps.edit !== undefined){
+      console.log(newProps.edit, this.state.activeEditor);
       this.state.activeEditor.updateOptions({ readOnly: !newProps.edit })
+    }
   }
 
   render() {

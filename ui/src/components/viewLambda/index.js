@@ -79,7 +79,6 @@ class ViewLambda extends Component {
       let ownerIsViewing = newProps.userQuery.me && (newProps.userQuery.me.username === newProps.lambdaQuery.lambda.owner.username)
       let adminIsViewing = newProps.userQuery.me && newProps.userQuery.me.admin === 1;
       this.setState({ lambda: newLambda, ownerIsViewing, adminIsViewing })
-      console.log(newProps.userQuery.me, newProps.lambdaQuery.lambda.owner);
     }
   }
 
