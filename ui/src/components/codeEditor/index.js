@@ -23,6 +23,12 @@ class Editor extends React.Component {
     this.props.onChange(newValue);
   }
 
+  componentWillReceiveProps(newProps){
+    // console.log(newProps.edit, this.state.activeEditor);
+    if (newProps.edit !== undefined)
+      this.state.activeEditor.updateOptions({ readOnly: !newProps.edit })
+  }
+
   render() {
     const requireConfig = {
       url: 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.1/require.min.js',

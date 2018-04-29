@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
-import { FormControlLabel } from 'material-ui/Form';
 import Badge from 'material-ui/Badge';
 import Switch from 'material-ui/Switch';
 import Paper from 'material-ui/Paper';
@@ -183,17 +182,11 @@ class LambdaEditor extends Component {
               >
                 {languageOptions.filter(o => o.key === this.props.lambda.language)[0].name}
               </Button>}
-              <FormControlLabel
-                className={classes.privacy}
-                label=""
-                control={
-                  <Tooltip placement="right" id="tooltip-icon" title="Private">
-                    <Switch
-                      checked={this.props.lambda.public === 1}
-                      onChange={(event, checked) => this.props.editLambda({ public: checked })} />
-                  </Tooltip>
-                }
-              />
+              <Tooltip placement="right" id="tooltip-icon" title="Private">
+                <Switch
+                  checked={this.props.lambda.public === 1}
+                  onChange={(event, checked) => this.props.editLambda({ public: checked })} />
+              </Tooltip>
                 <Menu
                   id="language-menu"
                   anchorEl={this.state.languageAnchorEl}
@@ -262,6 +255,7 @@ class LambdaEditor extends Component {
                 height={this.state.outputHeight}
                 editorTheme={themeOptions[this.state.editorTheme].key}
                 code={this.props.output}
+                edit={this.props.edit}
                 editorOptions={{
                   minimap: { enabled: false },
                   lineNumbers: false,

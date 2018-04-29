@@ -153,6 +153,11 @@ class ViewLambda extends Component {
     this.setState({ isEditing: !this.state.isEditing })
   }
 
+  // When the user types in the editor
+  onEditorUpdate = (newCode) => {
+    this.setLambda({ code: newCode })
+  }
+
   editLambda = (newData) => {
     this.setState({ lambda: Object.assign({}, this.state.lambda, newData) })
   }
