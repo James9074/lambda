@@ -74,11 +74,12 @@ class ViewLambda extends Component {
   }
 
   componentWillReceiveProps(newProps){
-    if (newProps.lambdaQuery.lambda && !newProps.lambdaQuery.loading && (this.state.lambda === undefined || (this.props.lambdaQuery.lambda.slug !== newProps.slug))){
+    if (newProps.lambdaQuery.lambda && !newProps.userQuery.loading && !newProps.lambdaQuery.loading && (this.state.lambda === undefined || (this.props.lambdaQuery.lambda.slug !== newProps.slug))){
       let newLambda = newProps.lambdaQuery.lambda === null ? 'none' : Object.assign({ ...newProps.lambdaQuery.lambda }, { inputs: JSON.parse(newProps.lambdaQuery.lambda.inputs) })
       let ownerIsViewing = newProps.userQuery.me && (newProps.userQuery.me.username === newProps.lambdaQuery.lambda.owner.username)
       let adminIsViewing = newProps.userQuery.me && newProps.userQuery.me.admin === 1;
       this.setState({ lambda: newLambda, ownerIsViewing, adminIsViewing })
+      console.log(newProps.userQuery.me, newProps.lambdaQuery.lambda.owner);
     }
   }
 
@@ -115,7 +116,7 @@ class ViewLambda extends Component {
 
     request(settings, (err, response, body) => {
       this.setState({ loadingOutput: false })
-      this.setState({ editorOutput: body.output || body.lambda_error || body.error })
+      this.setState({ editorOutput: body === undefined ? 'Error' : (body.output || body.lambda_error || body.error) })
     })
   }
 

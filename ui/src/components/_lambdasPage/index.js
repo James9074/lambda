@@ -90,7 +90,7 @@ class Lambdas extends Component {
                     λ
                   </Typography>
                 </Grid>
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12} sm={9}>
                   <div className={classes.welcomeContainer}>
                     <Typography variant="headline">
                       <b>lambda</b> | noun | lamb·da

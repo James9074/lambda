@@ -113,7 +113,7 @@ function entryPoint(inputs){
 
     request(settings, (err, response, body) => {
       this.setState({ loadingOutput: false })
-      this.setState({ editorOutput: body.output || body.lambda_error || body.error })
+      this.setState({ editorOutput: body === undefined ? 'Error' : (body.output || body.lambda_error || body.error) })
     })
   }
 

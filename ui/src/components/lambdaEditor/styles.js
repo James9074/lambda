@@ -31,9 +31,6 @@ export default theme => ({
     position: 'relative',
     borderTop: `5px solid ${theme.palette.secondary[500]}`,
   },
-  inputsOverlay: {
-
-  },
   loadingOutput: {
     '& div': {
       top: '-10px'
@@ -61,10 +58,14 @@ export default theme => ({
   editorButtons: {
     textAlign: 'right',
     '& button': {
-      top: '50%',
-      transform: 'translate(0,-50%)',
+      // top: '50%',
+      // transform: 'translate(0,-50%)',
       position: 'relative',
+      marginTop: '5px'
     }
+  },
+  editorOptions: {
+    color: theme.palette.grey[500]
   },
   error: {
     color: 'red',

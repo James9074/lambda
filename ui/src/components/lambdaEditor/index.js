@@ -128,137 +128,149 @@ class LambdaEditor extends Component {
                   fullWidth
                   margin="none"
                 />)}
-
                 {!this.props.edit && (<Typography variant="headline" className={classes.lambdaName}>{/* this.props.lambda.name */}</Typography>)}
-
               </Grid>
-
               <Grid item xs={12} md={5} className={classes.editorButtons}>
-                <IconButton aria-label="Theme" aria-owns="theme-menu" onClick={() => this.setState({ showInputs: !this.state.showInputs })} className={(this.props.errors && this.props.errors.inputs !== undefined) ? classes.error : ''}>
-                { !validInputs ? (<InputIcon />) :
-                  (<Badge className={classes.badge} badgeContent={validInputs} color='secondary'>
-                    <InputIcon />
-                  </Badge>)}
+              <Tooltip placement="top" id="tooltip-icon" title="Inputs">
+                <IconButton aria-label="Inputs" aria-owns="inputs-menu" onClick={() => this.setState({ showInputs: !this.state.showInputs })} className={(this.props.errors && this.props.errors.inputs !== undefined) ? classes.error : ''}>
+                  { !validInputs ? (<InputIcon />) :
+                    (<Badge className={classes.badge} badgeContent={validInputs} color='secondary'>
+                      <InputIcon />
+                    </Badge>)}
                 </IconButton>
-                { (this.props.adminIsViewing || this.props.ownerIsViewing) && !this.props.edit && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleDeleteLambda}>
-                  <DeleteIcon />
-                </IconButton>)}
-                { (this.props.adminIsViewing || this.props.ownerIsViewing) && !this.props.edit && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleToggleEdit}>
-                  <EditIcon />
-                </IconButton>)}
-                { (this.props.adminIsViewing || this.props.ownerIsViewing) && this.props.edit && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleToggleEdit}>
-                  <UndoIcon />
-                </IconButton>)}
-
-                { this.props.edit && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleSaveLambda}>
+              </Tooltip>
+              { (this.props.adminIsViewing || this.props.ownerIsViewing) && !this.props.edit && !this.props.isNewLambda && (<IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleDeleteLambda}>
+                <DeleteIcon />
+              </IconButton>)}
+              { (this.props.adminIsViewing || this.props.ownerIsViewing) && !this.props.edit && !this.props.isNewLambda &&
+                (<Tooltip placement="top" id="tooltip-icon" title="Edit">
+                  <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleToggleEdit}>
+                    <EditIcon />
+                  </IconButton>
+                </Tooltip>)}
+              { (this.props.adminIsViewing || this.props.ownerIsViewing) && this.props.edit && !this.props.isNewLambda &&
+                (<Tooltip placement="top" id="tooltip-icon" title="Edit">
+                  <IconButton className={classes.themeButton} aria-label="Edit" aria-owns="edit-menu" onClick={this.props.handleToggleEdit}>
+                    <UndoIcon />
+                  </IconButton>
+                </Tooltip>)}
+              { this.props.edit &&
+              (<Tooltip placement="top" id="tooltip-icon" title="Save">
+                <IconButton className={classes.themeButton} aria-label="Save" aria-owns="save-menu" onClick={this.props.handleSaveLambda}>
                   <SaveIcon />
-                </IconButton>)}
-
-                { this.props.view && (<IconButton disabled className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleCloneLambda}>
-                  <ContentCopyIcon />
-                </IconButton>)}
-                <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.testLambda}>
+                </IconButton>
+              </Tooltip>)}
+              { this.props.view &&
+                (<Tooltip placement="top" id="tooltip-icon" title="Clone">
+                  <IconButton disabled className={classes.themeButton} aria-label="Clone" aria-owns="clone-menu" onClick={this.handleCloneLambda}>
+                    <ContentCopyIcon />
+                  </IconButton>
+                </Tooltip>)}
+              <Tooltip placement="top" id="tooltip-icon" title="Run">
+                <IconButton className={classes.themeButton} aria-label="Test" aria-owns="theme-menu" onClick={this.props.testLambda}>
                   <PlayArrowIcon />
                 </IconButton>
+              </Tooltip>
+              <Tooltip placement="top" id="tooltip-icon" title="Theme">
                 <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.handleThemeMenuOpen}>
-                  <SortIcon />
+                    <SortIcon />
                 </IconButton>
-                { this.props.edit && <Button
-                  style={{ top: '25%' }}
-                  aria-owns={this.state.languageMenuOpen ? 'simple-menu' : null}
-                  aria-haspopup="true"
-                  onClick={this.handleLanguageMenuOpen}
-                >
-                  {languageOptions.filter(o => o.key === this.props.lambda.language)[0].name}
-                </Button>}
-                <FormControlLabel
-                  className={classes.privacy}
-                  label=""
-                  control={
-                    <Tooltip placement="right" id="tooltip-icon" title="Private">
-                      <Switch
-                        checked={this.props.lambda.public === 1}
-                        onChange={(event, checked) => this.props.editLambda({ public: checked })} />
-                    </Tooltip>
-                  }
-                />
-                  <Menu
-                    id="language-menu"
-                    anchorEl={this.state.languageAnchorEl}
-                    open={this.state.languageMenuOpen}
-                    onClose={this.handleLanguageMenuClose}
-                  >
-                    {languageOptions.map((option, index) =>
-                      <MenuItem
-                        key={index}
-                        selected={index === this.state.editorLanguage}
-                        onClick={event => this.handleLanguageMenuClick(event, index)}
-                      >
-                        {option.name}
-                      </MenuItem>,
-                    )}
-                </Menu>
-
+              </Tooltip>
+              { this.props.edit && <Button
+                aria-owns={this.state.languageMenuOpen ? 'simple-menu' : null}
+                aria-haspopup="true"
+                onClick={this.handleLanguageMenuOpen}
+              >
+                {languageOptions.filter(o => o.key === this.props.lambda.language)[0].name}
+              </Button>}
+              <FormControlLabel
+                className={classes.privacy}
+                label=""
+                control={
+                  <Tooltip placement="right" id="tooltip-icon" title="Private">
+                    <Switch
+                      checked={this.props.lambda.public === 1}
+                      onChange={(event, checked) => this.props.editLambda({ public: checked })} />
+                  </Tooltip>
+                }
+              />
                 <Menu
-                  id="theme-menu"
-                  anchorEl={this.state.themeAnchorEl}
-                  open={this.state.themeMenuOpen}
-                  onClose={this.handleThemeMenuClose}
+                  id="language-menu"
+                  anchorEl={this.state.languageAnchorEl}
+                  open={this.state.languageMenuOpen}
+                  onClose={this.handleLanguageMenuClose}
                 >
-                  {themeOptions.map((option, index) =>
+                  {languageOptions.map((option, index) =>
                     <MenuItem
                       key={index}
-                      selected={index === this.state.editorTheme}
-                      onClick={event => this.handleThemeMenuClick(event, index)}
+                      selected={index === this.state.editorLanguage}
+                      onClick={event => this.handleLanguageMenuClick(event, index)}
                     >
                       {option.name}
                     </MenuItem>,
                   )}
               </Menu>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} className={classes.mainEditor}>
 
-              <LambdaInputs
-                edit={this.props.edit}
-                show={this.state.showInputs}
-                lambdaInputs={this.props.lambda.inputs}
-                addInput={this.props.addInput}
-                removeInput={this.props.removeInput}
-                modifyInput={this.props.modifyInput}
-                onClose={() => { this.setState({ showInputs: false }) }} />
-
-              <Paper elevation={4}>
-                <Editor
-                  editorTheme={themeOptions[this.state.editorTheme].key}
-                  language={language}
-                  code={this.state.editorCode}
-                  onChange={newCode => this.onEditorUpdate(newCode)}
-                  editorOptions={{
-                    readOnly: !this.props.edit
-                  }}/>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} className={classes.output} style={{ height: this.state.outputHeight }}>
-              {this.props.loading && (
-                <div className={classes.loadingOutput}>
-                  <LinearProgress color="secondary" />
-                </div>
-              )}
-              <Paper elevation={4}>
-                <Editor
-                  height={this.state.outputHeight}
-                  editorTheme={themeOptions[this.state.editorTheme].key}
-                  code={this.props.output}
-                  editorOptions={{
-                    minimap: { enabled: false },
-                    lineNumbers: false,
-                    readOnly: true,
-                  }} />
-              </Paper>
+              <Menu
+                id="theme-menu"
+                anchorEl={this.state.themeAnchorEl}
+                open={this.state.themeMenuOpen}
+                onClose={this.handleThemeMenuClose}
+              >
+                {themeOptions.map((option, index) =>
+                  <MenuItem
+                    key={index}
+                    selected={index === this.state.editorTheme}
+                    onClick={event => this.handleThemeMenuClick(event, index)}
+                  >
+                    {option.name}
+                  </MenuItem>,
+                )}
+            </Menu>
             </Grid>
           </Grid>
+          <Grid item xs={12} className={classes.mainEditor}>
+
+            <LambdaInputs
+              edit={this.props.edit}
+              show={this.state.showInputs}
+              lambdaInputs={this.props.lambda.inputs}
+              addInput={this.props.addInput}
+              removeInput={this.props.removeInput}
+              modifyInput={this.props.modifyInput}
+              onClose={() => { this.setState({ showInputs: false }) }} />
+
+            <Paper elevation={4}>
+              <Editor
+                editorTheme={themeOptions[this.state.editorTheme].key}
+                language={language}
+                code={this.state.editorCode}
+                onChange={newCode => this.onEditorUpdate(newCode)}
+                editorOptions={{
+                  readOnly: !this.props.edit
+                }}/>
+            </Paper>
           </Grid>
+          <Grid item xs={12} className={classes.output} style={{ height: this.state.outputHeight }}>
+            {this.props.loading && (
+              <div className={classes.loadingOutput}>
+                <LinearProgress color="secondary" />
+              </div>
+            )}
+            <Paper elevation={4}>
+              <Editor
+                height={this.state.outputHeight}
+                editorTheme={themeOptions[this.state.editorTheme].key}
+                code={this.props.output}
+                editorOptions={{
+                  minimap: { enabled: false },
+                  lineNumbers: false,
+                  readOnly: true,
+                }} />
+            </Paper>
+          </Grid>
+        </Grid>
+        </Grid>
       </div>
     );
   }
