@@ -5,7 +5,9 @@ class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeEditor: null
+      activeEditor: null,
+      codeEditor: null,
+      outputEditor: null
     }
   }
 
@@ -19,14 +21,18 @@ class Editor extends React.Component {
     window.monacos.push(monaco)
   }
 
+  onDidCreateEditor(editor) {
+    console.log('NEW EDITOPR', editor, this);
+  }
+
   onChange(newValue) {
     this.props.onChange(newValue);
   }
 
   componentWillReceiveProps(newProps){
     if (newProps.edit !== undefined){
-      console.log(newProps.edit, this.state.activeEditor);
-      this.state.activeEditor.updateOptions({ readOnly: !newProps.edit })
+      // window.editors[0] should be the code editor. This is a major hack and should be fixed.
+      window.editors[0].updateOptions({ readOnly: !newProps.edit })
     }
   }
 
