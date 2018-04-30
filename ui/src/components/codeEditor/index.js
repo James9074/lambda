@@ -21,10 +21,6 @@ class Editor extends React.Component {
     window.monacos.push(monaco)
   }
 
-  onDidCreateEditor(editor) {
-    console.log('NEW EDITOPR', editor, this);
-  }
-
   onChange(newValue) {
     this.props.onChange(newValue);
   }
@@ -59,7 +55,7 @@ class Editor extends React.Component {
         this.state.monaco.editor.setModelLanguage(this.state.activeEditor.model, this.props.language)
       }
     }
-    // console.log(1)
+
     return (
       <MonacoEditor
         width="100%"

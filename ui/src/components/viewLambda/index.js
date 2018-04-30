@@ -145,9 +145,10 @@ class ViewLambda extends Component {
   handleToggleEdit = () => {
     if (!this.state.isEditing)
       this.setState({ cachedLambda: Object.assign({}, this.state.lambda) })
-    else
+    else {
       this.setState({ lambda: this.state.cachedLambda })
-
+      window.editors[0].setValue(this.state.cachedLambda.code)
+    }
 
     this.setState({ isEditing: !this.state.isEditing })
   }

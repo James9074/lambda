@@ -143,13 +143,13 @@ class LambdaEditor extends Component {
               </IconButton>)}
               { (this.props.adminIsViewing || this.props.ownerIsViewing) && !this.props.edit && !this.props.isNewLambda &&
                 (<Tooltip placement="top" id="tooltip-icon" title="Edit">
-                  <IconButton className={classes.themeButton} aria-label="Theme" aria-owns="theme-menu" onClick={this.props.handleToggleEdit}>
+                  <IconButton className={classes.themeButton} aria-label="Edit" aria-owns="edit-menu" onClick={this.props.handleToggleEdit}>
                     <EditIcon />
                   </IconButton>
                 </Tooltip>)}
               { (this.props.adminIsViewing || this.props.ownerIsViewing) && this.props.edit && !this.props.isNewLambda &&
-                (<Tooltip placement="top" id="tooltip-icon" title="Edit">
-                  <IconButton className={classes.themeButton} aria-label="Edit" aria-owns="edit-menu" onClick={this.props.handleToggleEdit}>
+                (<Tooltip placement="top" id="tooltip-icon" title="Cancel">
+                  <IconButton className={classes.themeButton} aria-label="Cancel" aria-owns="cancel-menu" onClick={this.props.handleToggleEdit}>
                     <UndoIcon />
                   </IconButton>
                 </Tooltip>)}
