@@ -4,6 +4,7 @@ export default theme => ({
     zIndex: '100',
     height: '40px',
     borderRadius: '0px',
+    color: 'white !important'
   },
   searchContainer: {
     margin: '0',

@@ -181,7 +181,7 @@ export default class SearchBar extends Component {
     const classes = this.props.classes;
     return (
       <div className={classes.searchContainer}>
-        <IconButton color="inherit" aria-label="Search" className={classes.searchIcon} disabled>
+        <IconButton aria-label="Search" className={classes.searchIcon} disabled>
           <SearchIcon />
         </IconButton>
 

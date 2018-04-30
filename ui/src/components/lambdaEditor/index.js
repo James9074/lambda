@@ -182,11 +182,11 @@ class LambdaEditor extends Component {
               >
                 {languageOptions.filter(o => o.key === this.props.lambda.language)[0].name}
               </Button>}
-              <Tooltip placement="right" id="tooltip-icon" title="Private">
+              { false && (<Tooltip placement="right" id="tooltip-icon" title="Private">
                 <Switch
                   checked={this.props.lambda.public === 1}
                   onChange={(event, checked) => this.props.editLambda({ public: checked })} />
-              </Tooltip>
+              </Tooltip>) }
                 <Menu
                   id="language-menu"
                   anchorEl={this.state.languageAnchorEl}
