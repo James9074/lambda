@@ -35,6 +35,8 @@ var _passportTwitter = require('passport-twitter');
 
 var _passportGithub = require('passport-github');
 
+var _passportLDAP = require('passport-ldapauth');
+
 var _db = require('./db');
 
 var _db2 = _interopRequireDefault(_db);
@@ -191,5 +193,18 @@ _passport2.default.use(new _passportGithub.Strategy({
   }
 }));
 
+
+// https://github.com/vesse/passport-ldapauth
+_passport2.default.use(new _passportLDAP.Strategy({
+  server: {
+    url: process.env.LDAP_URL,
+    bindDN: process.env.LDAP_BIND_DN,
+    bindCredentials: process.env.LDAP_BIND_PW,
+    searchBase: process.env.LDAP_SEARCH_BASE,
+    searchFilter: process.env.LDAP_SEARCH_FILTER
+  }
+}));
+
 exports.default = _passport2.default;
 //# sourceMappingURL=passport.js.map
+

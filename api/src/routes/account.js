@@ -34,6 +34,10 @@ const loginProviders = [
     provider: 'github',
     options: { scope: 'profile email' },
   },
+  {
+    provider: 'ldapauth',
+    options: { scope: 'profile email' },
+  }
 ];
 
 // '/about' => ''
@@ -76,6 +80,19 @@ function getSuccessRedirect(req) {
     ? `&maxAge=${req.session.cookie.originalMaxAge}`
     : ''}`;
 }
+
+// Register LDAP
+router.post('/login/ldapauth', passport.authenticate('ldapauth', {
+  session: false,
+  successRedirect: '/',
+  failureRedirect: '/',
+  failureFlash: true,
+  //scope: 'profile email'
+}), function(req, res) {
+  console.log(req,res);
+  res.send({status: 'ok'});
+});
+
 
 // Registers route handlers for the external login providers
 loginProviders.forEach(({ provider, options }) => {
