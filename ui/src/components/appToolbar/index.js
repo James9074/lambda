@@ -1,16 +1,16 @@
-// @flowimport { LinearProgress } from 'material-ui/Progress';
+// @flowimport LinearProgress from '@material-ui/core/LinearProgress';
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Grid from 'material-ui/Grid';
-import Toolbar from 'material-ui/Toolbar';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
-import { LinearProgress } from 'material-ui/Progress';
-import Hidden from 'material-ui/Hidden'
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Grid from '@material-ui/core/Grid';
+import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Hidden from '@material-ui/core/Hidden'
 import AppDrawer from 'components/appDrawer'
 import SearchBar from 'components/searchBar'
 import UserInfo from 'components/userInfo'

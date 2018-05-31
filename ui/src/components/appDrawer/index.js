@@ -2,10 +2,13 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Drawer from 'material-ui/Drawer';
-import Button from 'material-ui/Button';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import SendIcon from '@material-ui/icons/Send';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';

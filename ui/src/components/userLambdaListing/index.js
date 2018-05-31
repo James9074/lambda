@@ -2,11 +2,11 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import LambdaCard from 'components/lambdaCard'
-import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
-import { CircularProgress } from 'material-ui/Progress';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { gql, graphql } from 'react-apollo';
 import styles from './styles'
 

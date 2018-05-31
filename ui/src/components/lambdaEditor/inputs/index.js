@@ -2,16 +2,18 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
 import EditIcon from '@material-ui/icons/Edit';
-import IconButton from 'material-ui/IconButton';
-import TextField from 'material-ui/TextField';
-import Slide from 'material-ui/transitions/Slide';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
+import Slide from '@material-ui/core/Slide';
 import styles from './styles'
 
 

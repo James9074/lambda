@@ -90,9 +90,8 @@ router.post('/login/ldapauth', passport.authenticate('ldapauth', {
   //scope: 'profile email'
 }), function(req, res) {
   console.log(req,res);
-  res.send({status: 'ok'});
+  res.status(200).send('OK');
 });
-
 
 // Registers route handlers for the external login providers
 loginProviders.forEach(({ provider, options }) => {

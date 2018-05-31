@@ -2,15 +2,16 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import LambdaCard from 'components/lambdaCard'
-import Grid from 'material-ui/Grid';
-import Typography from 'material-ui/Typography';
-import AppBar from 'material-ui/AppBar';
-import Tabs, { Tab } from 'material-ui/Tabs';
-import Paper from 'material-ui/Paper';
-import Hidden from 'material-ui/Hidden'
-import { CircularProgress } from 'material-ui/Progress';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Paper from '@material-ui/core/Paper';
+import Hidden from '@material-ui/core/Hidden'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import SmallHeader from 'components/smallHeader'
 import { gql, graphql } from 'react-apollo';
 import styles from './styles'
@@ -70,7 +71,7 @@ class Lambdas extends Component {
 
     if (data && data.error){
       return (<div className={classes.loading}>
-        <Typography variant="headline">There is Error</Typography>
+        <Typography variant="headline">There is an Error</Typography>
         </div>)
     }
     if (!data.lambdas){
