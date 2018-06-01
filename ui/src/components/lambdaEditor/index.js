@@ -2,14 +2,15 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Badge from 'material-ui/Badge';
-import Switch from 'material-ui/Switch';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Badge from '@material-ui/core/Badge';
+import Switch from '@material-ui/core/Switch';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
 import SortIcon from '@material-ui/icons/Sort';
 import EditIcon from '@material-ui/icons/Edit';
 import UndoIcon from '@material-ui/icons/Undo';
@@ -18,11 +19,11 @@ import ContentCopyIcon from '@material-ui/icons/ContentCopy';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
 import InputIcon from '@material-ui/icons/Input';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import Editor from 'components/codeEditor'
-import { LinearProgress } from 'material-ui/Progress';
-import TextField from 'material-ui/TextField';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import TextField from '@material-ui/core/TextField';
 import LambdaInputs from './inputs'
 import styles from './styles'
 

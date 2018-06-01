@@ -29,6 +29,8 @@ services:
       - "3000:3000"
     volumes:
       - ./ui:/usr/src/app
+    environment:
+      - USE_LDAP=true
     # command: serve -s build -p 3000
     # build:
       # dockerfile: Dockerfile-prod

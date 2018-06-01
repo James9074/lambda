@@ -3,12 +3,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Avatar from 'material-ui/Avatar';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import LoginModal from 'components/loginModal'
-import Menu, { MenuItem } from 'material-ui/Menu';
-import Hidden from 'material-ui/Hidden'
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Hidden from '@material-ui/core/Hidden'
 import styles from './styles'
 
 @withStyles(styles)
@@ -59,10 +60,10 @@ class UserInfo extends Component {
       return (
         <div className={classes.root}>
           <Hidden smUp>
-            <Button raised color="secondary" className={classes.loginSmall} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
+            <Button color="secondary" className={classes.loginSmall} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
           </Hidden>
           <Hidden xsDown>
-            <Button raised color="secondary" className={classes.login} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
+            <Button color="secondary" className={classes.login} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
           </Hidden>
           <LoginModal onClose={this.handleRequestClose} isOpen={this.state.loginModalOpen} />
         </div>
@@ -73,7 +74,7 @@ class UserInfo extends Component {
       <div className={classes.root}>
           <div className={classes.nameInfo}>
           <Button className={classes.avatar} onClick={this.handleUserMenuOpen}>
-            <Avatar alt="Avatar" src={profilePic} ref="avatar"/>
+            <Avatar alt="" src={profilePic} ref="avatar"/>
           </Button>
           <Hidden smDown>
             <div className={classes.nameText}>

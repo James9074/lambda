@@ -14,6 +14,7 @@ module.exports =
     },
     "rules": {
       "curly": "off", // Ugly for one-liners
+      "no-console": "off",
       "no-underscore-dangle": "off", // I like this one actually, but the library we're using enforces it.
       "semi": "off", // Where's the "force no semi" rule?
       "comma-dangle": "off", // Ew. I get it, but ew.

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
 import Autosuggest from 'react-autosuggest';
 import ApolloClient from 'apollo-client';
 import { gql, withApollo } from 'react-apollo';
-import Paper from 'material-ui/Paper';
-import { MenuItem } from 'material-ui/Menu';
+import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import ReactDOM from 'react-dom'

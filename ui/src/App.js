@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom'
 import { gql, graphql } from 'react-apollo';
-import Grid from 'material-ui/Grid';
+import Grid from '@material-ui/core/Grid';
 import Lambdas from 'components/_lambdasPage'
 import LambdaPage from 'components/_lambdaPage'
 import NewLambdaPage from 'components/_newLambdaPage'
@@ -12,9 +12,9 @@ import User from 'components/_userPage'
 import AppToolbar from 'components/appToolbar/'
 import LoginModal from 'components/loginModal'
 import FullPageLoader from 'components/fullPageLoader/'
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import { MuiThemeProvider } from 'material-ui/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import 'typeface-roboto'
 import { RobotTheme } from './Themes'
 import './App.css'
