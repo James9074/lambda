@@ -81,16 +81,14 @@ function getSuccessRedirect(req) {
     : ''}`;
 }
 
-// Register LDAP
-router.post('/login/ldapauth', passport.authenticate('ldapauth', {
-  session: false,
-  successRedirect: '/',
-  failureRedirect: '/',
-  failureFlash: true,
-  //scope: 'profile email'
-}), function(req, res) {
-  console.log(req,res);
-  res.status(200).send('OK');
+// Register LDAP as an auth mechanism
+router.post('/login/ldapauth', (req, res, next) => {
+  passport.authenticate('ldapauth', {
+    session: true,
+    failureFlash: true
+  })(req, res, next)
+}, (req, res, next) => {
+  return res.status(200).json({status: 'success', user: req.user});
 });
 
 // Registers route handlers for the external login providers

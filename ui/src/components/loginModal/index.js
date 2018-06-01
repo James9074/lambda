@@ -6,6 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -19,7 +21,10 @@ class LoginModal extends Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      loading: false,
+      error: false,
+      errorText: ''
     };
   }
 
@@ -27,12 +32,14 @@ class LoginModal extends Component {
     router: PropTypes.object.isRequired
   }
 
-  editUserName = (event, i) => {
-    this.setState({ username: i })
+  editUserName = (event) => {
+    this.setState({ username: event.target.value })
+    event.preventDefault();
   }
 
-  editPassword = (event, i) => {
-    this.setState({ password: i })
+  editPassword = (event) => {
+    this.setState({ password: event.target.value })
+    event.preventDefault();
   }
 
   catchReturn = (ev) => {
@@ -47,15 +54,27 @@ class LoginModal extends Component {
   }
 
   ldapAuth = () => {
+    if (this.state.username === '' || this.state.password === '')
+      return this.setState({
+        loading: false,
+        error: true,
+        errorText: 'Please supply a username and password to log in' })
+    this.setState({ loading: true });
     axios.post('/login/ldapauth', {
-      firstName: 'Fred',
-      lastName: 'Flintstone'
+      username: this.state.username,
+      password: this.state.password
     })
-    .then((response) => {
-      console.log(response);
+    .then(() => {
+      this.setState({ loading: false, error: false, errorText: '' });
+      window.location.reload();
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error)
+      this.setState({
+        loading: false,
+        error: true,
+        errorText: error.response.status === 401 ?
+        'Invalid credentials, pelase try again' : 'There was an error while trying to authenticate you' })
     });
   }
 
@@ -75,9 +94,10 @@ class LoginModal extends Component {
                 id="login-username"
                 value={this.state.username}
                 placeholder="Username"
-                onChange={(e, i) => this.editUserName(e, i)}
+                onChange={e => this.editUserName(e)}
                 onKeyPress={this.catchReturn}
                 margin="none"
+                error={this.state.error}
               />
 
               <TextField
@@ -85,11 +105,13 @@ class LoginModal extends Component {
                 type="password"
                 value={this.state.password}
                 placeholder="Password"
-                onChange={(e, i) => this.editPassword(e, i)}
+                onChange={e => this.editPassword(e)}
                 onKeyPress={this.catchReturn}
                 margin="none"
+                error={this.state.error}
               />
             </div>
+            <Typography className={classes.error}>{this.state.errorText}</Typography>
           </DialogContent>)}
           {!useLdap && (<DialogContent>
             <DialogContentText>
@@ -101,7 +123,9 @@ class LoginModal extends Component {
               Cancel
             </Button>
             <Button onClick={() => this.ldapAuth()} color="primary">
-              Login
+            {this.state.loading ?
+              <CircularProgress size={14} /> : // Size 14 works pretty well
+              <Typography>Login</Typography>}
             </Button>
           </DialogActions>)}
 

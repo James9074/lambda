@@ -74,7 +74,7 @@ class UserInfo extends Component {
       <div className={classes.root}>
           <div className={classes.nameInfo}>
           <Button className={classes.avatar} onClick={this.handleUserMenuOpen}>
-            <Avatar alt="Avatar" src={profilePic} ref="avatar"/>
+            <Avatar alt="" src={profilePic} ref="avatar"/>
           </Button>
           <Hidden smDown>
             <div className={classes.nameText}>

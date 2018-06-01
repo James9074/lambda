@@ -4,5 +4,8 @@ export default {
     '& div': {
       margin: '5px'
     }
+  },
+  error: {
+    color: 'red'
   }
 }

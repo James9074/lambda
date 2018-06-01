@@ -71,7 +71,8 @@ async function login(req, provider, profile, tokens) {
 
   if (!user) {
     user = await _db2.default.table('logins').innerJoin('users', 'users.id', 'logins.user_id').where({ 'logins.provider': provider, 'logins.id': profile.id }).first('users.*');
-    if (!user && profile.emails && profile.emails.length && profile.emails[0].verified === true) {
+    if (!user && profile.emails && profile.emails.length 
+      && profile.emails[0].verified === true && profile.emails[0].value !== undefined) {
       user = await _db2.default.table('users').where('emails', '@>', JSON.stringify([{ email: profile.emails[0].value, verified: true }])).first();
     }
   }
@@ -106,7 +107,7 @@ async function login(req, provider, profile, tokens) {
       updated_at: _db2.default.raw('CURRENT_TIMESTAMP')
     });
   }
-
+  
   return {
     id: user.id,
     displayName: user.display_name,
@@ -125,6 +126,8 @@ _passport2.default.use(new _passportGoogleOauth.OAuth2Strategy({
   passReqToCallback: true
 }, async (req, accessToken, refreshToken, profile, done) => {
   try {
+    //TODO: Is verified contained in profile.emails[x]? If not, possibly uncomment below.
+    //if (profile.emails && profile.emails.length) profile.emails[0].verified = true;
     const user = await login(req, 'google', profile, {
       accessToken,
       refreshToken
@@ -166,6 +169,7 @@ _passport2.default.use(new _passportTwitter.Strategy({
   passReqToCallback: true
 }, async (req, token, tokenSecret, profile, done) => {
   try {
+    //We can assume verification for twitter
     if (profile.emails && profile.emails.length) profile.emails[0].verified = true;
     const user = await login(req, 'twitter', profile, {
       token,
@@ -183,6 +187,8 @@ _passport2.default.use(new _passportGithub.Strategy({
   clientSecret: process.env.GITHUB_CLIENT_SECRET
 }, async (req, accessToken, refreshToken, profile, done) => {
   try {
+    //We can assume verification for github
+    if (profile.emails && profile.emails.length) profile.emails[0].verified = true;
     const user = await login(req, 'github', profile, {
       accessToken,
       refreshToken
@@ -193,7 +199,6 @@ _passport2.default.use(new _passportGithub.Strategy({
   }
 }));
 
-
 // https://github.com/vesse/passport-ldapauth
 _passport2.default.use(new _passportLDAP.Strategy({
   server: {
@@ -202,9 +207,34 @@ _passport2.default.use(new _passportLDAP.Strategy({
     bindCredentials: process.env.LDAP_BIND_PW,
     searchBase: process.env.LDAP_SEARCH_BASE,
     searchFilter: process.env.LDAP_SEARCH_FILTER
+  },
+  passReqToCallback: true
+}, async (req, profile, done) => {
+
+  try {
+    var userProfile = {
+      id: profile[process.env.LDAP_USERNAME_ATTRIBUTE || 'sAMAccountName'],
+      displayName: profile[process.env.LDAP_DISPLAYNAME_ATTRIBUTE || 'name'],
+      imageUrl: profile[process.env.LDAP_PROFILE_IMAGE_ATTRIBUTE || ''],
+      emails: [{
+        value: profile[process.env.LDAP_EMAIL_ATTRIBUTE || 'mail'],
+        verified: true
+      }],
+      username: profile[process.env.LDAP_USERNAME_ATTRIBUTE || 'sAMAccountName'],
+      admin: profile.memberOf && process.env.LDAP_ADMIN_GROUP ? profile.memberOf.indexOf(process.env.LDAP_ADMIN_GROUP) > -1 ? 1 : 0 : 0,
+      _json: JSON.stringify(profile)
+    }
+
+
+    const user = await login(req, 'ldapauth', userProfile, {
+      token: '118',
+      tokenSecret: '118'
+    });
+    done(null, user);
+  } catch (err) {
+    done(err);
   }
 }));
 
 exports.default = _passport2.default;
 //# sourceMappingURL=passport.js.map
-
