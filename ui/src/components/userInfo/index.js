@@ -65,7 +65,7 @@ class UserInfo extends Component {
           <Hidden xsDown>
             <Button color="secondary" className={classes.login} onClick={() => this.setState({ loginModalOpen: true })}>Log In</Button>
           </Hidden>
-          <LoginModal onClose={this.handleRequestClose} useLdap={true} isOpen={this.state.loginModalOpen} />
+          <LoginModal onClose={this.handleRequestClose} isOpen={this.state.loginModalOpen} />
         </div>
       )
     let profilePic = user.imageUrl || `https://robohash.org/${user.username}.png?size=300x300`

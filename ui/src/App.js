@@ -71,7 +71,6 @@ class App extends Component {
                   </Button>)}
                   <LoginModal onClose={() => this.setState({ loginModalOpen: false })}
                     isOpen={this.state.loginModalOpen}
-                    useLdap={true}
                     returnTo='/lambdas/new' />
                 </Grid>
               </Grid>

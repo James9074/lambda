@@ -79,7 +79,8 @@ class LoginModal extends Component {
   }
 
   render(){
-    const { useLdap, classes, isOpen, onClose } = this.props
+    const { classes, isOpen, onClose } = this.props
+    let useLdap = process.env.USE_LDAP;
     return (
         <Dialog open={isOpen} onClose={onClose}>
           <DialogTitle>
