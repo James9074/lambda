@@ -16,7 +16,7 @@
     "faker": "^4.1.0",
     "graphql": "^0.10.4",
     "graphql-relay": "^0.5.2",
-    "handlebars": "^4.0.10",
+    "handlebars": "^4.7.7",
     "handlebars-layouts": "^3.1.4",
     "i18next": "^8.4.3",
     "i18next-express-middleware": "^1.0.5",
