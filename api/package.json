@@ -39,7 +39,7 @@
     "request": "^2.87.0",
     "shortid": "^2.2.8",
     "source-map-support": "^0.4.15",
-    "validator": "^8.0.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
